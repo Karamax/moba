@@ -1,0 +1,565 @@
+#include "_defines.fos"
+#include "_itempid.fos"
+#include "_macros.fos"
+
+void unsafe_holodisc_change(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item@[] items;
+	int counthol=0;
+    if( cr.GetItems( -1, items ) > 0 )
+    {
+		if(cr.ParamBase[PLAYER_MAIN_FACTION]==ENCLAVA)
+		{
+			for( uint i = 0, l = items.length(); i < l; i++ )
+			{
+				if(items[ i ].GetProtoId()==PID_ENCLAVE_HOLODISK_3)//arm
+				{
+				__ArmorPointsEnclave+=(items[ i ].GetCount()*__HolodicsAdd);
+				cr.ParamBase[PLAYER_POINTS]+=(items[ i ].GetCount()*50);
+				cr.DeleteItem( items[ i ].GetProtoId(), items[ i ].GetCount() );
+				counthol++;
+				}
+				if(items[ i ].GetProtoId()==PID_ENCLAVE_HOLODISK_4)//med
+				{
+				__DrugsPointsEnclave+=(items[ i ].GetCount()*__HolodicsAdd);
+				cr.ParamBase[PLAYER_POINTS]+=(items[ i ].GetCount()*50);
+				cr.DeleteItem( items[ i ].GetProtoId(), items[ i ].GetCount() );
+				counthol++;
+				}
+				if(items[ i ].GetProtoId()==PID_ENCLAVE_HOLODISK_2)//ener
+				{
+				__EnergyPointsEnclave+=(items[ i ].GetCount()*__HolodicsAdd);
+				cr.ParamBase[PLAYER_POINTS]+=(items[ i ].GetCount()*50);
+				cr.DeleteItem( items[ i ].GetProtoId(), items[ i ].GetCount() );
+				counthol++;
+				}
+				if(items[ i ].GetProtoId()==PID_ENCLAVE_HOLODISK_5)//sg
+				{
+				__SmallGunsPointsEnclave+=(items[ i ].GetCount()*__HolodicsAdd);
+				cr.ParamBase[PLAYER_POINTS]+=(items[ i ].GetCount()*50);
+				cr.DeleteItem( items[ i ].GetProtoId(), items[ i ].GetCount() );
+				counthol++;
+				}
+				if(items[ i ].GetProtoId()==PID_ENCLAVE_HOLODISK_1)//bg
+				{
+				__BigGunsPointsEnclave+=(items[ i ].GetCount()*__HolodicsAdd);
+				cr.ParamBase[PLAYER_POINTS]+=(items[ i ].GetCount()*50);
+				cr.DeleteItem( items[ i ].GetProtoId(), items[ i ].GetCount() );
+				counthol++;
+				}
+			}
+		}
+		if(cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)
+		{
+			for( uint i = 0, l = items.length(); i < l; i++ )
+			{
+				if(items[ i ].GetProtoId()==PID_ENCLAVE_HOLODISK_3)//arm
+				{
+				__ArmorPointsBoS+=(items[ i ].GetCount()*__HolodicsAdd);
+				cr.ParamBase[PLAYER_POINTS]+=(items[ i ].GetCount()*50);
+				cr.DeleteItem( items[ i ].GetProtoId(), items[ i ].GetCount() );
+				counthol++;
+				}
+				if(items[ i ].GetProtoId()==PID_ENCLAVE_HOLODISK_4)//med
+				{
+				__DrugsPointsBoS+=(items[ i ].GetCount()*__HolodicsAdd);
+				cr.ParamBase[PLAYER_POINTS]+=(items[ i ].GetCount()*50);
+				cr.DeleteItem( items[ i ].GetProtoId(), items[ i ].GetCount() );
+				counthol++;
+				}
+				if(items[ i ].GetProtoId()==PID_ENCLAVE_HOLODISK_2)//ener
+				{
+				__EnergyPointsBoS+=(items[ i ].GetCount()*__HolodicsAdd);
+				cr.ParamBase[PLAYER_POINTS]+=(items[ i ].GetCount()*50);
+				cr.DeleteItem( items[ i ].GetProtoId(), items[ i ].GetCount() );
+				counthol++;
+				}
+				if(items[ i ].GetProtoId()==PID_ENCLAVE_HOLODISK_5)//sg
+				{
+				__SmallGunsPointsBoS+=(items[ i ].GetCount()*__HolodicsAdd);
+				cr.ParamBase[PLAYER_POINTS]+=(items[ i ].GetCount()*50);
+				cr.DeleteItem( items[ i ].GetProtoId(), items[ i ].GetCount() );
+				counthol++;
+				}
+				if(items[ i ].GetProtoId()==PID_ENCLAVE_HOLODISK_1)//bg
+				{
+				__BigGunsPointsBoS+=(items[ i ].GetCount()*__HolodicsAdd);
+				cr.ParamBase[PLAYER_POINTS]+=(items[ i ].GetCount()*50);
+				cr.DeleteItem( items[ i ].GetProtoId(), items[ i ].GetCount() );
+				counthol++;
+				}
+			}
+		}
+		
+    } 
+	cr.Say( SAY_NETMSG, "Operation complete, technology status updated..." );
+	if(counthol>0)
+	{
+		if(__SmallGunsPointsEnclave < 1000)
+			__SmallGunsLevelEnclave  = 1;
+		else if(__SmallGunsPointsEnclave < 10000)
+			__SmallGunsLevelEnclave  = 2;
+		else if(__SmallGunsPointsEnclave < 50000)
+			__SmallGunsLevelEnclave  = 3;
+		else if(__SmallGunsPointsEnclave < 100000)
+			__SmallGunsLevelEnclave  = 4;
+		else __SmallGunsLevelEnclave  = 5;
+
+		if(__SmallGunsPointsBoS < 1000)
+			__SmallGunsLevelBoS  = 1;
+		else if(__SmallGunsPointsBoS < 10000)
+			__SmallGunsLevelBoS  = 2;
+		else if(__SmallGunsPointsBoS < 50000)
+			__SmallGunsLevelBoS  = 3;
+		else if(__SmallGunsPointsBoS < 100000)
+			__SmallGunsLevelBoS  = 4;
+		else __SmallGunsLevelBoS  = 5;
+
+		if(__BigGunsPointsEnclave < 1000)
+			__BigGunsLevelEnclave  = 1;
+		else if(__BigGunsPointsEnclave < 10000)
+			__BigGunsLevelEnclave  = 2;
+		else if(__BigGunsPointsEnclave < 50000)
+			__BigGunsLevelEnclave  = 3;
+		else if(__BigGunsPointsEnclave < 100000)
+			__BigGunsLevelEnclave  = 4;
+		else __BigGunsLevelEnclave  = 5;
+
+		if(__BigGunsPointsBoS < 1000)
+			__BigGunsLevelBoS  = 1;
+		else if(__BigGunsPointsBoS < 10000)
+			__BigGunsLevelBoS  = 2;
+		else if(__BigGunsPointsBoS < 50000)
+			__BigGunsLevelBoS  = 3;
+		else if(__BigGunsPointsBoS < 100000)
+			__BigGunsLevelBoS  = 4;
+		else __BigGunsLevelBoS  = 5;
+
+		if(__EnergyPointsEnclave < 1000)
+			__EnergyLevelEnclave  = 1;
+		else if(__EnergyPointsEnclave < 10000)
+			__EnergyLevelEnclave  = 2;
+		else if(__EnergyPointsEnclave < 50000)
+			__EnergyLevelEnclave  = 3;
+		else if(__EnergyPointsEnclave < 100000)
+			__EnergyLevelEnclave  = 4;
+		else __EnergyLevelEnclave  = 5;
+
+		if(__EnergyPointsBoS < 1000)
+			__EnergyLevelBoS  = 1;
+		else if(__EnergyPointsBoS < 10000)
+			__EnergyLevelBoS  = 2;
+		else if(__EnergyPointsBoS < 50000)
+			__EnergyLevelBoS  = 3;
+		else if(__EnergyPointsBoS < 100000)
+			__EnergyLevelBoS  = 4;
+		else __EnergyLevelBoS  = 5;
+
+		if(__ArmorPointsEnclave < 1000)
+			__ArmorLevelEnclave  = 1;
+		else if(__ArmorPointsEnclave < 10000)
+			__ArmorLevelEnclave  = 2;
+		else if(__ArmorPointsEnclave < 50000)
+			__ArmorLevelEnclave  = 3;
+		else if(__ArmorPointsEnclave < 100000)
+			__ArmorLevelEnclave  = 4;
+		else __ArmorLevelEnclave  = 5;
+
+		if(__ArmorPointsBoS < 1000)
+			__ArmorLevelBoS  = 1;
+		else if(__ArmorPointsBoS < 10000)
+			__ArmorLevelBoS  = 2;
+		else if(__ArmorPointsBoS < 50000)
+			__ArmorLevelBoS  = 3;
+		else if(__ArmorPointsBoS < 100000)
+			__ArmorLevelBoS  = 4;
+		else __ArmorLevelBoS  = 5;
+
+		if(__DrugsPointsEnclave < 1000)
+			__DrugsLevelEnclave  = 1;
+		else if(__DrugsPointsEnclave < 10000)
+			__DrugsLevelEnclave  = 2;
+		else if(__DrugsPointsEnclave < 50000)
+			__DrugsLevelEnclave  = 3;
+		else if(__DrugsPointsEnclave < 100000)
+			__DrugsLevelEnclave  = 4;
+		else __DrugsLevelEnclave  = 5;
+
+		if(__DrugsPointsBoS < 1000)
+			__DrugsLevelBoS  = 1;
+		else if(__DrugsPointsBoS < 10000)
+			__DrugsLevelBoS  = 2;
+		else if(__DrugsPointsBoS < 50000)
+			__DrugsLevelBoS  = 3;
+		else if(__DrugsPointsBoS < 100000)
+			__DrugsLevelBoS  = 4;
+		else __DrugsLevelBoS  = 5;
+		int[] technologyinfo(10);
+			technologyinfo[0] =__SmallGunsPointsEnclave;
+			technologyinfo[1] =__SmallGunsPointsBoS;
+			technologyinfo[2] =__BigGunsPointsEnclave;
+			technologyinfo[3] =__BigGunsPointsBoS;
+			technologyinfo[4] =__EnergyPointsEnclave;
+			technologyinfo[5] =__EnergyPointsBoS;
+			technologyinfo[6] =__ArmorPointsEnclave;
+			technologyinfo[7] =__ArmorPointsBoS;
+			technologyinfo[8] =__DrugsPointsEnclave;
+			technologyinfo[9] =__DrugsPointsBoS;
+		SetAnyData("TECHNOLOGYINFO",technologyinfo);
+	}
+	if(cr.ParamBase[PLAYER_MAIN_FACTION]==ENCLAVA)
+	{
+		cr.ParamBase[TECH_SG]=__SmallGunsLevelEnclave;
+		cr.ParamBase[TECH_BG]=__BigGunsLevelEnclave;
+		cr.ParamBase[TECH_EW]=__EnergyLevelEnclave;
+		cr.ParamBase[TECH_AR]=__ArmorLevelEnclave;
+		cr.ParamBase[TECH_MD]=__DrugsLevelEnclave;
+	}
+	if(cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)
+	{
+		cr.ParamBase[TECH_SG]=__SmallGunsLevelBoS;
+		cr.ParamBase[TECH_BG]=__BigGunsLevelBoS;
+		cr.ParamBase[TECH_EW]=__EnergyLevelBoS;
+		cr.ParamBase[TECH_AR]=__ArmorLevelBoS;
+		cr.ParamBase[TECH_MD]=__DrugsLevelBoS;
+	}
+	return;
+}
+void unsafe_getstuff(Critter& cr, int timeout_index, int stuff_index, int, string@, int[]@)
+{
+	uint []USED_TIMEOUT = {STUFF_TIMEOUT_WEAPON, STUFF_TIMEOUT_ARMORS, STUFF_TIMEOUT_MEDICAMENTS};
+	
+	int []CHOSEN_STUFF_WEAPON = 
+	{
+	/*sg*/
+	/*0*/PID_10MM_PISTOL,/*T600*/
+	/*1*/PID_DESERT_EAGLE,/*T720*/
+	/*2*/PID_SHOTGUN,/*T840*/
+	/*3*/PID_10MM_SMG,/*T960*/
+	
+	/*4*/PID_14MM_PISTOL,/*T1200*/
+	/*5*/PID_HUNTING_RIFLE,/*T1200*/
+	/*6*/PID_ASSAULT_RIFLE,/*T1200*/
+	/*7*/PID_GREASE_GUN,/*T1200*/
+	
+	/*8*/PID_223_PISTOL,/*T2100*/
+	/*9*/PID_SNIPER_RIFLE,/*T2400*/
+	/*10*/PID_FN_FAL,/*T2400*/
+	/*11*/PID_COMBAT_SHOTGUN,/*T2400*/
+	
+	/*12*/PID_HK_P90C,/*T3000*/
+	/*13*/PID_HK_G11E,/*T3600*/
+	
+	/*14*/PID_M72_GAUSS_RIFLE,/*T7200*/
+	
+	/*bg*/
+	/*15*/PID_FLAMER,/*T900*/
+	
+	/*16*/PID_IMPROVED_FLAMETHROWER,/*T1200*/
+	/*17*/PID_ROCKET_LAUNCHER,/*T1200*/
+	
+	/*18*/PID_MINIGUN,/*T2400*/
+	/*19*/PID_LIGHT_SUPPORT_WEAPON,/*T1800*/
+	
+	/*20*/PID_AVENGER_MINIGUN,/*T3600*/
+	
+	/*21*/PID_BOZAR,/*T7200*/
+	/*22*/PID_VINDICATOR_MINIGUN,/*T7200*/
+	
+	/*ew*/
+	/*23*/PID_LASER_PISTOL,/*T600*/
+	/*24*/PID_MAGNETO_LASER_PISTOL,/*T900*/
+	
+	/*25*/PID_PLASMA_PISTOL,/*T1200*/
+	
+	/*26*/PID_LASER_RIFLE,/*T2400*/
+	
+	/*27*/PID_PLASMA_RIFLE,/*T3600*/
+	
+	/*28*/PID_TURBO_PLASMA_RIFLE,/*T7200*/
+	/*29*/PID_YK42B_PULSE_RIFLE/*T7200*/
+	};
+	
+	int []WEAPON_ADDT = 
+	{
+	/*sg*/
+	600,
+	720,
+	840,
+	960,
+	
+	1200,
+	1200,
+	1200,
+	1200,
+	
+	2100,
+	2400,
+	2400,
+	2400,
+	
+	3000,
+	3600,
+	
+	7200,
+	
+	/*bg*/
+	900,
+	
+	1200,
+	1200,
+	
+	2400,
+	1800,
+	
+	3600,
+	
+	7200,
+	7200,
+	
+	/*ew*/
+	600,
+	900,
+	
+	1200,
+	
+	2400,
+	
+	3600,
+	
+	7200,
+	7200
+	};
+	
+	int []CHOSEN_STUFF_AMMO_COUNT = 
+	{
+	/*sg*/
+	300,
+	300,
+	300,
+	900,
+	
+	300,
+	450,
+	450,
+	660,
+	
+	300,
+	300,
+	300,
+	360,
+	
+	360,
+	360,
+	
+	300,
+	
+	/*bg*/
+	30,
+	
+	30,
+	20,
+	
+	2000,
+	2000,
+	
+	2000,
+	
+	2000,
+	2000,
+	
+	/*ew*/
+	400,
+	400,
+	
+	400,
+	
+	400,
+	
+	400,
+	
+	300,
+	300
+	};
+	
+	int [] CHOSEN_STUFF_AMMO= 
+	{
+	/*sg*/
+	PID_10MM_JHP,
+	PID_44_MAGNUM_JHP,
+	PID_SHOTGUN_SHELLS,
+	PID_10MM_JHP,
+	
+	PID_14MM_AP,
+	PID_223_FMJ,
+	PID_5MM_JHP,
+	PID_45_CALIBER_AMMO,
+	
+	PID_223_FMJ,
+	PID_223_FMJ,
+	PID_7_62MM_AMMO,
+	PID_SHOTGUN_SHELLS,
+	
+	PID_10MM_JHP,
+	PID_5MM_JHP,
+	
+	PID_2MM_EC_AMMO,
+	
+	/*bg*/
+	PID_FLAMETHROWER_FUEL,
+	
+	PID_FLAMETHROWER_FUEL,
+	PID_EXPLOSIVE_ROCKET,
+	
+	PID_5MM_JHP,
+	PID_223_FMJ,
+	
+	PID_5MM_JHP,
+	
+	PID_223_FMJ,
+	PID_4_7MM_CASELESS,
+	
+	/*ew*/
+	PID_SMALL_ENERGY_CELL,
+	PID_SMALL_ENERGY_CELL,
+	
+	PID_SMALL_ENERGY_CELL,
+	
+	PID_MICRO_FUSION_CELL,
+	
+	PID_MICRO_FUSION_CELL,
+	
+	PID_MICRO_FUSION_CELL,
+	PID_MICRO_FUSION_CELL
+	};
+	
+	int []CHOSEN_STUFF_ARMORS = 
+	{
+	/*0*/PID_LEATHER_JACKET,/*T600*/
+	/*1*/PID_LEATHER_ARMOR,/*T900*/
+	/*2*/PID_LEATHER_ARMOR_MK_II,/*T1200*/
+	
+	/*3*/PID_METAL_ARMOR,/*T1600*/
+	/*4*/PID_METAL_ARMOR_MK_II,/*T1800*/
+	/*5*/PID_TESLA_ARMOR,/*T1800*/
+	
+	/*6*/PID_COMBAT_ARMOR,/*T3000*/
+	/*7*/PID_COMBAT_ARMOR_MK_II,/*T3600*/ 
+	
+	/*8*/PID_POWERED_ARMOR,/*T7200*/ 
+	/*9*/PID_ADVANCED_POWER_ARMOR/*T7200*/
+	};
+	
+	int []ARMORS_ADDT = 
+	{
+	600,
+	900,
+	1200,
+	
+	1600,
+	1800,
+	1800,
+	
+	3000,
+	3600, 
+	
+	7200,
+	7200
+	};
+	
+	int []CHOSEN_STUFF_MEDICAMENTS = 
+	{
+	/*0*/PID_NUKA_COLA,/*T60*/
+	/*1*/PID_BEER,/*T60*/
+	/*2*/PID_ANTIDOTE,/*T60*/
+	/*3*/PID_HEALING_POWDER,/*T60*/
+	
+	/*4*/PID_STIMPAK,/*T60*/
+	/*5*/PID_RADAWAY,/*T60*/
+	/*6*/PID_RAD_X,/*T60*/
+	/*7*/PID_MENTATS,/*T60*/
+	
+	/*8*/PID_BUFFOUT,/*T60*/
+	/*9*/PID_PSYCHO,/*T60*/
+	/*10*/PID_JET,/*T60*/
+	/*11*/PID_SUPER_STIMPAK,/*T60*/
+	
+	/*12*/PID_COOKIE/*240*/
+	};
+	
+	int []MEDICAMENTS_ADDT = 
+	{
+	600,
+	600,
+	600,
+	600,
+	
+	600,
+	600,
+	600,
+	600,
+	
+	600,
+	600,
+	600,
+	600,
+	
+	600
+	};
+	
+	int []CHOSEN_STUFF_MEDICAMENTS_COUNT = 
+	{
+	1,
+	1,
+	1,
+	5,
+	
+	5,
+	2,
+	2,
+	1,
+	
+	1,
+	1,
+	1,
+	5,
+	
+	3
+	};
+
+	if (cr.ParamBase[USED_TIMEOUT[timeout_index]]>__FullSecond+REAL_SECOND(0))
+	{
+		cr.Say( SAY_NETMSG, "You can not take this type of item on this moment. Propably you have timeout, and must wait." );
+		return;
+	}
+	else
+	{
+		if (timeout_index == 0)
+		{
+			cr.AddItem( CHOSEN_STUFF_WEAPON[stuff_index], 1 );
+			cr.AddItem( CHOSEN_STUFF_AMMO[stuff_index], CHOSEN_STUFF_AMMO_COUNT[stuff_index] );
+			cr.ParamBase[USED_TIMEOUT[timeout_index]] = __FullSecond+REAL_SECOND(WEAPON_ADDT[stuff_index]);
+		}
+		
+		else if (timeout_index == 1)
+		{
+			cr.AddItem( CHOSEN_STUFF_ARMORS[stuff_index], 1 );
+			cr.ParamBase[USED_TIMEOUT[timeout_index]] = __FullSecond+REAL_SECOND(ARMORS_ADDT[stuff_index]);
+		}
+		
+		else if (timeout_index == 2)
+		{
+			cr.AddItem( CHOSEN_STUFF_MEDICAMENTS[stuff_index], CHOSEN_STUFF_MEDICAMENTS_COUNT[stuff_index]);
+			if(cr.ParamBase[TO_MORE_DRUGS]>=4)
+			{
+				cr.ParamBase[TO_MORE_DRUGS] = 0;
+				cr.ParamBase[USED_TIMEOUT[timeout_index]] = __FullSecond+REAL_SECOND(MEDICAMENTS_ADDT[stuff_index]);
+			}
+			else
+			cr.ParamBase[TO_MORE_DRUGS]++;
+		}
+		
+		cr.Say( SAY_NETMSG, "Ok, it is working. Look to your inventory." );
+		return;
+	}
+}

@@ -1,0 +1,39 @@
+[comment]
+Arrc eieelinrdcc / Your comments.
+
+[data]
+lang=russ engl
+
+[dialog]
+&
+1 1000 None 0 #
+2 1010 D _param p ST_INTELLECT > 3 R _var n trade_was = 0 #
+3 1020 D _param p ST_INTELLECT < 4 @
+2 2000 None 1 #
+0 2010 R _script vcity_gate_guard@transit 0  #
+0 2020 &
+
+[russ]
+{100}{}{Самогонщик}
+{200}{}{Вы видите самогонщика.}
+{210}{}{Вы видите слегка подвыпившего мужчину. Он проверяет содержимое своих сумок и иногда раздается звон стеклянной тары.}
+{210}{}{Вы видите самогонщика. Интересно как его зовут - Трус, Балбес или Бывалый?}
+{1000}{}{Ddlaacreiaiaul onnriiaec}
+{1010}{}{-}
+{1020}{}{-}
+{2000}{}{Hi, if you wonna go inside to buy best stuff, than you need 10000 player points.}
+{2010}{}{Yes, I want go inside!}
+{2020}{}{Well, i will back later,  bye! [Leave]}
+
+[engl]
+{100}{}{Bootlegger}
+{200}{}{You see a bootlegger.}
+{210}{}{You see a slightly drunk man. He is checking his bags, sometimes you can hear some glass clanking.}
+{210}{}{You see a bootlegger. You wonder what is his name - Ivan, Roman or Rasputin?}
+{1000}{}{Initial preferences}
+{1010}{}{-}
+{1020}{}{-}
+{2000}{}{Hi, if you wonna go inside to buy best stuff, than you need 10000 player points.}
+{2010}{}{Yes, I want go inside!}
+{2020}{}{Well, i will back later,  bye! [Leave]}
+

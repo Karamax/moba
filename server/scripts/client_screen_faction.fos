@@ -1,0 +1,390 @@
+IGUIElementTextOpt@ PanelFactionsText;
+IGUIElementTextOpt@ NameFactionsText;
+IGUIElementTextOpt@ RankFactionsText;
+IGUIElementTextOpt@ FreeFactionsText;
+IGUIElementButtonOpt@ FreeFactionsButton;
+IGUIElementTextOpt@ FactionCreateText;
+IGUIElementButtonOpt@ FactionCreateButton;
+IGUIElementTextOpt@ FactionPlayersText;
+IGUIElementButtonOpt@ FactionPlayersButton;
+IGUIElementTextOpt@ FactionOnlineText;
+IGUIElementButtonOpt@ FactionOnlineButton;
+IGUIElementTextOpt@ AddLeaderText;
+IGUIElementButtonOpt@ AddLeaderButton;
+IGUIElementTextOpt@ InvinitePlayerText;
+IGUIElementButtonOpt@ InvinitePlayerButton;
+IGUIElementTextOpt@ InivinitionsText;
+IGUIElementButtonOpt@ InivinitionsButton;
+IGUIElementTextOpt@ ApplyInvText;
+IGUIElementButtonOpt@ ApplyInvButton;
+IGUIElementTextOpt@ DontApplyInvText;
+IGUIElementButtonOpt@ DontApplyInvButton;
+IGUIElementTextOpt@ DontLeadText;
+IGUIElementButtonOpt@ DontLeadButton;
+IGUIElementTextOpt@ ResignText;
+IGUIElementButtonOpt@ ResignButton;
+IGUIElementTextOpt@ KickPlayerText;
+IGUIElementButtonOpt@ KickPlayerButton;
+IGUIElementTextOpt@ FactionEditBoxText;
+IGUIElementEditBoxOpt@ FactionEditBoxOpt;
+IGUIElementButtonOpt@ FactionPanelExitButton;
+
+class FreeFactionsButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("faction_serv_engine@unsafe_list_free_factions",0,0,0,null,null);
+	}
+}
+
+class FactionCreateButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(FactionEditBoxOpt.getText()=="")return;
+		string @str=FactionEditBoxOpt.getText();
+		int faction_id=0;
+		StrToInt(str,faction_id);
+		RunServerScriptUnsafe("faction_serv_engine@unsafe_create_faction",faction_id,0,0,null,null);
+	}
+}
+
+class FactionPlayersButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("faction_serv_engine@unsafe_list_players_faction",0,0,0,null,null);
+	}
+}
+
+class FactionOnlineButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("faction_serv_engine@unsafe_online_players_faction",0,0,0,null,null);
+	}
+}
+
+class AddLeaderButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(FactionEditBoxOpt.getText()=="")return;
+		string @str=FactionEditBoxOpt.getText();
+		RunServerScriptUnsafe("faction_serv_engine@unsafe_give_leading",0,0,0,str,null);
+	}
+}
+
+class InvinitePlayerButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(FactionEditBoxOpt.getText()=="")return;
+		string @str=FactionEditBoxOpt.getText();
+		RunServerScriptUnsafe("faction_serv_engine@unsafe_invinite_new_member",0,0,0,str,null);
+	}
+}
+
+class InivinitionsButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("faction_serv_engine@unsafe_see_proposition",0,0,0,null,null);
+	}
+}
+
+class ApplyInvButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("faction_serv_engine@unsafe_apply_membership",0,0,0,null,null);
+	}
+}
+
+class DontApplyInvButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("faction_serv_engine@unsafe_dont_apply_membership",0,0,0,null,null);
+	}
+}
+
+class DontLeadButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("faction_serv_engine@unsafe_resign_from_leading",0,0,0,null,null);
+	}
+}
+
+class ResignButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("faction_serv_engine@unsafe_resign_from_membership",0,0,0,null,null);
+	}
+}
+
+class KickPlayerButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(FactionEditBoxOpt.getText()=="")return;
+		string @str=FactionEditBoxOpt.getText();
+		RunServerScriptUnsafe("faction_serv_engine@unsafe_del_member",0,0,0,str,null);
+	}
+}
+
+
+class FactionPanelExitButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		HideScreen(CLIENT_SCREEN_FACTION,0,0,0);
+	}
+}
+
+class FactionScreenClass : IGUIScreenCallbackMove
+{
+	void OnMove(int x, int y){}
+}
+
+void InitFactionScreen()
+{
+	FactionScreenClass FactionScreen;
+	GUI_CreateScreen(CLIENT_SCREEN_FACTION,"faction_panel.png")
+		.CanMove(true)
+		.Modal(false)
+		.Multiinstance(false)
+		.SizeByMultipleImages(1,1)
+		.CallbackMove(FactionScreen);
+		
+	@PanelFactionsText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"FACTION PANEL", 50, 28)
+	  .TextOptions(FONT_BIG, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(505,10);
+	 
+	@NameFactionsText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Faction", 300, 20)
+	  .TextOptions(FONT_FAT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(200,10);
+	
+	@RankFactionsText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Rank", 300, 50)
+	  .TextOptions(FONT_FAT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(200,10);
+	  
+	@FreeFactionsText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Free factions names",360, 88)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(300,20);
+	 
+	FreeFactionsButtonClass obiekt1;
+	@FreeFactionsButton=
+	GUI_AddButton(CLIENT_SCREEN_FACTION, 320,73)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(obiekt1);
+	
+	@FactionCreateText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Create new faction", 360, 122)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(300,20);
+	
+	FactionCreateButtonClass obiekt2;
+	@FactionCreateButton=
+	GUI_AddButton(CLIENT_SCREEN_FACTION, 320,107)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(obiekt2);
+	
+	@FactionPlayersText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Faction members", 360, 154)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(300,20);
+	
+	FactionPlayersButtonClass obiekt3;
+	@FactionPlayersButton=
+	GUI_AddButton(CLIENT_SCREEN_FACTION, 320,139)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(obiekt3);
+	
+	@FactionOnlineText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Players online",360, 188)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(300,20);
+	
+	FactionOnlineButtonClass obiekt4;
+	@FactionOnlineButton=
+	GUI_AddButton(CLIENT_SCREEN_FACTION, 320,173)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(obiekt4);
+	
+	@AddLeaderText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Add leader", 360, 222)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(300,20);
+	
+	AddLeaderButtonClass obiekt5;
+	@AddLeaderButton=
+	GUI_AddButton(CLIENT_SCREEN_FACTION, 320,207)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(obiekt5);
+	
+	@InvinitePlayerText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Invinite new member", 360, 256)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(300,20);
+	
+	InvinitePlayerButtonClass obiekt6;
+	@InvinitePlayerButton=
+	GUI_AddButton(CLIENT_SCREEN_FACTION, 320,241)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(obiekt6);
+	
+	@InivinitionsText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Your invinitations",360, 290)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(300,20);
+	
+	InivinitionsButtonClass obiekt7;
+	@InivinitionsButton=
+	GUI_AddButton(CLIENT_SCREEN_FACTION, 320,275)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(obiekt7);
+	
+	@ApplyInvText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Apply memberchip",360, 324)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(300,20);
+	
+	ApplyInvButtonClass obiekt8;
+	@ApplyInvButton=
+	GUI_AddButton(CLIENT_SCREEN_FACTION, 320,309)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(obiekt8);
+	
+	@DontApplyInvText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Don't apply memberchip",360, 358)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(300,20);
+	
+	DontApplyInvButtonClass obiekt9;
+	@DontApplyInvButton=
+	GUI_AddButton(CLIENT_SCREEN_FACTION, 320,343)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(obiekt9);
+	
+	@DontLeadText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Don't lead",360, 392)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(300,20);
+	
+	DontLeadButtonClass  obiekt10;
+	@DontLeadButton=
+	GUI_AddButton(CLIENT_SCREEN_FACTION, 320,377)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(obiekt10);
+	
+	@ResignText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Leave your faction", 360, 426)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(300,20);
+	
+	ResignButtonClass obiekt11;
+	@ResignButton=
+	GUI_AddButton(CLIENT_SCREEN_FACTION, 320,411)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(obiekt11);
+	
+	@KickPlayerText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Kick member", 360, 460)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(300,20);
+	
+	KickPlayerButtonClass obiekt12;
+	@KickPlayerButton=
+	GUI_AddButton(CLIENT_SCREEN_FACTION, 320,445)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(obiekt12);
+	
+	@FactionEditBoxText=
+	GUI_AddText(CLIENT_SCREEN_FACTION,"Faction ID/Player name:", 15, 452)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(190,5);
+	
+	@FactionEditBoxOpt=
+	GUI_AddEditBox(CLIENT_SCREEN_FACTION,100,470)
+		.TextOptions(FONT_FALLOUT, COLOR_GREEN, 0)
+		.EditBoxSize(240,10)
+		.Margins(3,0,3,0)
+		.BackgroundPic("empty_box.png");
+	
+	FactionPanelExitButtonClass obiekt13;
+	@FactionPanelExitButton=
+	GUI_AddButton(CLIENT_SCREEN_FACTION, 0,0)
+		.UpPic("greendot small_x.png")
+		.DownPic("greendot small_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(obiekt13);
+}
+
+void ShowFactionScreen()
+{
+	PanelFactionsText.setVisible(true);
+	NameFactionsText.setVisible(true);
+	RankFactionsText.setVisible(true);
+	FreeFactionsText.setVisible(true);
+	FreeFactionsButton.setVisible(true);
+	FactionCreateText.setVisible(true);
+	FactionCreateButton.setVisible(true);
+	FactionPlayersText.setVisible(true);
+	FactionPlayersButton.setVisible(true);
+	FactionOnlineText.setVisible(true);
+	FactionOnlineButton.setVisible(true);
+	AddLeaderText.setVisible(true);
+	AddLeaderButton.setVisible(true);
+	InvinitePlayerText.setVisible(true);
+	InvinitePlayerButton.setVisible(true);
+	InivinitionsText.setVisible(true);
+	InivinitionsButton.setVisible(true);
+	ApplyInvText.setVisible(true);
+	ApplyInvButton.setVisible(true);
+	DontApplyInvText.setVisible(true);
+	DontApplyInvButton.setVisible(true);
+	DontLeadText.setVisible(true);
+	DontLeadButton.setVisible(true);
+	ResignText.setVisible(true);
+	ResignButton.setVisible(true);
+	KickPlayerText.setVisible(true);
+	KickPlayerButton.setVisible(true);
+	FactionEditBoxText.setVisible(true);
+	FactionPanelExitButton.setVisible(true);
+	SetScreenPos(CLIENT_SCREEN_FACTION,__ScreenWidth/2-270,__ScreenHeight/2-295);
+	ShowScreen(CLIENT_SCREEN_FACTION,0,0,0);
+	FactionEditBoxOpt.setVisible(true);
+	FactionEditBoxOpt.Text("");
+	FactionEditBoxOpt.setFocused(true);
+}

@@ -1,0 +1,229 @@
+[comment]
+Arrc eieelinrdcc / Your comments.
+
+[data]
+lang=russ engl
+
+[dialog]
+&
+1 1000 None 0 #
+2 1010 @
+2 2000 None 1 #
+5 2010 #
+11 2020 #
+12 2030 #
+0 2040 @
+3 3000 None 1 @
+4 4000 None 1 @
+5 5000 None 1 #
+6 5010 #
+7 5020 #
+8 5030 #
+9 5040 #
+10 5050 #
+2 5060 @
+6 6000 None 1 #
+11 6010 D _param p PLAYER_CAPS } 1000 R _param p PLAYER_CAPS - 1000 #
+11 6020 D _param p PLAYER_CAPS } 5000 R _param p PLAYER_CAPS - 5000 #
+11 6030 D _param p PLAYER_CAPS } 10000 R _param p PLAYER_CAPS - 10000 #
+11 6040 D _param p PLAYER_CAPS } 50000 R _param p PLAYER_CAPS - 50000 #
+11 6050 D _param p PLAYER_CAPS } 100000 R _param p PLAYER_CAPS - 100000 #
+11 6060 D _param p PLAYER_CAPS } 500000 R _param p PLAYER_CAPS - 500000 #
+11 6070 D _param p PLAYER_CAPS } 1000000 R _param p PLAYER_CAPS - 1000000 #
+2 6080 @
+7 7000 None 1 #
+11 7010 D _param p PLAYER_CAPS } 1000 R _param p PLAYER_CAPS - 1000 #
+11 7020 D _param p PLAYER_CAPS } 5000 R _param p PLAYER_CAPS - 5000 #
+11 7030 D _param p PLAYER_CAPS } 10000 R _param p PLAYER_CAPS - 10000 #
+11 7040 D _param p PLAYER_CAPS } 50000 R _param p PLAYER_CAPS - 50000 #
+11 7050 D _param p PLAYER_CAPS } 100000 R _param p PLAYER_CAPS - 100000 #
+11 7060 D _param p PLAYER_CAPS } 500000 R _param p PLAYER_CAPS - 500000 #
+11 7070 D _param p PLAYER_CAPS } 1000000 R _param p PLAYER_CAPS - 1000000 #
+2 7080 @
+8 8000 None 1 #
+11 8010 D _param p PLAYER_CAPS } 1000 R _param p PLAYER_CAPS - 1000 #
+11 8020 D _param p PLAYER_CAPS } 5000 R _param p PLAYER_CAPS - 5000 #
+11 8030 D _param p PLAYER_CAPS } 10000 R _param p PLAYER_CAPS - 10000 #
+11 8040 D _param p PLAYER_CAPS } 50000 R _param p PLAYER_CAPS - 50000 #
+11 8050 D _param p PLAYER_CAPS } 100000 R _param p PLAYER_CAPS - 100000 #
+11 8060 D _param p PLAYER_CAPS } 500000 R _param p PLAYER_CAPS - 500000 #
+11 8070 D _param p PLAYER_CAPS } 1000000 R _param p PLAYER_CAPS - 1000000 #
+2 8080 @
+9 9000 None 1 #
+11 9010 D _param p PLAYER_CAPS } 1000 R _param p PLAYER_CAPS - 1000 #
+11 9020 D _param p PLAYER_CAPS } 5000 R _param p PLAYER_CAPS - 5000 #
+11 9030 D _param p PLAYER_CAPS } 10000 R _param p PLAYER_CAPS - 10000 #
+11 9040 D _param p PLAYER_CAPS } 50000 R _param p PLAYER_CAPS - 50000 #
+11 9050 D _param p PLAYER_CAPS } 100000 R _param p PLAYER_CAPS - 100000 #
+11 9060 D _param p PLAYER_CAPS } 500000 R _param p PLAYER_CAPS - 500000 #
+11 9070 D _param p PLAYER_CAPS } 1000000 R _param p PLAYER_CAPS - 1000000 #
+2 9080 @
+10 10000 None 1 #
+11 10010 D _param p PLAYER_CAPS } 1000 R _param p PLAYER_CAPS - 1000 #
+11 10020 D _param p PLAYER_CAPS } 5000 R _param p PLAYER_CAPS - 5000 #
+11 10030 D _param p PLAYER_CAPS } 10000 R _param p PLAYER_CAPS - 10000 #
+11 10040 D _param p PLAYER_CAPS } 50000 R _param p PLAYER_CAPS - 50000 #
+11 10050 D _param p PLAYER_CAPS } 100000 R _param p PLAYER_CAPS - 100000 #
+11 10060 D _param p PLAYER_CAPS } 500000 R _param p PLAYER_CAPS - 500000 #
+11 10070 D _param p PLAYER_CAPS } 1000000 R _param p PLAYER_CAPS - 1000000 #
+2 10080 @
+11 11000 None 1 #
+2 11010 #
+0 11020 @
+12 12000 None 1 #
+3 12010 #
+4 12020 #
+13 12030 #
+2 12040 @
+13 13000 None 1 &
+
+[russ]
+{100}{}{Торговец}
+{200}{}{Вы видите торговца.}
+{210}{}{Вы видите торговца.}
+{1000}{}{Ddlaacreiaiaul onnriiaec}
+{1010}{}{---}
+{2000}{}{What do you need our soldier?}
+{2010}{}{I want donate our technologies.}
+{2020}{}{I want deposit money to my private account.}
+{2030}{}{I need some stuff.}
+{2040}{}{Nothing, bye.}
+{3000}{}{What armor do you need?}
+{4000}{}{What weapon do you need?}
+{5000}{}{What technology do you want make more advanced?}
+{5010}{}{Small Guns...}
+{5020}{}{Big Guns...}
+{5030}{}{Energy Weapons...}
+{5040}{}{Armors...}
+{5050}{}{Medicaments...}
+{5060}{}{Mistake,sorry.}
+{6000}{}{Donation for Small Guns?(You need to have caps on your account)}
+{6010}{}{1000 caps.}
+{6020}{}{5000 caps.}
+{6030}{}{10000 caps.}
+{6040}{}{50000 caps.}
+{6050}{}{100000 caps.}
+{6060}{}{500000 caps.}
+{6070}{}{1000000 caps.}
+{6080}{}{Not this, back.}
+{7000}{}{Donation for Big Guns?(You need to have caps on your account)}
+{7010}{}{1000 caps.}
+{7020}{}{5000 caps.}
+{7030}{}{10000 caps.}
+{7040}{}{50000 caps.}
+{7050}{}{100000 caps.}
+{7060}{}{500000 caps.}
+{7070}{}{1000000 caps.}
+{7080}{}{Not this, back.}
+{8000}{}{Donation for Energy Weapons?(You need to have caps on your account)}
+{8010}{}{1000 caps.}
+{8020}{}{5000 caps.}
+{8030}{}{10000 caps.}
+{8040}{}{50000 caps.}
+{8050}{}{100000 caps.}
+{8060}{}{500000 caps.}
+{8070}{}{1000000 caps.}
+{8080}{}{Not this, back.}
+{9000}{}{Donation for Armors?(You need to have caps on your account)}
+{9010}{}{1000 caps.}
+{9020}{}{5000 caps.}
+{9030}{}{10000 caps.}
+{9040}{}{50000 caps.}
+{9050}{}{100000 caps.}
+{9060}{}{500000 caps.}
+{9070}{}{1000000 caps.}
+{9080}{}{Not this, back.}
+{10000}{}{Donation for Medicaments?(You need to have caps on your account)}
+{10010}{}{1000 caps.}
+{10020}{}{5000 caps.}
+{10030}{}{10000 caps.}
+{10040}{}{50000 caps.}
+{10050}{}{100000 caps.}
+{10060}{}{500000 caps.}
+{10070}{}{1000000 caps.}
+{10080}{}{Not this, back.}
+{11000}{}{Ok it is done, what next?}
+{11010}{}{Yes, I need more things...}
+{11020}{}{That is all, than you buy...}
+{12000}{}{What stuff do you need? (You must have money on you private account)}
+{12010}{}{Armor...}
+{12020}{}{Weapon...}
+{12030}{}{Medicaments...}
+{12040}{}{Sorry, mistake...}
+{13000}{}{What medicaments do you need?}
+
+[engl]
+{100}{}{Торговец}
+{200}{}{Вы видите торговца.}
+{210}{}{Вы видите торговца.}
+{1000}{}{Ddlaacreiaiaul onnriiaec}
+{1010}{}{---}
+{2000}{}{What do you need our soldier?}
+{2010}{}{I want donate our technologies.}
+{2020}{}{I want deposit money to my private account.}
+{2030}{}{I need some stuff.}
+{2040}{}{Nothing, bye.}
+{3000}{}{What armor do you need?}
+{4000}{}{What weapon do you need?}
+{5000}{}{What technology do you want make more advanced?}
+{5010}{}{Small Guns...}
+{5020}{}{Big Guns...}
+{5030}{}{Energy Weapons...}
+{5040}{}{Armors...}
+{5050}{}{Medicaments...}
+{5060}{}{Mistake,sorry.}
+{6000}{}{Donation for Small Guns?(You need to have caps on your account)}
+{6010}{}{1000 caps.}
+{6020}{}{5000 caps.}
+{6030}{}{10000 caps.}
+{6040}{}{50000 caps.}
+{6050}{}{100000 caps.}
+{6060}{}{500000 caps.}
+{6070}{}{1000000 caps.}
+{6080}{}{Not this, back.}
+{7000}{}{Donation for Big Guns?(You need to have caps on your account)}
+{7010}{}{1000 caps.}
+{7020}{}{5000 caps.}
+{7030}{}{10000 caps.}
+{7040}{}{50000 caps.}
+{7050}{}{100000 caps.}
+{7060}{}{500000 caps.}
+{7070}{}{1000000 caps.}
+{7080}{}{Not this, back.}
+{8000}{}{Donation for Energy Weapons?(You need to have caps on your account)}
+{8010}{}{1000 caps.}
+{8020}{}{5000 caps.}
+{8030}{}{10000 caps.}
+{8040}{}{50000 caps.}
+{8050}{}{100000 caps.}
+{8060}{}{500000 caps.}
+{8070}{}{1000000 caps.}
+{8080}{}{Not this, back.}
+{9000}{}{Donation for Armors?(You need to have caps on your account)}
+{9010}{}{1000 caps.}
+{9020}{}{5000 caps.}
+{9030}{}{10000 caps.}
+{9040}{}{50000 caps.}
+{9050}{}{100000 caps.}
+{9060}{}{500000 caps.}
+{9070}{}{1000000 caps.}
+{9080}{}{Not this, back.}
+{10000}{}{Donation for Medicaments?(You need to have caps on your account)}
+{10010}{}{1000 caps.}
+{10020}{}{5000 caps.}
+{10030}{}{10000 caps.}
+{10040}{}{50000 caps.}
+{10050}{}{100000 caps.}
+{10060}{}{500000 caps.}
+{10070}{}{1000000 caps.}
+{10080}{}{Not this, back.}
+{11000}{}{Ok it is done, what next?}
+{11010}{}{Yes, I need more things...}
+{11020}{}{That is all, than you buy...}
+{12000}{}{What stuff do you need? (You must have money on you private account)}
+{12010}{}{Armor...}
+{12020}{}{Weapon...}
+{12030}{}{Medicaments...}
+{12040}{}{Sorry, mistake...}
+{13000}{}{What medicaments do you need?}
+

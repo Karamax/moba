@@ -1,0 +1,236 @@
+#include "_teams.fos"
+#include "_defines.fos"
+#include "_itempid.fos"
+#include  "npc_planes.fos"
+#include "_macros.fos"
+#include "_npc_pids.fos"
+#include "_bags.fos"
+
+void _GuardInit(Critter& npc, bool firstTime)
+{
+	//npc.SetEvent( CRITTER_EVENT_SMTH_DROP_ITEM, "_GuardSmthDropItem" );
+	uint pid=npc.GetProtoId();
+	npc.StatBase[ST_TEAM_ID]=TEAM_Guard;
+	npc.ModeBase[MODE_UNLIMITED_AMMO]=1;
+	npc.ModeBase[MODE_NO_DROP]=1;
+	npc.ModeBase[MODE_NO_LOOT]=1;
+	npc.ModeBase[MODE_NO_STEAL]=1;
+	npc.StatBase[ST_EXPLODE_ABSORB] = 60;
+    npc.StatBase[ST_EXPLODE_RESIST] = 90;
+	npc.StatBase[ST_REPLICATION_TIME]=__FullSecond+REAL_MINUTE(45);
+	npc.ShowCritterDist1=80;
+	//to random
+	int stuff=Random(1,3);
+
+	if (stuff==1)
+	{
+		npc.AddItem(PID_LASER_RIFLE,1);
+		npc.SetFavoriteItem(SLOT_HAND1,PID_LASER_RIFLE);
+	}
+	else if (stuff==2)
+	{
+		npc.AddItem(PID_GREASE_GUN,1);
+		npc.SetFavoriteItem(SLOT_HAND1,PID_GREASE_GUN);
+	}
+	else if (stuff==3)
+	{
+		npc.AddItem(PID_LIGHT_SUPPORT_WEAPON,1);
+		npc.SetFavoriteItem(SLOT_HAND1,PID_LIGHT_SUPPORT_WEAPON);
+	}
+}
+
+void walk1(Critter& npc, bool firstTime)
+{
+	CreateTimeEvent(__FullSecond+REAL_SECOND(3),"e_walk1",npc.Id,false);
+}
+
+void walk2(Critter& npc, bool firstTime)
+{	
+	CreateTimeEvent(__FullSecond+REAL_SECOND(3),"e_walk2",npc.Id,false);
+}
+
+void walk3(Critter& npc, bool firstTime)
+{
+	CreateTimeEvent(__FullSecond+REAL_SECOND(3),"e_walk3",npc.Id,false);
+}
+
+void walk4(Critter& npc, bool firstTime)
+{
+	CreateTimeEvent(__FullSecond+REAL_SECOND(3),"e_walk4",npc.Id,false);
+}
+
+void walk5(Critter& npc, bool firstTime)
+{
+	CreateTimeEvent(__FullSecond+REAL_SECOND(3),"e_walk5",npc.Id,false);
+}
+
+void walk6(Critter& npc, bool firstTime)
+{	
+	CreateTimeEvent(__FullSecond+REAL_SECOND(3),"e_walk6",npc.Id,false);
+}
+
+void gwalk1(Critter& npc, bool firstTime)
+{
+	uint pid=npc.GetProtoId();
+	npc.StatBase[ST_TEAM_ID]=TEAM_Guard;
+	npc.ModeBase[MODE_UNLIMITED_AMMO]=1;
+	npc.ModeBase[MODE_NO_DROP]=1;
+	npc.ModeBase[MODE_NO_LOOT]=1;
+	npc.ModeBase[MODE_NO_STEAL]=1;
+	npc.TimeoutBase[TO_REPLICATION]=__FullSecond+REAL_MINUTE(45);
+	npc.ShowCritterDist1=80;
+	//to random
+	int stuff=Random(1,3);
+
+	if (stuff==1)
+	{
+		npc.AddItem(PID_LASER_RIFLE,1);
+		npc.SetFavoriteItem(SLOT_HAND1,PID_LASER_RIFLE);
+	}
+	else if (stuff==2)
+	{
+		npc.AddItem(PID_GREASE_GUN,1);
+		npc.SetFavoriteItem(SLOT_HAND1,PID_GREASE_GUN);
+	}
+	else if (stuff==3)
+	{
+		npc.AddItem(PID_LIGHT_SUPPORT_WEAPON,1);
+		npc.SetFavoriteItem(SLOT_HAND1,PID_LIGHT_SUPPORT_WEAPON);
+	}
+	CreateTimeEvent(__FullSecond+REAL_SECOND(3),"e_gwalk1",npc.Id,false);
+}
+
+void gwalk2(Critter& npc, bool firstTime)
+{
+	uint pid=npc.GetProtoId();
+	npc.StatBase[ST_TEAM_ID]=TEAM_Guard;
+	npc.ModeBase[MODE_UNLIMITED_AMMO]=1;
+	npc.ModeBase[MODE_NO_DROP]=1;
+	npc.ModeBase[MODE_NO_LOOT]=1;
+	npc.ModeBase[MODE_NO_STEAL]=1;
+	npc.TimeoutBase[TO_REPLICATION]=__FullSecond+REAL_MINUTE(45);
+	npc.ShowCritterDist1=80;
+	//to random
+	int stuff=Random(1,3);
+	if (stuff==1)
+	{
+		npc.AddItem(PID_LASER_RIFLE,1);
+		npc.SetFavoriteItem(SLOT_HAND1,PID_LASER_RIFLE);
+	}
+	else if (stuff==2)
+	{
+		npc.AddItem(PID_GREASE_GUN,1);
+		npc.SetFavoriteItem(SLOT_HAND1,PID_GREASE_GUN);
+	}
+	else if (stuff==3)
+	{
+		npc.AddItem(PID_LIGHT_SUPPORT_WEAPON,1);
+		npc.SetFavoriteItem(SLOT_HAND1,PID_LIGHT_SUPPORT_WEAPON);
+	}
+	CreateTimeEvent(__FullSecond+REAL_SECOND(3),"e_gwalk2",npc.Id,false);
+}
+uint e_walk1(uint[]@ values)
+{
+	Critter @ npc =::GetCritter(values[0]);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 99, 118, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 100, 140, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	CreateTimeEvent(__FullSecond+REAL_SECOND(160),"e_walk1",npc.Id,false);
+	return 0;
+}
+
+uint e_walk2(uint[]@ values)
+{
+	Critter @ npc =::GetCritter(values[0]);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 135, 98, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 115, 166, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 177, 132, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	CreateTimeEvent(__FullSecond+REAL_SECOND(160),"e_walk2",npc.Id,false);
+	return 0;
+}
+
+uint e_walk3(uint[]@ values)
+{
+	Critter @ npc =::GetCritter(values[0]);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 197, 129, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 144, 135, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 121, 113, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	CreateTimeEvent(__FullSecond+REAL_SECOND(160),"e_walk3",npc.Id,false);
+	return 0;
+}
+
+uint e_walk4(uint[]@ values)
+{
+	Critter @ npc =::GetCritter(values[0]);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 167, 136, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 167, 132, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	CreateTimeEvent(__FullSecond+REAL_SECOND(160),"e_walk4",npc.Id,false);
+	return 0;
+}
+
+uint e_walk5(uint[]@ values)
+{
+	Critter @ npc =::GetCritter(values[0]);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 84, 129, 2, true, 1);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 105, 142, 2, true, 1);
+	npc.Wait(Random(4000,5000));
+	CreateTimeEvent(__FullSecond+REAL_SECOND(160),"e_walk5",npc.Id,false);
+	return 0;
+}
+
+uint e_walk6(uint[]@ values)
+{
+	Critter @ npc =::GetCritter(values[0]);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 42, 46, 2, true, 1);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 58, 58, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 89, 86, 2, true, 1);
+	npc.Wait(Random(4000,5000));
+	CreateTimeEvent(__FullSecond+REAL_SECOND(160),"e_walk6",npc.Id,false);
+	return 0;
+}
+
+uint e_gwalk1(uint[]@ values)
+{
+	Critter @ npc =::GetCritter(values[0]);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 105, 131, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 169, 181, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 156, 103, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	CreateTimeEvent(__FullSecond+REAL_SECOND(160),"e_gwalk1",npc.Id,false);
+	return 0;
+}
+
+uint e_gwalk2(uint[]@ values)
+{
+	Critter @ npc =::GetCritter(values[0]);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 64, 112, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 41, 139, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	AddWalkPlane(npc, 0, 59, 59, 2, false, 1);
+	npc.Wait(Random(4000,5000));
+	CreateTimeEvent(__FullSecond+REAL_SECOND(160),"e_gwalk2",npc.Id,false);
+	return 0;
+}

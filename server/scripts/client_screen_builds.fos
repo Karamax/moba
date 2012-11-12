@@ -1,0 +1,393 @@
+IGUIElementButtonOpt@ Build1Button;
+IGUIElementButtonOpt@ Build2Button;
+IGUIElementButtonOpt@ Build3Button;
+IGUIElementButtonOpt@ Build4Button;
+IGUIElementButtonOpt@ Build5Button;
+IGUIElementButtonOpt@ Build6Button;
+IGUIElementButtonOpt@ Build7Button;
+IGUIElementButtonOpt@ Build8Button;
+IGUIElementButtonOpt@ Build9Button;
+IGUIElementButtonOpt@ Build10Button;
+IGUIElementButtonOpt@ Build11Button;
+IGUIElementButtonOpt@ Build12Button;
+IGUIElementButtonOpt@ Build13Button;
+IGUIElementButtonOpt@ Build14Button;
+IGUIElementButtonOpt@ Build15Button;
+IGUIElementButtonOpt@ Build16Button;
+IGUIElementButtonOpt@ BuildHideButton;
+IGUIElementTextOpt@ BuildText;
+
+class BuildScreenClass : IGUIScreenCallbackMove
+{
+	void OnMove(int x, int y){}
+}
+
+class BuildHideButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build1ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build1",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build2ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build2",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build3ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build3",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build4ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build4",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build5ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build5",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build6ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build6",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build7ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build7",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build8ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build8",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build9ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build9",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build10ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build10",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build11ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build11",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build12ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build12",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build13ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build13",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build14ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build14",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build15ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build15",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+class Build16ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_scripts@unsafe_ap_regen",0,0,0,null,null);
+		RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		RunServerScriptUnsafe("server_builds@unsafe_build16",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		return;
+	}
+}
+
+void InitBuildScreen()
+{
+	BuildScreenClass BuildScreen;
+	GUI_CreateScreen(CLIENT_SCREEN_BUILDS,"window.png")
+		.CanMove(true)
+		.Modal(false)
+		.Multiinstance(false)
+		.SizeByMultipleImages(1,1)
+		.CallbackMove(BuildScreen);		
+		
+	@BuildText=
+	GUI_AddText(CLIENT_SCREEN_BUILDS,"Choose Your Fighter !!!", 110, 10)
+	  .TextOptions(FONT_BIG, COLOR_RED, FT_BORDERED)
+      .TextBoxSize(400,10)
+	  .Visible(true);
+	  
+	BuildHideButtonClass bulHide;
+	@BuildHideButton=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 5,5)
+		.UpPic("greendot small_x.png")
+		.DownPic("greendot small_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(bulHide);
+	
+	Build1ButtonClass bul1;
+	@Build1Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 50,40)
+		.UpPic("avatar1.png")
+		.DownPic("avatar1.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul1);
+		
+	Build2ButtonClass bul2;
+	@Build2Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 120,40)
+		.UpPic("avatar2.png")
+		.DownPic("avatar2.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul2);
+		
+	Build3ButtonClass bul3;
+	@Build3Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 190,40)
+		.UpPic("avatar3.png")
+		.DownPic("avatar3.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul3);
+		
+	Build4ButtonClass bul4;
+	@Build4Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 260,40)
+		.UpPic("avatar4.png")
+		.DownPic("avatar4.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul4);
+		
+	Build5ButtonClass bul5;
+	@Build5Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 330,40)
+		.UpPic("avatar5.png")
+		.DownPic("avatar5.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul5);
+		
+	Build6ButtonClass bul6;
+	@Build6Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 400,40)
+		.UpPic("avatar6.png")
+		.DownPic("avatar6.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul6);
+		
+	Build7ButtonClass bul7;
+	@Build7Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 50,120)
+		.UpPic("avatar7.png")
+		.DownPic("avatar7.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul7);
+		
+	Build8ButtonClass bul8;
+	@Build8Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 120,120)
+		.UpPic("avatar8.png")
+		.DownPic("avatar8.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul8);
+		
+	Build9ButtonClass bul9;
+	@Build9Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 190,120)
+		.UpPic("avatar9.png")
+		.DownPic("avatar9.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul9);
+		
+	Build10ButtonClass bul10;
+	@Build10Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 260,120)
+		.UpPic("avatar10.png")
+		.DownPic("avatar10.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul10);
+		
+	Build11ButtonClass bul11;
+	@Build11Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 330,120)
+		.UpPic("avatar11.png")
+		.DownPic("avatar11.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul11);
+		
+	Build12ButtonClass bul12;
+	@Build12Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 400,120)
+		.UpPic("avatar12.png")
+		.DownPic("avatar12.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul12);
+		
+	Build13ButtonClass bul13;
+	@Build13Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 50,200)
+		.UpPic("avatar13.png")
+		.DownPic("avatar13.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul13);
+		
+	Build14ButtonClass bul14;
+	@Build14Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 120,200)
+		.UpPic("avatar14.png")
+		.DownPic("avatar14.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul14);
+		
+	Build15ButtonClass bul15;
+	@Build15Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 190,200)
+		.UpPic("avatar15.png")
+		.DownPic("avatar15.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul15);
+		
+	Build16ButtonClass bul16;
+	@Build16Button=
+	GUI_AddButton(CLIENT_SCREEN_BUILDS, 260,200)
+		.UpPic("avatar16.png")
+		.DownPic("avatar16.png")
+		.ClickableZone(60,75)
+		.CallbackMouseClick(bul16);
+}

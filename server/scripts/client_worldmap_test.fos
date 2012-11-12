@@ -1,0 +1,315 @@
+#include "client_worldmap_h.fos"
+#include "_defines.fos"
+
+IWMImageOpt@ ReddingEnc;
+IWMImageOpt@ ReddingBos;
+
+IWMImageOpt@ ModocEnc;
+IWMImageOpt@ ModocBos;
+
+IWMImageOpt@ GeckoEnc;
+IWMImageOpt@ GeckoBos;
+
+IWMImageOpt@ BrokenEnc;
+IWMImageOpt@ BrokenBos;
+
+IWMImageOpt@ NCREnc;
+IWMImageOpt@ NCRBos;
+
+IWMImageOpt@ KlamathEnc;
+IWMImageOpt@ KlamathBos;
+
+IWMImageOpt@ HubEnc;
+IWMImageOpt@ HubBos;
+
+IWMImageOpt@ JunktownEnc;
+IWMImageOpt@ JunktownBos;
+
+IWMImageOpt@ DenEnc;
+IWMImageOpt@ DenBos;
+
+void InitWorldMapDraw() 
+{
+	@ReddingEnc = WM_AddImage();
+	ReddingEnc.Image(PT_ART_INTRFACE, "enclave_wm.png")
+		.Position(650, 500)
+		.Size(50, 50)
+		.CollisionTransparent(true);	
+	@ReddingBos = WM_AddImage();
+	ReddingBos.Image(PT_ART_INTRFACE, "bos_wm.png")
+		.Position(650, 500)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+		
+	@ModocEnc = WM_AddImage();
+	ModocEnc.Image(PT_ART_INTRFACE, "enclave_wm.png")
+		.Position(900, 250)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+	@ModocBos = WM_AddImage();
+	ModocBos.Image(PT_ART_INTRFACE, "bos_wm.png")
+		.Position(900, 250)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+	
+	@GeckoEnc = WM_AddImage();
+	GeckoEnc.Image(PT_ART_INTRFACE, "enclave_wm.png")
+		.Position(1250, 200)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+	@GeckoBos = WM_AddImage();
+	GeckoBos.Image(PT_ART_INTRFACE, "bos_wm.png")
+		.Position(1250, 200)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+		
+	@BrokenEnc = WM_AddImage();
+	BrokenEnc.Image(PT_ART_INTRFACE, "enclave_wm.png")
+		.Position(1150, 850)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+	@BrokenBos = WM_AddImage();
+	BrokenBos.Image(PT_ART_INTRFACE, "bos_wm.png")
+		.Position(1150, 850)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+		
+	@NCREnc = WM_AddImage();
+	NCREnc.Image(PT_ART_INTRFACE, "enclave_wm.png")
+		.Position(1100, 1400)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+	@NCRBos = WM_AddImage();
+	NCRBos.Image(PT_ART_INTRFACE, "bos_wm.png")
+		.Position(1100, 1400)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+		
+	@KlamathEnc = WM_AddImage();
+	KlamathEnc.Image(PT_ART_INTRFACE, "enclave_wm.png")
+		.Position(350, 100)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+	@KlamathBos = WM_AddImage();
+	KlamathBos.Image(PT_ART_INTRFACE, "bos_wm.png")
+		.Position(350, 100)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+		
+	@HubEnc = WM_AddImage();
+	HubEnc.Image(PT_ART_INTRFACE, "enclave_wm.png")
+		.Position(1000, 1850)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+	@HubBos = WM_AddImage();
+	HubBos.Image(PT_ART_INTRFACE, "bos_wm.png")
+		.Position(1000, 1850)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+		
+	@JunktownEnc = WM_AddImage();
+	JunktownEnc.Image(PT_ART_INTRFACE, "enclave_wm.png")
+		.Position(1000, 1650)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+	@JunktownBos = WM_AddImage();
+	JunktownBos.Image(PT_ART_INTRFACE, "bos_wm.png")
+		.Position(1000, 1650)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+		
+	@DenEnc = WM_AddImage();
+	DenEnc.Image(PT_ART_INTRFACE, "enclave_wm.png")
+		.Position(450, 250)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+	@DenBos = WM_AddImage();
+	DenBos.Image(PT_ART_INTRFACE, "bos_wm.png")
+		.Position(450, 250)
+		.Size(50, 50)
+		.CollisionTransparent(true);
+
+
+	/*IWMImageOpt@ testImage = WM_AddImage();
+
+	if(@testImage != null) {
+		//testImage.Image(PT_ART_INVEN, "fo2077_axe.png")
+
+		testImage.Image(PT_ART_SKILLDEX, "pbear.png")
+			 .Position(10, 10); 
+	} else {
+		Message("Dlaczego nuul?");
+	}*/
+	
+	uint dx = 30;
+	/*
+	IWMTextOpt@ BoStext = WM_AddText()
+		.Text("BoS Base")
+		.Position(ZONE_X(17) - dx, ZONE_Y(33))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+
+	IWMTextOpt@ Klamathtext = WM_AddText()
+		.Text("Klamath")
+		.Position(ZONE_X(7) - dx, ZONE_Y(3))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+		
+	IWMTextOpt@ TheDentext = WM_AddText()
+		.Text("The Den")
+		.Position(ZONE_X(9) - dx, ZONE_Y(6))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+
+	IWMTextOpt@ Reddingtext = WM_AddText()
+		.Text("Redding")
+		.Position(ZONE_X(13) - dx, ZONE_Y(11))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+	
+	IWMTextOpt@ Cathedraltext = WM_AddText()
+		.Text("Cathedral")
+		.Position(ZONE_X(18) - dx, ZONE_Y(2))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+		
+	IWMTextOpt@ Modoctext = WM_AddText()
+		.Text("Modoc")
+		.Position(ZONE_X(18) - dx, ZONE_Y(6))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+		
+	IWMTextOpt@ Geckotext = WM_AddText()
+		.Text("Gecko")
+		.Position(ZONE_X(25) - dx, ZONE_Y(5))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+		
+	IWMTextOpt@ VCtext = WM_AddText()
+		.Text("Vault City")
+		.Position(ZONE_X(24) - dx, ZONE_Y(7))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+	
+	IWMTextOpt@ Sierratext = WM_AddText()
+		.Text("Sierra")
+		.Position(ZONE_X(18) - dx, ZONE_Y(16))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+		
+	IWMTextOpt@ NewRenotext = WM_AddText()
+		.Text("New Reno")
+		.Position(ZONE_X(18) - dx, ZONE_Y(19))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+	
+	IWMTextOpt@ Brokentext = WM_AddText()
+		.Text("Broken Hills")
+		.Position(ZONE_X(23) - dx, ZONE_Y(18))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+		
+	IWMTextOpt@ Navarrotext = WM_AddText()
+		.Text("Navarro")
+		.Position(ZONE_X(4) - dx, ZONE_Y(17))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+		
+	IWMTextOpt@ SFtext = WM_AddText()
+		.Text("San Francisco")
+		.Position(ZONE_X(9) - dx, ZONE_Y(26))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+		
+	IWMTextOpt@ Mariposatext = WM_AddText()
+		.Text("Mariposa")
+		.Position(ZONE_X(13) - dx, ZONE_Y(29))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+	*/	
+	/*IWMTextOpt@ V13atext = WM_AddText()
+		.Text("Vault 13")
+		.Position(ZONE_X(19) - dx, ZONE_Y(29))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);*/
+		
+	IWMTextOpt@ Ncrtext = WM_AddText()
+		.Text("Ncr")
+		.Position(ZONE_X(22) - dx, ZONE_Y(29))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+		
+	IWMTextOpt@ V15text = WM_AddText()
+		.Text("Vault 15")
+		.Position(ZONE_X(25) - dx, ZONE_Y(29))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+		
+	IWMTextOpt@ Junktowntext = WM_AddText()
+		.Text("Junktown")
+		.Position(ZONE_X(20) - dx, ZONE_Y(34))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+		
+	IWMTextOpt@ Hubtext = WM_AddText()
+		.Text("The Hub")
+		.Position(ZONE_X(20) - dx, ZONE_Y(38))
+		.Size(ZONE_X(1) + 2 * dx, 30)
+		.Flags(FT_CENTERX);
+		
+	/*WM_AddImage().Image(PT_ART_MISC, "testSquare.png")
+		.Position(ZONE_X(0), ZONE_Y(3));
+
+	WM_AddImage().Image(PT_ART_MISC, "testSquare.png")
+		.Position(ZONE_X(2), ZONE_Y(3))
+		.Color(COLOR_LRED);
+
+	
+	for(uint x=3 ; x<=7; x++) 
+	{
+		for(uint y=4 ; y<=5; y++) 
+		{
+			WM_AddImage().Image(PT_ART_MISC, "testSquare.png")
+				.Position(ZONE_X(x), ZONE_Y(y))
+				.Color(COLOR_LGREEN);
+		}
+	}
+
+	for(uint x=5 ; x<=7; x++) 
+	{
+		for(uint y=0 ; y<=2; y++) 
+		{
+			WM_AddImage().Image(PT_ART_MISC, "testSquare.png")
+				.Position(ZONE_X(x), ZONE_Y(y))
+				.Color(COLOR_CONTOUR_YELLOW);
+		}
+	}
+
+	for(uint x=12 ; x<=21; x++) 
+	{
+		for(uint y=5 ; y<=13; y++) 
+		{
+			WM_AddImage().Image(PT_ART_MISC, "testSquare.png")
+				.Position(ZONE_X(x), ZONE_Y(y))
+				.Color(COLOR_LBLUE);
+		}
+	}*/
+		
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

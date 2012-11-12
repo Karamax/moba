@@ -1,0 +1,312 @@
+IGUIElementButtonOpt@ HelpModoc;
+IGUIElementButtonOpt@ HelpRedding;
+IGUIElementButtonOpt@ HelpKlamath;
+IGUIElementButtonOpt@ HelpNCR;
+IGUIElementButtonOpt@ HelpGecko;
+IGUIElementButtonOpt@ HelpBroken;
+IGUIElementButtonOpt@ HelpDen;
+IGUIElementButtonOpt@ HelpHub;
+IGUIElementButtonOpt@ HelpJunktown;
+IGUIElementButtonOpt@ Ready;
+IGUIElementButtonOpt@ Private;
+IGUIElementButtonOpt@ Global;
+IGUIElementEditBoxOpt@ HeadEditBoxOpt;
+IGUIElementTextOpt   @PlayerPointsTextOpt;
+IGUIElementButtonOpt@ MessagePanelExitButton;
+
+class MessagePanelExitButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		HideScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+	}
+}
+
+class HelpModocClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		int type = 1;
+		string message = "We need more soldiers in Modoc.";
+		RunServerScriptUnsafe("npc_factions_messages@unsafe_help_message",type,0,0,message,null);
+		HideScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+	}
+}
+
+class HelpReddingClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		int type = 1;
+		string message = "We need more soldiers in Redding.";
+		RunServerScriptUnsafe("npc_factions_messages@unsafe_help_message",type,0,0,message,null);
+		HideScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+	}
+}
+
+class HelpKlamathClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		int type = 1;
+		string message = "We need more soldiers in Klamath.";
+		RunServerScriptUnsafe("npc_factions_messages@unsafe_help_message",type,0,0,message,null);
+		HideScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+	}
+}
+
+class HelpNCRClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		int type = 1;
+		string message = "We need more soldiers in NCR.";
+		RunServerScriptUnsafe("npc_factions_messages@unsafe_help_message",type,0,0,message,null);
+		HideScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+	}
+}
+
+class HelpGeckoClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		int type = 1;
+		string message = "We need more soldiers in Gecko.";
+		RunServerScriptUnsafe("npc_factions_messages@unsafe_help_message",type,0,0,message,null);
+		HideScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+	}
+}
+
+class HelpBrokenClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		int type = 1;
+		string message = "We need more soldiers in Broken Hills.";
+		RunServerScriptUnsafe("npc_factions_messages@unsafe_help_message",type,0,0,message,null);
+		HideScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+	}
+}
+
+class HelpDenClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		int type = 1;
+		string message = "We need more soldiers in Den.";
+		RunServerScriptUnsafe("npc_factions_messages@unsafe_help_message",type,0,0,message,null);
+		HideScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+	}
+}
+
+class HelpHubClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		int type = 1;
+		string message = "We need more soldiers in Hub.";
+		RunServerScriptUnsafe("npc_factions_messages@unsafe_help_message",type,0,0,message,null);
+		HideScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+	}
+}
+
+class HelpJunktownClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		int type = 1;
+		string message = "We need more soldiers in Junktown.";
+		RunServerScriptUnsafe("npc_factions_messages@unsafe_help_message",type,0,0,message,null);
+		HideScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+	}
+}
+
+class ReadyClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		int type = 2;
+		RunServerScriptUnsafe("npc_factions_messages@unsafe_help_message",type,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+	}
+}
+
+class PrivateClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		int type = 3;
+		if(HeadEditBoxOpt.getText()=="")return;
+		string @message=HeadEditBoxOpt.getText();
+		RunServerScriptUnsafe("npc_factions_messages@unsafe_help_message",type,0,0,message,null);
+		HideScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+	}
+}
+
+class GlobalClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		int type = 4;
+		if(HeadEditBoxOpt.getText()=="")return;
+		string @message=HeadEditBoxOpt.getText();
+		RunServerScriptUnsafe("npc_factions_messages@unsafe_help_message",type,0,0,message,null);
+		HideScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+	}
+}
+
+class MessagesHeadClass : IGUIScreenCallbackMove
+{
+	void OnMove(int x, int y){}
+}
+
+void InitMessagesHeadScreen()
+{
+	MessagesHeadClass MessagesHeadScreen;
+	GUI_CreateScreen(CLIENT_SCREEN_HEAD_MESSAGES,"message_panel.png")
+		.CanMove(true)
+		.Modal(false)
+		.Multiinstance(false)
+		.SizeByMultipleImages(1,1)
+		.CallbackMove(MessagesHeadScreen);
+		
+	HelpModocClass dobiekt1;
+	@HelpModoc=
+	GUI_AddButton(CLIENT_SCREEN_HEAD_MESSAGES, 200,290)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(dobiekt1);
+		
+	HelpReddingClass dobiekt2;
+	@HelpRedding=
+	GUI_AddButton(CLIENT_SCREEN_HEAD_MESSAGES, 200,320)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(dobiekt2);
+		
+	HelpKlamathClass dobiekt3;
+	@HelpKlamath=
+	GUI_AddButton(CLIENT_SCREEN_HEAD_MESSAGES, 200,380)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(dobiekt3);
+		
+	HelpNCRClass dobiekt4;
+	@HelpNCR=
+	GUI_AddButton(CLIENT_SCREEN_HEAD_MESSAGES, 200,230)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(dobiekt4);
+		
+	HelpGeckoClass dobiekt5;
+	@HelpGecko=
+	GUI_AddButton(CLIENT_SCREEN_HEAD_MESSAGES, 200,350)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(dobiekt5);
+		
+	HelpBrokenClass dobiekt6;
+	@HelpBroken=
+	GUI_AddButton(CLIENT_SCREEN_HEAD_MESSAGES, 200,260)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(dobiekt6);
+		
+	HelpDenClass dobiekt7;
+	@HelpDen=
+	GUI_AddButton(CLIENT_SCREEN_HEAD_MESSAGES, 200,410)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(dobiekt7);
+		
+	HelpHubClass dobiekt9;
+	@HelpHub=
+	GUI_AddButton(CLIENT_SCREEN_HEAD_MESSAGES, 200,170)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(dobiekt9);
+		
+	HelpJunktownClass dobiekt10;
+	@HelpJunktown=
+	GUI_AddButton(CLIENT_SCREEN_HEAD_MESSAGES, 200,200)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(dobiekt10);
+		
+	ReadyClass dobiekt11;
+	@Ready=
+	GUI_AddButton(CLIENT_SCREEN_HEAD_MESSAGES, 474,143)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(dobiekt11);
+		
+	PrivateClass dobiekt12;
+	@Private=
+	GUI_AddButton(CLIENT_SCREEN_HEAD_MESSAGES, 375,245)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(dobiekt12);
+		
+	GlobalClass dobiekt13;
+	@Global=
+	GUI_AddButton(CLIENT_SCREEN_HEAD_MESSAGES, 375,310)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(dobiekt13);
+		
+	@HeadEditBoxOpt=
+	GUI_AddEditBox(CLIENT_SCREEN_HEAD_MESSAGES,273,370)
+		.TextOptions(FONT_FALLOUT, COLOR_GREEN, 0)
+		.EditBoxSize(240,10)
+		.Margins(3,0,3,0)
+		.BackgroundPic("message.png");
+		
+	@PlayerPointsTextOpt =
+        GUI_AddText( CLIENT_SCREEN_HEAD_MESSAGES,"", 300, 80 )
+        .TextOptions( FONT_FAT, COLOR_GREEN, FT_CENTERX )
+        .TextBoxSize( 200, 10 );
+		
+	MessagePanelExitButtonClass dobiekt14;
+	@MessagePanelExitButton=
+	GUI_AddButton(CLIENT_SCREEN_HEAD_MESSAGES, 30,44)
+		.UpPic("greendot small_x.png")
+		.DownPic("greendot small_x.png")
+		.ClickableZone(33,33)
+		.CallbackMouseClick(dobiekt14);
+
+}
+
+void ShowHeadMessagesScreen()
+{
+	HelpModoc.setVisible(true);
+	HelpRedding.setVisible(true);
+	HelpKlamath.setVisible(true);
+	HelpNCR.setVisible(true);
+	HelpGecko.setVisible(true);
+	HelpBroken.setVisible(true);
+	HelpDen.setVisible(true);
+	HelpHub.setVisible(true);
+	HelpJunktown.setVisible(true);
+	Ready.setVisible(true);
+	Private.setVisible(true);
+	Global.setVisible(true);
+	PlayerPointsTextOpt.setVisible(true);
+	SetScreenPos(CLIENT_SCREEN_HEAD_MESSAGES,__ScreenWidth/2-270,__ScreenHeight/2-295);
+	ShowScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+	HeadEditBoxOpt.setVisible(true);
+	HeadEditBoxOpt.Text("");
+	HeadEditBoxOpt.setFocused(true);
+	MessagePanelExitButton.setVisible(true);
+}

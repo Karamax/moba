@@ -1,0 +1,29 @@
+[comment]
+Aaoe eiiiaioa?ee / Your comments.
+
+[data]
+lang=russ engl
+
+[dialog]
+&
+1 1000 None 0 #
+2 1010 @
+2 2000 None 0 &
+
+[russ]
+{100}{}{error}
+{200}{}{Вы видите одного из жителей.}
+{210}{}{Вы видите одного из жителей.}
+{1000}{}{russ}
+{1010}{}{Оuss}
+{2000}{}{Нuss}
+
+[engl]
+{100}{}{Brotherhood Scribe}
+{200}{}{You see one of BoS scribes.}
+{210}{}{You see one of Brotherhood of Steel scribes.}
+{1000}{}{Initial preferences}
+{1010}{}{Answer}
+{2000}{}{Go Away.@@No time.@@...@@Leave.@@I am working.@@Fuck off.@@Go Away or i will splash acid on you.@@1337 /\/\4593R??? What the fuck??@@ 
+I will shoove syringe into your ass if you will keep bothering me!@@Guards! Take this moron from here!@@Why this Computer is not responding...@@Eeh...@@Dont you have something to do?}
+

@@ -1,0 +1,28 @@
+[comment]
+Aaoe eiiiaioa?ee / Your comments.
+
+[data]
+lang=russ engl
+
+[dialog]
+&
+1 1000 None 0 #
+2 1010 @
+2 2000 None 0 &
+
+[russ]
+{100}{}{error}
+{200}{}{Вы видите одного из жителей.}
+{210}{}{Вы видите одного из жителей.}
+{1000}{}{russ}
+{1010}{}{Оuss}
+{2000}{}{Нuss}
+
+[engl]
+{100}{}{Brotherhood Scribe}
+{200}{}{You see one of BoS scribes.}
+{210}{}{You see one of Brotherhood of Steel scribes.}
+{1000}{}{Initial preferences}
+{1010}{}{Answer}
+{2000}{}{Hail.@@I have no time now.@@Let me be.@@If you need something ask the guards.@@The Enclave is weaker than us.@@There were alot Mutant sightings this month.@@I am thinking about tactics. Leave me alone@@...@@I am sorry to inform, but you are bothering me@@}
+

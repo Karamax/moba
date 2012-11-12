@@ -1,0 +1,413 @@
+IGUIElementButtonOpt@ DepotShow;
+IGUIElementButtonOpt@ TacticNormal;
+IGUIElementButtonOpt@ TacticAgressive;
+IGUIElementButtonOpt@ TacticDevensive;
+IGUIElementButtonOpt@ ATacticNormal;
+IGUIElementButtonOpt@ ATacticAgressive;
+IGUIElementButtonOpt@ ATacticDevensive;
+IGUIElementButtonOpt@ AUp;
+IGUIElementButtonOpt@ AMidle;
+IGUIElementButtonOpt@ ADown;
+IGUIElementButtonOpt@ SuperS;
+IGUIElementButtonOpt@ TeamButton;
+IGUIElementButtonOpt@ MessButton;
+IGUIElementButtonOpt@ ContButton;
+IGUIElementButtonOpt@ TechButton;
+IGUIElementButtonOpt@ TeleportDButton;
+IGUIElementButtonOpt@ BuildButton;
+IGUIElementTextOpt@ PermaText;
+IGUIElementTextOpt@ StimpakInfo;
+bool visibleaddons=true;
+
+class DepotShowClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(GetCurrentCursor()==CURSOR_DEFAULT)
+		{
+			ShowScreen(CLIENT_SCREEN_DEPOT,0,0,0);
+		}
+	}
+}
+
+class AUpButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if((GetCurrentCursor()==CURSOR_DEFAULT)&&(GetChosen().Stat[ST_CURRENT_HP]>0))
+		{
+			RunServerScriptUnsafe("test@unsafe_pos_change",0,0,0,null,null);
+			RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+		}
+	}
+}
+
+class AMidleButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if((GetCurrentCursor()==CURSOR_DEFAULT)&&(GetChosen().Stat[ST_CURRENT_HP]>0))
+		{
+			RunServerScriptUnsafe("test@unsafe_pos_change",1,0,0,null,null);
+			RunServerScriptUnsafe("tactic@unsafe_tactic_normal",0,0,0,null,null);
+		}
+	}
+}
+
+class ADownButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if((GetCurrentCursor()==CURSOR_DEFAULT)&&(GetChosen().Stat[ST_CURRENT_HP]>0))
+		{
+			RunServerScriptUnsafe("test@unsafe_pos_change",2,0,0,null,null);
+			RunServerScriptUnsafe("tactic@unsafe_tactic_defensive",0,0,0,null,null);
+		}
+	}
+}
+
+class SuperSButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if((GetCurrentCursor()==CURSOR_DEFAULT)&&(GetChosen().Stat[ST_CURRENT_HP]>0))
+		{
+			RunServerScriptUnsafe("server_builds@unsafe_stimpak",0,0,0,null,null);
+		}
+	}
+}
+
+class TeamButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(GetCurrentCursor()==CURSOR_DEFAULT)
+		{
+			SetScreenPos(CLIENT_SCREEN_FACTION,__ScreenWidth/2-270,__ScreenHeight/2-295);
+			ShowScreen(CLIENT_SCREEN_FACTION,0,0,0);
+		}
+	}
+}
+
+class MessButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(GetCurrentCursor()==CURSOR_DEFAULT)
+		{
+			SetScreenPos(CLIENT_SCREEN_HEAD_MESSAGES,__ScreenWidth/2-270,__ScreenHeight/2-295);
+			ShowScreen(CLIENT_SCREEN_HEAD_MESSAGES,0,0,0);
+		}
+	}
+}
+
+class BuildButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(GetCurrentCursor()==CURSOR_DEFAULT)
+		{
+			//SetScreenPos(CLIENT_SCREEN_BUILDS,__ScreenWidth/2-270,__ScreenHeight/2-295);
+			ShowScreen(CLIENT_SCREEN_BUILDS,0,0,0);
+		}
+	}
+}
+
+class TeleportDButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(GetCurrentCursor()==CURSOR_DEFAULT)
+		{
+			RunServerScriptUnsafe("server_scripts@unsafe_teleport_on_battle",0,0,0,null,null);
+		}
+	}
+}
+
+class TechButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(GetCurrentCursor()==CURSOR_DEFAULT)
+		{
+			ShowScreen(CLIENT_SCREEN_TECHNOLOGY,0,0,0);
+		}
+	}
+}
+
+class ContButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(GetCurrentCursor()==CURSOR_DEFAULT)
+		{
+			if(GetChosen().ParamBase[PLAYER_MAIN_FACTION]== BROTHERHOOD || GetChosen().ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)
+			RunServerScriptUnsafe("serv_npc_faction_battle_sys@unsafe_control_taking",0,0,0,null,null);
+			else if (GetChosen().ParamBase[PLAYER_MAIN_FACTION]== HUNTERS)
+			RunServerScriptUnsafe("dev_server_scripts@unsafe_mynick",0,0,0,null,null);
+		}
+	}
+}
+
+class TacticDevensiveButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(GetCurrentCursor()==CURSOR_DEFAULT)
+		RunServerScriptUnsafe("tactic@unsafe_tactic_defensive",0,0,0,null,null);
+	}
+}
+class TacticNormalButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(GetCurrentCursor()==CURSOR_DEFAULT)
+		RunServerScriptUnsafe("tactic@unsafe_tactic_normal",0,0,0,null,null);
+	}
+}
+class TacticAgressiveButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(GetCurrentCursor()==CURSOR_DEFAULT)
+		RunServerScriptUnsafe("tactic@unsafe_tactic_agressive",0,0,0,null,null);
+	}
+}
+class ATacticDevensiveButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(GetCurrentCursor()==CURSOR_DEFAULT)
+		return;
+	}
+}
+class ATacticNormalButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(GetCurrentCursor()==CURSOR_DEFAULT)
+		return;
+	}
+}
+class ATacticAgressiveButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		if(GetCurrentCursor()==CURSOR_DEFAULT)
+		return;
+	}
+}
+void InitMainScreenAdvantages()
+{
+	TeamButtonClass Teamobject;
+	@TeamButton=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, 10,__ScreenHeight/2 -100)
+		.UpPic("fact.png")
+		.DownPic("fact.png")
+		.ClickableZone(24,20)
+		.CallbackMouseClick(Teamobject);
+	TeamButton.Hide();
+	IGUIElementOpt@ elementTeam;
+	@elementTeam = cast<IGUIElementOpt@>(TeamButton);
+	elementTeam.setAbsolutePosition(true);
+	
+	TeleportDButtonClass TeleportDobject;
+	@TeleportDButton=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, 10,35)
+		.UpPic("team.png")
+		.DownPic("team.png")
+		.ClickableZone(142,20)
+		.CallbackMouseClick(TeleportDobject);
+	TeleportDButton.Hide();
+	IGUIElementOpt@ elementTeleportD;
+	@elementTeleportD = cast<IGUIElementOpt@>(TeleportDButton);
+	elementTeleportD.setAbsolutePosition(true);
+	
+	@PermaText=
+	GUI_AddText(CLIENT_MAIN_SCREEN_GAME,"", __ScreenWidth/2 -80, 10)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(400,10);
+	  
+	@StimpakInfo=
+	GUI_AddText(CLIENT_MAIN_SCREEN_GAME,"", 35,__ScreenHeight/2 + 6 )
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(400,10);
+	StimpakInfo.setVisible(false);
+	IGUIElementOpt@ elementStimpakInfo;
+	@elementStimpakInfo = cast<IGUIElementOpt@>(StimpakInfo);
+	elementStimpakInfo.setAbsolutePosition(true);
+	
+	MessButtonClass Messobject;
+	@MessButton=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, 10,__ScreenHeight/2 +35)
+		.UpPic("pic_mess.png")
+		.DownPic("pic_mess.png")
+		.ClickableZone(24,20)
+		.CallbackMouseClick(Messobject);
+	MessButton.Hide();
+	IGUIElementOpt@ elementMess;
+	@elementMess = cast<IGUIElementOpt@>(MessButton);
+	elementMess.setAbsolutePosition(true);
+	
+	BuildButtonClass Buildobject;
+	@BuildButton=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, 10,10)
+		.UpPic("pic_mess.png")
+		.DownPic("pic_mess.png")
+		.ClickableZone(142,20)
+		.CallbackMouseClick(Buildobject);
+	BuildButton.Hide();
+	IGUIElementOpt@ elementBuild;
+	@elementBuild = cast<IGUIElementOpt@>(BuildButton);
+	elementBuild.setAbsolutePosition(true);
+	
+	ContButtonClass Contobject;
+	@ContButton=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, 10,__ScreenHeight/2 +70)
+		.UpPic("pic_control.png")
+		.DownPic("pic_control.png")
+		.ClickableZone(24,20)
+		.CallbackMouseClick(Contobject);
+	ContButton.Hide();
+	IGUIElementOpt@ elementCont;
+	@elementCont = cast<IGUIElementOpt@>(ContButton);
+	elementCont.setAbsolutePosition(true);
+	  
+	AUpButtonClass AUpButton;
+	@AUp=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, 10,__ScreenHeight/2 -75)
+		.UpPic("up.png")
+		.DownPic("up.png")
+		.ClickableZone(24,20)
+		.CallbackMouseClick(AUpButton);
+	AUp.Hide();
+	IGUIElementOpt@ elementUp;
+	@elementUp = cast<IGUIElementOpt@>(AUp);
+	elementUp.setAbsolutePosition(true);  
+	
+	AMidleButtonClass AMidleButton;
+	@AMidle=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, 10,__ScreenHeight/2 -50)
+		.UpPic("midle.png")
+		.DownPic("midle.png")
+		.ClickableZone(24,20)
+		.CallbackMouseClick(AMidleButton);
+	AMidle.Hide();
+	IGUIElementOpt@ elementMidle;
+	@elementMidle = cast<IGUIElementOpt@>(AMidle);
+	elementMidle.setAbsolutePosition(true); 
+	
+	ADownButtonClass ADownButton;
+	@ADown=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, 10,__ScreenHeight/2 -25)
+		.UpPic("down.png")
+		.DownPic("down.png")
+		.ClickableZone(24,20)
+		.CallbackMouseClick(ADownButton);
+	ADown.Hide();
+	IGUIElementOpt@ elementDown;
+	@elementDown = cast<IGUIElementOpt@>(ADown);
+	elementDown.setAbsolutePosition(true); 
+	
+	SuperSButtonClass SuperSButton;
+	@SuperS=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, 10,__ScreenHeight/2)
+		.UpPic("super_stimpak.png")
+		.DownPic("super_stimpak.png")
+		.ClickableZone(24,20)
+		.CallbackMouseClick(SuperSButton);
+	SuperS.Hide();
+	IGUIElementOpt@ elementSuperS;
+	@elementSuperS = cast<IGUIElementOpt@>(SuperS);
+	elementSuperS.setAbsolutePosition(true);
+	
+	TechButtonClass ATechButton;
+	@TechButton=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, 10,__ScreenHeight/2 +95)
+		.UpPic("tech.png")
+		.DownPic("tech.png")
+		.ClickableZone(24,20)
+		.CallbackMouseClick(ATechButton);
+	TechButton.Hide();
+	IGUIElementOpt@ elementTech;
+	@elementTech = cast<IGUIElementOpt@>(TechButton);
+	elementTech.setAbsolutePosition(true); 
+	  
+	TacticAgressiveButtonClass TacticAgressiveButton;
+	@TacticAgressive=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, __ScreenWidth/2+170,__ScreenHeight -55)
+		.Text("AGR", FONT_FAT, COLOR_GRAY,COLOR_GRAY,0)
+		.ClickableZone(37,19)
+		.CallbackMouseClick(TacticAgressiveButton);
+	TacticAgressive.Hide();
+	IGUIElementOpt@ elementAgr;
+	@elementAgr = cast<IGUIElementOpt@>(TacticAgressive);
+	elementAgr.setAbsolutePosition(true);
+	
+	TacticDevensiveButtonClass TacticDevensiveButton;
+	@TacticDevensive=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, __ScreenWidth/2+70,__ScreenHeight -55)
+		.Text("DEF", FONT_FAT, COLOR_GRAY,COLOR_GRAY,0)
+		.ClickableZone(37,19)
+		.CallbackMouseClick(TacticDevensiveButton);
+	TacticDevensive.Hide();
+	IGUIElementOpt@ elementDev;
+	@elementDev = cast<IGUIElementOpt@>(TacticDevensive);
+	elementDev.setAbsolutePosition(true);
+	
+	TacticNormalButtonClass TacticNormalButton;
+	@TacticNormal=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, __ScreenWidth/2+120,__ScreenHeight -55)
+		.Text("NOR", FONT_FAT, COLOR_GRAY,COLOR_GRAY,0)
+		.ClickableZone(37,19)
+		.CallbackMouseClick(TacticNormalButton);
+	TacticNormal.Hide();
+	IGUIElementOpt@ elementNor;
+	@elementNor = cast<IGUIElementOpt@>(TacticNormal);
+	elementNor.setAbsolutePosition(true);
+	
+	DepotShowClass DepotShowButton;
+	@DepotShow=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, 10,100)
+		.Text("USE DEPOT", FONT_FAT, COLOR_GREEN,COLOR_GREEN,0)
+		.ClickableZone(80,19)
+		.CallbackMouseClick(DepotShowButton);
+	DepotShow.Hide();
+	IGUIElementOpt@ elementDepotShow;
+	@elementDepotShow = cast<IGUIElementOpt@>(DepotShow);
+	elementDepotShow.setAbsolutePosition(true);
+	
+	ATacticAgressiveButtonClass ATacticAgressiveButton;
+	@ATacticAgressive=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, __ScreenWidth/2+170,__ScreenHeight -55)
+		.Text("AGR", FONT_FAT, COLOR_GREEN,COLOR_LGREEN,0)
+		.ClickableZone(37,19)
+		.CallbackMouseClick(ATacticAgressiveButton);
+	ATacticAgressive.Hide();
+	IGUIElementOpt@ elementAAgr;
+	@elementAAgr = cast<IGUIElementOpt@>(ATacticAgressive);
+	elementAAgr.setAbsolutePosition(true);
+	
+	ATacticDevensiveButtonClass ATacticDevensiveButton;
+	@ATacticDevensive=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, __ScreenWidth/2+70,__ScreenHeight -55)
+		.Text("DEF", FONT_FAT, COLOR_GREEN,COLOR_LGREEN,0)
+		.ClickableZone(37,19)
+		.CallbackMouseClick(ATacticDevensiveButton);
+	ATacticDevensive.Hide();
+	IGUIElementOpt@ elementADev;
+	@elementADev = cast<IGUIElementOpt@>(ATacticDevensive);
+	elementADev.setAbsolutePosition(true);
+	
+	ATacticNormalButtonClass ATacticNormalButton;
+	@ATacticNormal=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, __ScreenWidth/2+120,__ScreenHeight -55)
+		.Text("NOR", FONT_FAT, COLOR_GREEN,COLOR_LGREEN,0)
+		.ClickableZone(37,19)
+		.CallbackMouseClick(ATacticNormalButton);
+	ATacticNormal.Hide();
+	IGUIElementOpt@ elementANor;
+	@elementANor = cast<IGUIElementOpt@>(ATacticNormal);
+	elementANor.setAbsolutePosition(true);
+}
+

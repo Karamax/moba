@@ -1,0 +1,243 @@
+[comment]
+20/ erdrari IED-Dlaacia
+
+[data]
+lang=russ engl
+
+[dialog]
+&
+1 1000 None 0 #
+8 1010 D _param p ST_INTELLECT < 4 #
+2 1020 D _var n name_mem_npc_player = 1 D _param p ST_INTELLECT > 3 #
+2 1030 D _var n name_mem_npc_player = 0 D _param p ST_INTELLECT > 3 R _var n name_mem_npc_player = 1 @
+2 2000 None 0 #
+3 2010 #
+6 2020 #
+7 2030 #
+0 2040 #
+9 2050 D _param p SK_SPEECH > 79 D _var p q_chosen = 2 #
+10 2060 D _var p q_chosen = 2 #
+20 2070 D _var p q_ncr_redding_caravan_escort = 8 R _var p q_ncr_redding_caravan_escort = 0 R _item p PID_BOTTLE_CAPS + 2000 R _param p ST_EXPERIENCE + 6000 #
+25 2080 @
+3 3000 None 0 #
+4 3010 #
+0 3020 @
+4 4000 None 0 #
+5 4010 #
+0 4020 @
+5 5000 None 0 #
+2 5010 #
+0 5020 @
+6 6000 None 0 #
+2 6010 #
+0 6020 @
+7 7000 None 0 #
+2 7010 #
+0 7020 @
+9 8000 None 0 #
+0 8010 R _var p q_chosen = 3 @
+10 9000 None 0 #
+0 9010 #
+11 9020 D _param p SK_BARTER < 50 D _item p PID_BOTTLE_CAPS > 999 R _item p PID_BOTTLE_CAPS - 1000 R _item n PID_BOTTLE_CAPS + 1000 #
+11 9030 D _item p PID_BOTTLE_CAPS > 799 D _param p SK_BARTER > 49 D _param p SK_BARTER < 100 R _item n PID_BOTTLE_CAPS + 800 R _item p PID_BOTTLE_CAPS - 800 #
+11 9040 D _item p PID_BOTTLE_CAPS > 499 D _param p SK_BARTER > 99 R _item p PID_BOTTLE_CAPS - 500 R _item n PID_BOTTLE_CAPS + 500 @
+11 10000 None 0 #
+0 10010 R _var p q_chosen = 3 @
+20 11000 None 0 #
+0 11010 #
+21 11020 D _param p SK_SPEECH > 100 D _var p npc_story = 0 @
+21 12000 None 0 #
+0 12010 R _item p PID_DEANS_ELECTRONICS + 1 R _var p npc_story = 1 #
+0 12020 R _item p PID_FIRST_AID_BOOK + 1 R _var p npc_story = 1 #
+0 12030 R _item p PID_SCOUT_HANDBOOK + 1 R _var p npc_story = 1 #
+0 12040 R _item p PID_GUNS_AND_BULLETS + 1 R _var p npc_story = 1 #
+0 12050 R _param p ST_EXPERIENCE + 2000 R _var p npc_story = 1 @
+25 13000 None 1 #
+27 13010 #
+28 13020 #
+26 13030 @
+26 14000 None 0 #
+0 14010 #
+29 14020 D _script caravan@d_NeedResetCaravanStatus 1 3 D _script caravan@d_CanResetCaravanStatus 1 3 R _script caravan@r_SetSelectedCaravan 1 3 #
+30 14030 D _script caravan@d_NeedResetCaravanStatus 1 3 D _script caravan@d_CanNotResetCaravanStatus 1 3 @
+27 15000 None 0 #
+0 15010 #
+31 15020 D _script caravan@d_NeedResetCaravanStatus 1 1 D _script caravan@d_CanResetCaravanStatus 1 1 R _script caravan@r_SetSelectedCaravan 1 1 #
+30 15030 D _script caravan@d_NeedResetCaravanStatus 1 1 D _script caravan@d_CanNotResetCaravanStatus 1 1 @
+28 16000 None 0 #
+0 16010 #
+32 16020 D _script caravan@d_NeedResetCaravanStatus 1 2 D _script caravan@d_CanResetCaravanStatus 1 2 R _script caravan@r_SetSelectedCaravan 1 2 #
+30 16030 D _script caravan@d_NeedResetCaravanStatus 1 2 D _script caravan@d_CanNotResetCaravanStatus 1 2 @
+29 17000 caravan@dlg_GenResetCaravanText 0 #
+0 17010 #
+0 17020 D _script caravan@d_CheckHasEnoughMoney 1 3 R _script caravan@r_ResetCaravanStatus 1 3 @
+30 18000 None 0 #
+0 18010 @
+31 19000 caravan@dlg_GenResetCaravanText 0 #
+0 19010 #
+0 19020 D _script caravan@d_CheckHasEnoughMoney 1 1 R _script caravan@r_ResetCaravanStatus 1 1 @
+32 20000 caravan@dlg_GenResetCaravanText 0 #
+0 20010 #
+0 20020 D _script caravan@d_CheckHasEnoughMoney 1 2 R _script caravan@r_ResetCaravanStatus 1 2 &
+
+[russ]
+{100}{}{ƒжеймс}
+{200}{}{¬ы видите большого, толстого мужчину с короткими, буйными волосами.}
+{210}{}{¬ы видите ƒжеймса Xоффи, хоз€ина каравана.}
+{210}{}{¬ы видите рубцеватого, выгл€д€щего сильным мужчину с оценивающим взгл€дом.}
+{1000}{}{Ddlaacreiaiaul onnriiaec}
+{1010}{}{aodre}
+{1020}{}{cireie}
+{1030}{}{il cireie}
+{2000}{}{Ddcaln, ? Acleen Oiooc. Ii iau?ii eli? ciaon Acceec. ? cralaot erdrarirec, einidul ooia?n cc dlaaciar.}
+{2010}{}{Nle?rn erecl-icaoau erdrariu ainia?nn? e inoiao?}
+{2020}{}{Eoar iau?ii ooia?n erdrariu cc Dlaaciar?}
+{2030}{}{?ni iiaiai a aidial?}
+{2040}{}{Ddinni inerndcartnu, Acceec. Ndrncai, ai nacaric?.}
+{2050}{}{Non nreil alei, eie adoa [Idcnuarlnl ?leialer, ddi einidiai drnnercre adiaiauce] inddracen? ilneieuei ilaleu ircra n iaice cc arrco erdrariia, eil au oinleinu aiairnu lai, ?niau diacarnun?.}
+{2060}{}{Eil iocir cioideroc? ia iaiie cc erdrariia. Ilneieuei ilaleu ircra n ice orle ilcrdericdiariiue didon?ce, dieicnl nreiai?}
+{2070}{}{Acleen. ? iaci cc iodriiceia erdrarir Arddi.}
+{2080}{}{Acceec, lnnu drcaiaid, ir nleo iodriu erdrariia...}
+{3000}{}{Yniai ? il cirt. Dinddrrcare erdrariuceia. Iau?ii erdrariu ooia?n in ntar 1-ai, 11-ai c 21-ai ?cner ercaiai eln?or. Anl irerclii, ere ?rnu. Acacru ec, ain ere iii onndilii: eiaar a aidial iroiacnn? erdrari, einidieo iociu etac, ir?reuice erdrarir nnracn drerneo calnu, dd?ei e tao in eile edldinnc. Anl irerclii, ere ?rnu.}
+{3010}{}{Nai? edldinnu? ?ni nu cellru a acao?}
+{3020}{}{Dii?nii. Niaar, iraldiil, ? diaiaidt n icec. Ndrncai, ai nacaric?.}
+{4000}{}{Ere cl, eie aie - ere nre aiaid?n? Dol, nla? ?ni, a drernel aindcnuarec?}
+{4010}{}{Aiiaul-ni ar.}
+{4020}{}{Anl, ? nla? irneorren?, oceieiaue. Ai nacaric?.}
+{5000}{}{Ro, ar. Niaar yni eiiail iau?ni?ln. Ol-ol.}
+{5010}{}{Nldldu, eiaar eu yni au?nicec, dicaieu crarnu nlal lul ilneieuei aiddinia.}
+{5020}{}{Io ar, r nu ere aoere. Ai nacaric?.}
+{6000}{}{Eu aiace erdrariu di anle ynie aiaie craunie donnuil. Ain ?ni ? nlal nerco: Eu inddrae?le cieinot doao a Aidia Oalccul, lul ?rnnu doau caln a Iut Dlii (i-e?-e?, lnec nu diicerlru i ?le ? aiaidt), c arcl ync oricc cc ied o irn ll dieodrtn.}
+{6010}{}{Dicaieu eil nddincnu o nla? lul eil-?ni.}
+{6020}{}{Anl ?nii. Dier.}
+{7000}{}{Dinelaill adle? iiainnle erei, di-eileo. Iau?iil alei - rronu, erdrariu c anl nreil.}
+{7010}{}{Eicii ? lul nddiro.}
+{7020}{}{Rar. Eraii, ? dieao.}
+{8000}{}{Ar, ni?ii. Dieit lai di ynie nndriiie ialcal n iieldie. In?lai cl il diei?u? Erdrari orle a Nri-Odriocnei.}
+{8010}{}{Iadieiil ndrncai! [Oenc]}
+{9000}{}{Or. Etar? cioideroc? nnicn alila, r i erdrdonro erdrariia nle aiell, eicln, nu ariacn ereie-ni, ineoar eil cirnu? 1500 eiiln c ? oerco irddraelicl.}
+{9010}{}{Eraii, nre ireao! [Oenc]}
+{9020}{}{Ain 1000 eiiln. Aueerauare erdrdon.}
+{9030}{}{Ain 800 eiiln! Aueerauare erdrdon.}
+{9040}{}{Ain 500 eiiln. Aueerauare erdrdon.}
+{10000}{}{[Iraei oeuarlnn?] Nre c aunu. ?lai nieuei il nalerlru ae? oidirlai ?leialer?!  Erdrari aacioen? a Nri-Odriocnei.}
+{10010}{}{? il craoao nait "uladinnu". [Oenc]}
+{11000}{}{Ar, ? cirt. Aeraiardt cr neocao. Ain naic aliuac.}
+{11010}{}{ Ndrncai. [Oenc]}
+{11020}{}{Acleen, r eicln, irecilru ileiiai?}
+{12000}{}{Iln, alila il are, eiao eicceo arnu, cinldlnoln?}
+{12010}{}{? aicueo "Yelendiiceo Acir".}
+{12020}{}{? aicueo eicao di dldaie dieiuc.}
+{12030}{}{Irnnieuir? eicar neronr eil ddcaiacnn?.}
+{12040}{}{Aicueo "Idoccl c ailddcdrnu".}
+{12050}{}{Iln, eicac eil il iociu, innrau nlal. [Oenc]}
+{13000}{}{Ar, a ?le alei? Ereie erdrari?}
+{13010}{}{Erdrari Alir Alear.}
+{13020}{}{Erdrari Nracileec.}
+{13030}{}{Erdrari Nnlialeer.}
+{14000}{}{A ?le creet?rlnn? ddiaeler n erdrariie Nnlialeer?}
+{14010}{}{Aoert, ? crae?io a nelaotuce drc.}
+{14020}{}{Ai adle? erdrarir, einidue eil aialeinu iodri?nu, ddiccirei iaii ilddc?niil niauncl. ? oinle@sex@|||r| au dlrcnu ynin eiioecen. Eicii yni ere-ni oeracnu?}
+{14030}{}{Ai adle? erdrarir, einidue eil aialeinu iodri?nu, ddiccirei iaii ilddc?niil niauncl. ? oinle@sex@|||r| au dlrcnu ynin eiioecen. Eicii yni ere-ni oeracnu?}
+{15000}{}{?ni nre neo?ceinu ni nnrdciie Aliie?}
+{15010}{}{Aoert, ? crae?io a nelaotuce drc.}
+{15020}{}{Ai adle? erdrarir, einidue eil aialeinu iodri?nu, ddiccirei iaii ilddc?niil niauncl. ? oinle@sex@|||r| au dlrcnu ynin eiioecen. Eicii yni ere-ni oeracnu?}
+{15030}{}{Ai adle? erdrarir, einidue eil aialeinu iodri?nu, ddiccirei iaii ilddc?niil niauncl. ? oinle@sex@|||r| au dlrcnu ynin eiioecen. Eicii yni ere-ni oeracnu?}
+{16000}{}{Erecl ddiaeleu n Yidcei?}
+{16010}{}{Aoert, ? crae?io a nelaotuce drc.}
+{16020}{}{Ai adle? erdrarir, einidue eil aialeinu iodri?nu, ddiccirei iaii ilddc?niil niauncl. ? oinle@sex@|||r| au dlrcnu ynin eiioecen. Eicii yni ere-ni oeracnu?}
+{16030}{}{Ai adle? erdrarir, einidue eil aialeinu iodri?nu, ddiccirei iaii ilddc?niil niauncl. ? oinle@sex@|||r| au dlrcnu ynin eiioecen. Eicii yni ere-ni oeracnu?}
+{17000}{}{Ro, ar. @lex leader@ drnnercre eil ia ynie ddiaelel. Nlal ddcalnn? crderncnu, ?niau eu crauec ia ynie ainraiie ilaidrcoelicc. Dernr ninnracn @lex money@ eiiln.}
+{17010}{}{? iaaoert oneiac? c aldionu.}
+{17020}{}{Aiacnn?. [Inarnu aliuac]}
+{18000}{}{Ddinnc, @pname@, ii yni ilaiceicii. Nu necreie ?rnni irn diaaiacru. Yni il eicln ddiaiecrnun? alneiil?ii.}
+{18010}{}{I?liu creu.}
+{19000}{}{Ro, ar. @lex leader@ drnnercre eil ia ynie ddiaelel. Nlal ddcalnn? crderncnu, ?niau eu crauec ia ynie ainraiie ilaidrcoelicc. Dernr ninnracn @lex money@ eiiln.}
+{19010}{}{? iaaoert oneiac? c aldionu.}
+{19020}{}{Aiacnn?. [Inarnu aliuac]}
+{20000}{}{Ro, ar. @lex leader@ drnnercre eil ia ynie ddiaelel. Nlal ddcalnn? crderncnu, ?niau eu crauec ia ynie ainraiie ilaidrcoelicc. Dernr ninnracn @lex money@ eiiln.}
+{20010}{}{? iaaoert oneiac? c aldionu.}
+{20020}{}{Aiacnn?. [Inarnu aliuac]}
+
+[engl]
+{100}{}{James}
+{200}{}{You see a burly, thick-set man with short, bushy hair.}
+{210}{}{You see James Hoffy, the caravan master.}
+{210}{}{You see a scarred, tough-looking man with a calculating stare.}
+{1000}{}{Initial preferences}
+{1010}{}{stupid}
+{1020}{}{know}
+{1030}{}{not know}
+{2000}{}{Hello there, I'm James Hoffy. But usually people call me Jimmy. I organize the caravans around here.}
+{2010}{}{Are there any caravans ready to go out now?}
+{2020}{}{}
+{2030}{}{Hear any news around town lately?}
+{2040}{}{I was just looking around, Jimmy. Thanks. Goodbye.}
+{2050}{}{There is one thing, my friend [You describe the man you have told about by undertaker] departed with your caravan a few weeks ago, IТd like to catch up to him.}
+{2060}{}{I need information concerning one of your caravans. Few week ago an unplanned traveler left with it, remember?}
+{2070}{}{Acleen. ? iaci cc iodriiceia erdrarir Arddi.}
+{2080}{}{Acceec, lnnu drcaiaid, ir nleo iodriu erdrariia...}
+{3000}{}{That I don't know. You'd have to ask the caravan drivers. You can usually find a caravan here on the 1st, 11th, and 21st of each month. Real neat and tidy that way. You see here, this is the way it works: When a caravan's in town and looking for help, the caravan master has his tent set up here just south of my castle. Real neat and tidy that way.}
+{3010}{}{Your castle? What do you mean?}
+{3020}{}{I see. I guess I'll talk to them, then. Thanks. Goodbye.}
+{4000}{}{What else is a man's home? Sheesh, were you brought up in a tent or something?}
+{4010}{}{ActuallyЕ I was.}
+{4020}{}{I've heard enough from you, damn bigot. Goodbye.}
+{5000}{}{Oh, yeah. Well, I guess that explains things, then. A lot of things. Heh, heh.}
+{5010}{}{Now that we've straightened that out, let me ask you something else.}
+{5020}{}{Yeah. Goodbye.}
+{6000}{}{We run caravans all over the fricking place. Let me tell you: We've got gold ore going out to Vault City, we've got some going out to New Reno (ooo-la-la, if ya know what I mean), and we've even got some going to those prissy bastards in the NCR.}
+{6010}{}{Let me ask you about something else.}
+{6020}{}{That's all I need to know for now. Goodbye.}
+{7000}{}{Not a whole lot going on lately, I guess. Just the usual digging, and caravans and stuff.}
+{7010}{}{Let me ask you about something else.}
+{7020}{}{Yeah. Goodbye.}
+{8000}{}{Yes. He had this strange suit with a number, I remember. Why not, I can help you. Caravan went to San-Francisco.}
+{8010}{}{Thanks a lot! [Leave]}
+{9000}{}{Heh. Any information has its price, especially concerning caravans, maybe you are some kind of bandit, how should I know. $1500 and I will show you the direction.}
+{9010}{}{All right, IТm gonna find it n my own! [Leave]}
+{9020}{}{Here is 1000 coins. Tell me the route.}
+{9030}{}{Here is 800 coins! Tell me the route.}
+{9040}{}{Here is 500 coins. Tell me the route.}
+{10000}{}{[Smiling boldly] Very well. There is nothing you canТt do for an honest man! Caravan went to San-Francisco.}
+{10010}{}{Your УgenerosityФ will not be forgotten. [Leave]}
+{11000}{}{Ar, ? cirt. Aeraiardt cr neocao. Ain naic aliuac.}
+{11010}{}{ Ndrncai. [Oenc]}
+{11020}{}{Acleen, r eicln, irecilru ileiiai?}
+{12000}{}{Iln, alila il are, eiao eicceo arnu, cinldlnoln?}
+{12010}{}{? aicueo "Yelendiiceo Acir"}
+{12020}{}{? aicueo eicao di dldaie dieiuc.}
+{12030}{}{Irnnieuir? eicar neronr eil ddcaiacnn?.}
+{12040}{}{Aicueo "Idoccl c ailddcdrnu".}
+{12050}{}{Iln, eicac eil il iociu, innrau nlal. [Oenc]}
+{13000}{}{Ar, a ?le alei? Ereie erdrari?}
+{13010}{}{Erdrari Alir Alear.}
+{13020}{}{Erdrari Nracileec.}
+{13030}{}{Erdrari Nnlialeer.}
+{14000}{}{A ?le creet?rlnn? ddiaeler n erdrariie Nnlialeer?}
+{14010}{}{Aoert, ? crae?io a nelaotuce drc.}
+{14020}{}{Ai adle? erdrarir, einidue eil aialeinu iodri?nu, ddiccirei iaii ilddc?niil niauncl. ? oinle@sex@|||r| au dlrcnu ynin eiioecen. Eicii yni ere-ni oeracnu?}
+{14030}{}{Ai adle? erdrarir, einidue eil aialeinu iodri?nu, ddiccirei iaii ilddc?niil niauncl. ? oinle@sex@|||r| au dlrcnu ynin eiioecen. Eicii yni ere-ni oeracnu?}
+{15000}{}{A ?le creet?rlnn? ddiaeler n erdrariie Alir Alear?}
+{15010}{}{Aoert, ? crae?io a nelaotuce drc.}
+{15020}{}{Ai adle? erdrarir, einidue eil aialeinu iodri?nu, ddiccirei iaii ilddc?niil niauncl. ? oinle@sex@|||r| au dlrcnu ynin eiioecen. Eicii yni ere-ni oeracnu?}
+{15030}{}{Ai adle? erdrarir, einidue eil aialeinu iodri?nu, ddiccirei iaii ilddc?niil niauncl. ? oinle@sex@|||r| au dlrcnu ynin eiioecen. Eicii yni ere-ni oeracnu?}
+{16000}{}{A ?le creet?rlnn? ddiaeler n erdrariie Yidcei Nracileec?}
+{16010}{}{Aoert, ? crae?io a nelaotuce drc.}
+{16020}{}{Ai adle? erdrarir, einidue eil aialeinu iodri?nu, ddiccirei iaii ilddc?niil niauncl. ? oinle@sex@|||r| au dlrcnu ynin eiioecen. Eicii yni ere-ni oeracnu?}
+{16030}{}{Ai adle? erdrarir, einidue eil aialeinu iodri?nu, ddiccirei iaii ilddc?niil niauncl. ? oinle@sex@|||r| au dlrcnu ynin eiioecen. Eicii yni ere-ni oeracnu?}
+{17000}{}{Ro, ar. @lex leader@ drnnercre eil ia ynie ddiaelel. Nlal ddcalnn? crderncnu, ?niau eu crauec ia ynie ainraiie ilaidrcoelicc. Dernr ninnracn @lex money@ eiiln.
+(}
+{17010}{}{? iaaoert oneiac? c aldionu.}
+{17020}{}{Aiacnn?. [Inarnu aliuac]}
+{18000}{}{Ddinnc, @pname@, ii yni ilaiceicii. Nu necreie ?rnni irn diaaiacru. Yni il eicln ddiaiecrnun? alneiil?ii.}
+{18010}{}{I?liu creu.}
+{19000}{}{Ro, ar. @lex leader@ drnnercre eil ia ynie ddiaelel. Nlal ddcalnn? crderncnu, ?niau eu crauec ia ynie ainraiie ilaidrcoelicc. Dernr ninnracn @lex money@ eiiln.
+(}
+{19010}{}{? iaaoert oneiac? c aldionu.}
+{19020}{}{Aiacnn?. [Inarnu aliuac]}
+{20000}{}{Ro, ar. @lex leader@ drnnercre eil ia ynie ddiaelel. Nlal ddcalnn? crderncnu, ?niau eu crauec ia ynie ainraiie ilaidrcoelicc. Dernr ninnracn @lex money@ eiiln.
+(}
+{20010}{}{? iaaoert oneiac? c aldionu.}
+{20020}{}{Aiacnn?. [Inarnu aliuac]}
+

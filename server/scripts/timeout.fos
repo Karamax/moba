@@ -1,0 +1,208 @@
+//Timeout by Galachad version 0.1.0
+//corrections by ison :)
+
+#include "_client_defines.fos"
+#include "client_gui_h.fos"
+#include "_colors.fos"
+#include "_defines.fos"
+#include "_msgstr.fos"
+
+IGUIElementTextOpt@ timeout;
+import int GetIniValue(string& iniKey, int defaultValue) from "ini_parser";
+//import bool IsAutoAimActive() from "client_auto_aim";
+
+void TimeoutUpdate()
+{
+	if(timeout.isVisible())
+	{
+		CritterCl@ cr = GetChosen();
+		if(@cr==null)
+		{
+			timeout.setText("");
+			return;
+		}
+		int Pauza=((cr.ParamBase[PAUZA])/30)+1;
+		int bosDOMINATION=(cr.ParamBase[BOS_PLUS]);
+		int enclaveDOMINATION=(cr.ParamBase[ENCLAVE_PLUS]);
+		int battletrue=(cr.ParamBase[BATTLE_TRUE]);
+		int timeMENTATS=(cr.ParamBase[PLAYER_TIMEOUT_MENTATS]-__FullSecond)/20;
+		int timeBUFFOUT=(cr.ParamBase[PLAYER_TIMEOUT_BUFFOUT]-__FullSecond)/20;
+		int timePSYCHO=(cr.ParamBase[PLAYER_TIMEOUT_PSYCHO]-__FullSecond)/20;
+		int timeJET=(cr.ParamBase[PLAYER_TIMEOUT_JET]-__FullSecond)/20;
+		int timeRADX=(cr.ParamBase[PLAYER_TIMEOUT_RAD_X]-__FullSecond)/20;
+		int timeNUKACOLA=(cr.ParamBase[PLAYER_TIMEOUT_NUKA_COLA]-__FullSecond)/20;
+		int timeBEER=(cr.ParamBase[PLAYER_TIMEOUT_BEER]-__FullSecond)/20;
+		int timeCOOKIE=(cr.ParamBase[PLAYER_TIMEOUT_COOKIE]-__FullSecond)/20;
+		int timeCIGARETTES=(cr.ParamBase[PLAYER_TIMEOUT_CIGARETTES]-__FullSecond)/20;
+		int timeFA=cr.Timeout[TO_SK_FIRST_AID]/20;
+		int timeDOC=cr.Timeout[TO_SK_DOCTOR]/20;
+		int timeREPAIR=cr.Timeout[TO_SK_REPAIR]/20;
+		int timeSCIEN=cr.Timeout[TO_SK_SCIENCE]/20;
+		int timeLOCK=cr.Timeout[TO_SK_LOCKPICK]/20;
+		int timeSTEAL=cr.Timeout[TO_SK_STEAL]/20;
+		int timeBAT=cr.Timeout[TO_BATTLE]/20;
+		int timeREPLI=cr.Timeout[TO_REPLICATION]/20;
+		int timeSNEAK=cr.Timeout[TO_SNEAK]/20;
+		string result="";
+//		if(IsAutoAimActive()) result="\n\n\n\n";
+		
+		if(battletrue==1)
+		{
+			result=result+ "NEC ("+bosDOMINATION+") -VS- ("+ enclaveDOMINATION+") REF\n";
+		}
+		if(battletrue==0)
+		{
+			result=result+ "Next Battle in "+Pauza+"min.\n";
+		}
+		result=result+ "Your Honor Points: "+ cr.ParamBase[PLAYER_POINTS] +"\n";
+		if(timeMENTATS>0)
+		{
+			if(timeMENTATS>120)
+				result=result+ "Mentats"+": "+timeMENTATS/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ "Mentats"+": "+timeMENTATS+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeBUFFOUT>0)
+		{
+			if(timeBUFFOUT>120)
+				result=result+ "Buffout"+": "+timeBUFFOUT/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ "Buffout"+": "+timeBUFFOUT+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timePSYCHO>0)
+		{
+			if(timePSYCHO>120)
+				result=result+ "Psycho"+": "+timePSYCHO/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ "Psycho"+": "+timePSYCHO+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeJET>0)
+		{
+			if(timeJET>120)
+				result=result+ "Jet"+": "+timeJET/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ "Jet"+": "+timeJET+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeRADX>0)
+		{
+			if(timeRADX>120)
+				result=result+ "Rad X"+": "+timeRADX/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ "Rad X"+": "+timeRADX+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeNUKACOLA>0)
+		{
+			if(timeNUKACOLA>120)
+				result=result+ "Nuka Cola"+": "+timeNUKACOLA/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ "Nuka Cola"+": "+timeNUKACOLA+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeBEER>0)
+		{
+			if(timeBEER>120)
+				result=result+ "Beer"+": "+timeBEER/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ "Beer"+": "+timeBEER+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeCOOKIE>0)
+		{
+			if(timeCOOKIE>120)
+				result=result+ "Cookie"+": "+timeCOOKIE/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ "Cookie"+": "+timeCOOKIE+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeCIGARETTES>0)
+		{
+			if(timeCIGARETTES>120)
+				result=result+ "Cigarettes"+": "+timeCIGARETTES/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ "Cigarettes"+": "+timeCIGARETTES+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeFA>0)
+		{
+			if(timeFA>120)
+				result=result+ GetMsgStr(TEXTMSG_GAME,102301)+": "+timeFA/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ GetMsgStr(TEXTMSG_GAME,102301)+": "+timeFA+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeDOC>0)
+		{
+			if(timeDOC>120)
+				result=result+ GetMsgStr(TEXTMSG_GAME,102311)+": "+timeDOC/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ GetMsgStr(TEXTMSG_GAME,102311)+": "+timeDOC+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeREPAIR>0)
+		{
+			if(timeREPAIR>120)
+				result=result+ GetMsgStr(TEXTMSG_GAME,102321)+": "+timeREPAIR/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ GetMsgStr(TEXTMSG_GAME,102321)+": "+timeREPAIR+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeSCIEN>0)
+		{
+			if(timeSCIEN>120)
+				result=result+ GetMsgStr(TEXTMSG_GAME,102331)+": "+timeSCIEN/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ GetMsgStr(TEXTMSG_GAME,102331)+": "+timeSCIEN+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeLOCK>0)
+		{
+			if(timeLOCK>120)
+				result=result+ GetMsgStr(TEXTMSG_GAME,102341)+": "+timeLOCK/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ GetMsgStr(TEXTMSG_GAME,102341)+": "+timeLOCK+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeSTEAL>0)
+		{
+			if(timeSTEAL>120)
+				result=result+ GetMsgStr(TEXTMSG_GAME,102351)+": "+timeSTEAL/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ GetMsgStr(TEXTMSG_GAME,102351)+": "+timeSTEAL+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeBAT>0)
+		{
+			if(timeBAT<20)
+				result=result+ GetMsgStr(TEXTMSG_GAME,102381)+": "+timeBAT+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeREPLI>0)
+		{
+			if(timeREPLI>120)
+				result=result+ GetMsgStr(TEXTMSG_GAME,102411)+": "+timeREPLI/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE)+"\n";
+			else
+				result=result+ GetMsgStr(TEXTMSG_GAME,102411)+": "+timeREPLI+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND)+"\n";
+		}
+		if(timeSNEAK>0)
+		{
+			if(timeSNEAK>120)
+				result=result+ GetMsgStr(TEXTMSG_GAME,102431)+": "+timeSNEAK/60+GetMsgStr(TEXTMSG_GAME,TIMEOUT_MINUTE);
+			else
+				result=result+ GetMsgStr(TEXTMSG_GAME,102431)+": "+timeSNEAK+GetMsgStr(TEXTMSG_GAME,TIMEOUT_SECOND);
+		}
+		timeout.setText(result); 
+	}
+}
+
+void InitTimeoutInfo()    
+{
+	AppendIfaceIni("timeout.ini");
+	int x=GetIniValue("timeoutx",__ScreenWidth-250);
+	if(x==0)
+		x=__ScreenWidth-250;
+	int y=GetIniValue("timeouty",5);
+	if(y==0)
+		y=5;
+	@timeout = GUI_AddText(CLIENT_MAIN_SCREEN_GAME,"",0,0)    
+	.AbsolutePosition(x,y)
+	.TextOptions(FONT_FALLOUT,COLOR_GREEN,FT_BORDERED|FT_CENTERR)
+	.TextBoxSize(248,130);
+}
+
+void TimeOutChangeVisibility()
+{
+	if(timeout.isVisible())
+		timeout.setVisible(false);
+	else
+		timeout.setVisible(true);
+	timeout.setText("");
+}

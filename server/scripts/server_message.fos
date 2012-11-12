@@ -1,0 +1,17 @@
+#include "_defines.fos"
+
+void unsafe_server_message(Critter& cr, int, int, int, string@ message, int[]@)
+{
+	//if(!CheckIfDEV(cr)) return;
+	if(@message==null) return;
+	
+	for(uint i=0; i<=__MaxID; i++)
+	{
+		string@ str=GetPlayerName(i);
+		if(@str!=null)
+		{
+			Critter @findcr=GetPlayer(str);
+			if(@findcr!=null) findcr.Say(SAY_SERVER_MESSAGE,""+message);
+		}
+	}
+}

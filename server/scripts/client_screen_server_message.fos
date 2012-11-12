@@ -1,0 +1,21 @@
+
+IGUIElementTextOpt @ServerMessageTextOpt;
+IGUIElementTextOpt @ServerMessageGlobalMapTextOpt;
+uint ServerMessageDissappearTime=0;
+
+void InitServerMessageScreen()
+{
+	@ServerMessageTextOpt=
+	GUI_AddText(CLIENT_MAIN_SCREEN_GAME,"",__ScreenWidth/2-150,170)
+	  .TextOptions(FONT_BIG, COLOR_LRED2, FT_BORDERED|FT_CENTERX)
+      .TextBoxSize(300,500)
+	  .AbsolutePosition(true)
+	  .Visible(false);
+	
+	@ServerMessageGlobalMapTextOpt=
+	GUI_AddText(CLIENT_MAIN_SCREEN_GLOBAL_MAP,"",__ScreenWidth/2-150,100)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED|FT_CENTERX)
+      .TextBoxSize(300,500)
+	  .AbsolutePosition(true)
+	  .Visible(false);
+}

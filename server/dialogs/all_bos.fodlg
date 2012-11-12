@@ -1,0 +1,31 @@
+[comment]
+Aaoe eiiiaioa?ee / Your comments.
+
+[data]
+lang=russ engl
+
+[dialog]
+&
+1 1000 None 0 #
+2 1010 @
+2 2000 None 0 &
+
+[russ]
+{200}{}{Вы видите одного из жителей.}
+{210}{}{Вы видите одного из жителей.}
+{1000}{}{russ}
+{1010}{}{Оuss}
+{2000}{}{Нuss}
+
+[engl]
+{100}{}{Brotherhood Soldier}
+{200}{}{You see one of BoS soldiers.}
+{210}{}{You see one of Brotherhood of Steel soldiers.}
+{220}{}{You better not stand near when he wakes up. }
+{230}{}{You better not stand near when he wakes up. }
+{260}{}{Oh fuck! He got owned!}
+{270}{}{Oh fuck! He got owned!}
+{1000}{}{Initial preferences}
+{1010}{}{Answer}
+{2000}{}{Hah! Enclave stand's no chances!@@I wonder how town citizens survive our fight's...@@I hate taking off that armor when i go to toilet.@@My weapon jammed again....@@Why we have to get that ugly towns...@@When we will atack their main base?@@Stop talking to me.@@...and then i shot him in the groin...@@Friend of mine became Elder@@For me, those scribes are lazy scared babies, and they dont know how to handle the weapons they make.@@I could use bigger ammo ration.@@What the hell means "Kurwa"? I keep hearing that from those runers around the base.@@Elder Says Help, We help. Capititain says shoot, we blow their fucking heads!@@Hail, need something?@@What do You need?@@Go bother another guy.@@I really can't decide wchich weapons are best... Big guns Blow,Small Guns leaves nice holes and Energy Weapons turn your enemy to nothingness...@@...and then i said leave that woman or i will burst you into pieces! You should see him running...@@How long i have been standing here?@@Eh. I'm bored...@@I dont know you, bugger off@@Do you think that they can atack our base?@@}
+

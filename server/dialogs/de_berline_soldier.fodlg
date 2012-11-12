@@ -1,0 +1,37 @@
+[comment]
+
+
+[data]
+lang=engl pols russ
+
+[dialog]
+&
+1 1000 None 1 #
+2 1010 R _script dialog@r_SayMessageDelayed 3 1 0 2 @
+2 2000 None 0 &
+
+[engl]
+{100}{}{Bearline Soldier}
+{200}{}{You see a soldier.}
+{1000}{}{Predialogue installations}
+{1010}{}{start}
+{2000}{}{ }
+{100000001}{}{Versuche nichts Dummes!@@Behalte deine Hände da wo Ich sie sehen kann.@@Ich habe eine Waffe und ich Weiß sie zu Nutzen.@@Verpiss dich.@@Geh aus meiner Sicht.@@Ich bin ein Berliner.@@Eine Falsche Idee und es war deine Letzte.@@Ist es dein Job mich zu Nerven?}
+
+[pols]
+{100}{}{Berliński Żołnierz}
+{200}{}{Widzisz żołnierza.}
+{210}{}{Widzisz żołnierza, lepiej z nim nie zadzierać, wyglądą na osobę mogącą łatwo wyrządzić krzywdę.}
+{1000}{}{Predialogue installations}
+{1010}{}{start}
+{2000}{}{ }
+{100000001}{}{Versuche nichts Dummes!@@Behalte deine Hände da wo Ich sie sehen kann.@@Ich habe eine Waffe und ich Weiß sie zu Nutzen.@@Verpiss dich.@@Geh aus meiner Sicht.@@Ich bin ein Berliner.@@Eine Falsche Idee und es war deine Letzte.@@Ist es dein Job mich zu Nerven?}
+
+[russ]
+{100}{}{Bearline Soldier}
+{200}{}{You see a soldier.}
+{1000}{}{Predialogue installations}
+{1010}{}{start}
+{2000}{}{ }
+{100000001}{}{Versuche nichts Dummes!@@Behalte deine Hände da wo Ich sie sehen kann.@@Ich habe eine Waffe und ich Weiß sie zu Nutzen.@@Verpiss dich.@@Geh aus meiner Sicht.@@Ich bin ein Berliner.@@Eine Falsche Idee und es war deine Letzte.@@Ist es dein Job mich zu Nerven?}
+

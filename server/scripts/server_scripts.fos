@@ -1,0 +1,64 @@
+#include "_defines.fos"
+#include "_itempid.fos"
+#include "_maps.fos"
+#include "_colors.fos"
+#include "_time.fos"
+#include "_animation.fos"
+import void PlayVideo(Critter& cr, string& videoName, bool canStop) from "media";
+
+void unsafe_video(Critter& cr, int, int, int, string@, int[]@)
+{
+	PlayVideo(cr,"TheLifeAfterHell", false);
+}
+void unsafe_command(Critter& cr, int command, int HexX, int HexY, string@ message, int[]@)
+{
+	cr.ParamBase[PLAYER_COMMAND]=command;
+	cr.ParamBase[PLAYER_COMMAND_X]=HexX;
+	cr.ParamBase[PLAYER_COMMAND_Y]=HexY;
+}
+void unsafe_battle_stats(Critter& cr, int, int, int, string@ message, int[]@)
+{
+	cr.ParamBase[PAUZA]=__EvTime;
+	cr.ParamBase[BOS_PLUS]=__BosPLUS;
+	cr.ParamBase[ENCLAVE_PLUS]=__EnclavePlus;
+	cr.ParamBase[BATTLE_TRUE]=__IsBattle;
+}
+void unsafe_ap_regen(Critter& cr, int, int, int, string@ message, int[]@)
+{
+	cr.StatBase[ST_CURRENT_AP]=5000;
+}
+void unsafe_teleport_on_battle(Critter& cr, int, int, int, string@ message, int[]@)
+{
+	if(__IsBattle==0)
+			return;
+	int number=27000;
+	if(__RollMap==1)
+		number=27000;
+	else if(__RollMap==2)
+		number=28000;
+	else if(__RollMap==3)
+		number=18;
+	else if(__RollMap==4)
+		number=31;
+	else if(__RollMap==5)
+		number=45;
+	else if(__RollMap==6)
+		number=62;
+	else if(__RollMap==7)
+		number=6;
+	else if(__RollMap==8)
+		number=9;
+	else if(__RollMap==9)
+		number=115;
+
+	Map @map = GetMapByPid( number, 0 );
+	if (cr.ParamBase[PLAYER_MAIN_FACTION] == BROTHERHOOD)
+	{
+		cr.TransitToMap( map.Id, 80 );
+	}
+	else if (cr.ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)
+	{
+		cr.TransitToMap( map.Id, 90 );
+	}	
+	cr.ParamBase[IN_BASE] = 0;
+}

@@ -1,0 +1,74 @@
+[comment]
+
+
+[data]
+lang=pols engl russ
+
+[dialog]
+&
+1 1000 None 1 #
+2 1010 D _param p ST_CHARISMA } 2 D _param p ST_INTELLECT } 5 @
+2 2000 None 0 #
+3 2010 D _param p SK_DOCTOR { 50 #
+4 2020 D _param p SK_DOCTOR > 50 D _param p SK_DOCTOR { 140 #
+5 2030 D _script dialog@d_IsToHeal 0  D _item p PID_BOTTLE_CAPS } 300 R _item p PID_BOTTLE_CAPS - 300 R _script dialog@r_ToHeal 0 #
+0 2040 @
+3 3000 None 0 #
+0 3010 D _param p SK_DOCTOR } 50 @
+4 4000 None 0 #
+0 4010 D _item p PID_BOTTLE_CAPS } 1500 D _param p SK_DOCTOR } 50 D _var p de_medic_doctor = 0 R _param p SK_DOCTOR + 20 R _param p SK_FIRST_AID + 15 R _item p PID_BOTTLE_CAPS - 1500 R _var p de_medic_doctor + 1 #
+0 4020 D _item p PID_BOTTLE_CAPS < 1500 @
+5 5000 None 0 #
+0 5010 &
+
+[pols]
+{100}{}{Doctor}
+{1000}{}{Predialogue installations}
+{1010}{}{start}
+{2000}{}{Witaj przybyszu. Potrzebujesz leczenia? cos kiepsko wygladasz...}
+{2010}{}{Slyszalem, ze mozesz mnie nauczyc troche sztuki medycznej. Nie mam za duzej wprawy, ale potrafie wykonac proszki lecznie i znam zastowanie innych srodkow.}
+{2020}{}{Slyszalem, ze mozesz mnie nauczyc troche sztuki medycznej. Nie mam za duzej wprawy, ale potrafie wykonac proszki lecznie i znam zastowanie innych srodkow.}
+{2030}{}{Mozesz mnie uzdrowic? (300 kapsli)}
+{2040}{}{Musze isc.}
+{3000}{}{Z tego co widze to nie bardzo lapiesz o co chodzi... musisz wiedzec, ze jesli zrobisz cos nie tak jak trzeba to mozesz kogs okaleczyc albo nawet pomozesz mu zejsc z tego swiata. Wroc jak bedziesz wiedzial o co chodzi. Zegnam}
+{3010}{}{Dupek <spluwasz na ziemie i odchodzisz z opuszczona glowa, klac pod nosem>}
+{4000}{}{Widze ze lapiesz o co chodzi. Naucze Cie, ale taka wiedza bedzie CIe kosztowac 1500 kapsli. To jak, gotowy wyskoczyc z kapsli dla dobra ludzkosci?}
+{4010}{}{Zabierajmy sie do roboty!}
+{4020}{}{Kurwa, az tyle? nie mam... <kopiesz w piach i odchodzisz>}
+{5000}{}{Oczywiscie, badz szczesliwy.}
+{5010}{}{EXIT}
+
+[engl]
+{100}{}{Doctor}
+{1000}{}{Predialogue installations}
+{1010}{}{start}
+{2000}{}{Welcome wastelander. Need medic? You're looking bad...}
+{2010}{}{I heard, that you can learn me some medic skills. I don't have good practice, but I can make some basic healing supplies and I know other things.}
+{2020}{}{I heard, that you can learn me some medic skills. I don't have good practice, but I can make some basic healing supplies and I know other things.}
+{2030}{}{Can you heal me? (300 caps)}
+{2040}{}{I need to go.}
+{3000}{}{For now, I can see that you don't know what I am talking about...you need to know, that If you'll make something wrong, you can cripple someone or even kill him. Come back when you'll know what's going on.Bye}
+{3010}{}{Asshole <spitting on ground and leaving with lowered head >}
+{4000}{}{I see that you know wha's going on. I'll learn you, but it will cost you something, 1500 caps. So, are you ready  to know something new about humans?}
+{4010}{}{Let's get to work!}
+{4020}{}{Shit, so much? I don't have... <dig in the sand and walk away>}
+{5000}{}{Of course, be careful.}
+{5010}{}{EXIT}
+
+[russ]
+{100}{}{Doctor}
+{1000}{}{Predialogue installations}
+{1010}{}{start}
+{2000}{}{Welcome wastelander. Need medic? You're looking bad...}
+{2010}{}{I heard, that you can learn me some medic skills. I don't have good practice, but I can make some basic healing supplies and I know other things.}
+{2020}{}{I heard, that you can learn me some medic skills. I don't have good practice, but I can make some basic healing supplies and I know other things.}
+{2030}{}{Can you heal me? (300 caps)}
+{2040}{}{I need to go.}
+{3000}{}{For now, I can see that you don't know what I am talking about...you need to know, that If you'll make something wrong, you can cripple someone or even kill him. Come back when you'll know what's going on.Bye}
+{3010}{}{Asshole <spitting on ground and leaving with lowered head >}
+{4000}{}{I see that you know wha's going on. I'll learn you, but it will cost you something, 1500 caps. So, are you ready  to know something new about humans?}
+{4010}{}{Let's get to work!}
+{4020}{}{Shit, so much? I don't have... <dig in the sand and walk away>}
+{5000}{}{Of course, be careful.}
+{5010}{}{EXIT}
+

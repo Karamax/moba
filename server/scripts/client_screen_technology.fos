@@ -1,0 +1,168 @@
+IGUIElementTextOpt@ SmallGunsText;
+IGUIElementTextOpt@ BigGunsText;
+IGUIElementTextOpt@ EnergyWeaponsText;
+IGUIElementTextOpt@ ArmorsText;
+IGUIElementTextOpt@ MedicamentsText;
+IGUIElementTextOpt@ TableText;
+IGUIElementTextOpt@ Base1Text;
+IGUIElementTextOpt@ Base2Text;
+IGUIElementTextOpt@ Base3Text;
+IGUIElementTextOpt@ DeleteBaseText;
+IGUIElementButtonOpt@ TechnologyPanelExitButton;
+IGUIElementButtonOpt@ Base1Button;
+IGUIElementButtonOpt@ Base2Button;
+IGUIElementButtonOpt@ Base3Button;
+
+class Base1ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_bases@unsafe_create_base",0,0,0,null,null);
+	}
+}
+
+class Base2ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_bases@unsafe_create_base",1,0,0,null,null);
+	}
+}
+
+class Base3ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_bases@unsafe_create_base",2,0,0,null,null);
+	}
+}
+
+class TechnologyPanelExitButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		HideScreen(CLIENT_SCREEN_TECHNOLOGY,0,0,0);
+	}
+}
+
+class TechnologyScreenClass : IGUIScreenCallbackMove
+{
+	void OnMove(int x, int y){}
+}
+
+
+void InitTechnologyScreen()
+{
+	TechnologyScreenClass TechnologyScreen;
+	GUI_CreateScreen(CLIENT_SCREEN_TECHNOLOGY,"window.png")
+		.CanMove(true)
+		.Modal(false)
+		.Multiinstance(false)
+		.SizeByMultipleImages(1,1)
+		.CallbackMove(TechnologyScreen);
+		
+	@SmallGunsText=
+	GUI_AddText(CLIENT_SCREEN_TECHNOLOGY,"", 30, 68)
+	  .TextOptions(FONT_BIG, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(505,10)
+	  .Visible(true);
+	
+	@BigGunsText=
+	GUI_AddText(CLIENT_SCREEN_TECHNOLOGY,"", 30, 108)
+	  .TextOptions(FONT_BIG, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(505,10)
+	  .Visible(true);
+	  
+	@EnergyWeaponsText=
+	GUI_AddText(CLIENT_SCREEN_TECHNOLOGY,"", 30, 148)
+	  .TextOptions(FONT_BIG, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(505,10)
+	  .Visible(true);
+	  
+	@ArmorsText=
+	GUI_AddText(CLIENT_SCREEN_TECHNOLOGY,"", 30, 188)
+	  .TextOptions(FONT_BIG, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(505,10)
+	  .Visible(true);
+	  
+	@MedicamentsText=
+	GUI_AddText(CLIENT_SCREEN_TECHNOLOGY,"", 30, 228)
+	  .TextOptions(FONT_BIG, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(505,10)
+	  .Visible(true);
+	  
+	@TableText=
+	GUI_AddText(CLIENT_SCREEN_TECHNOLOGY,"Technology Table", 150, 28)
+	  .TextOptions(FONT_BIG, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(400,10)
+	  .Visible(true);
+	 
+	TechnologyPanelExitButtonClass obiekttechnology;
+	@TechnologyPanelExitButton=
+	GUI_AddButton(CLIENT_SCREEN_TECHNOLOGY, 0,0)
+		.UpPic("greendot small_x.png")
+		.DownPic("greendot small_x.png")
+		.ClickableZone(33,33)
+		.Visible(true)
+		.CallbackMouseClick(obiekttechnology);
+		
+	Base1ButtonClass obiektBase1Button;
+	@Base1Button=
+	GUI_AddButton(CLIENT_SCREEN_TECHNOLOGY, 30,300)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.Visible(true)
+		.CallbackMouseClick(obiektBase1Button);
+		
+	@Base1Text=
+	GUI_AddText(CLIENT_SCREEN_TECHNOLOGY,"Create base number 1.", 70, 305)
+	  .TextOptions(FONT_BIG, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(400,10)
+	  .Visible(true);
+		
+	Base2ButtonClass obiektBase2Button;
+	@Base2Button=
+	GUI_AddButton(CLIENT_SCREEN_TECHNOLOGY, 30,340)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.Visible(true)
+		.CallbackMouseClick(obiektBase2Button);
+		
+	@Base2Text=
+	GUI_AddText(CLIENT_SCREEN_TECHNOLOGY,"Create base number 2.", 70, 345)
+	  .TextOptions(FONT_BIG, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(400,10)
+	  .Visible(true);
+		
+	Base3ButtonClass obiektBase3Button;
+	@Base3Button=
+	GUI_AddButton(CLIENT_SCREEN_TECHNOLOGY, 30,380)
+		.UpPic("greendot big_x.png")
+		.DownPic("greendot big_x.png")
+		.ClickableZone(33,33)
+		.Visible(true)
+		.CallbackMouseClick(obiektBase3Button);
+		
+	@Base3Text=
+	GUI_AddText(CLIENT_SCREEN_TECHNOLOGY,"Create base number 3.", 70, 385)
+	  .TextOptions(FONT_BIG, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(400,10)
+	  .Visible(true);
+	  
+	@DeleteBaseText=
+	GUI_AddText(CLIENT_SCREEN_TECHNOLOGY,"To delete the base write inside base map: ~deletebase", 70, 425)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(400,10)
+	  .Visible(true);
+}
+	  
+void ShowTechnologyScreen()
+{
+		SmallGunsText.setText("Small Guns: "+GetChosen().ParamBase[TECH_SG]+" lvl" );
+		BigGunsText.setText("Big Guns: "+GetChosen().ParamBase[TECH_BG]+" lvl" );
+		EnergyWeaponsText.setText("Energy Weapons: "+GetChosen().ParamBase[TECH_EW]+" lvl" );
+		ArmorsText.setText("Armors: "+GetChosen().ParamBase[TECH_AR]+" lvl" );
+		MedicamentsText.setText("Med&Drugs: "+GetChosen().ParamBase[TECH_MD]+" lvl" );
+}

@@ -1,0 +1,49 @@
+[comment]
+Aaoe eiiiaioa?ee / Your comments.
+
+[data]
+lang=russ engl pols germ
+
+[dialog]
+&
+1 1000 None 0 #
+2 1010 @
+2 2000 None 0 &
+
+[russ]
+{100}{}{Citizen.}
+{110}{}{avatar_kirelov.rng}
+{200}{}{You see a citizen.}
+{210}{}{You see a citizen of Junktown.}
+{240}{}{You see dead body.}
+{250}{}{You see dead citizen.}
+{1000}{}{I?aaaeaeiaiaua onoaiiaee}
+{1010}{}{-}
+{2000}{}{I think I'm Radiated.@@Welcome in Junktown!@@Don't Stare at me Like that!@@I am citizen of this city.@@Hi there, what ya need?.@@Hello.@@Hi.@@Do you need something?@@Anything's wrong?@I don't have the Time to talk right now, Sorry.@@Hello there!@@Uff, today its really hot weather.@@ Do you have something to drink?@@Be careful, don't try to do something stupid.@@ Move along, don't look at me like retarded!@@ Am I monument ? NO! So stop staring at me!@@Please, I am busy.@@ Stop doing those weird things, you're ugly@@Excuse me, I am busy.@@This town was made long time ago...Actually I don't know when.@@ When you will stop looking at me? I'd be happy.@@Do NOT touch anything which isn't yours!@@Do you understand me?@}
+
+[engl]
+{100}{}{Citizen.}
+{110}{}{avatar_kirelov.rng}
+{200}{}{You see a citizen.}
+{210}{}{You see a citizen of Junktown.}
+{240}{}{You see dead body.}
+{250}{}{You see dead citizen.}
+{1000}{}{Initial preferences}
+{1010}{}{-}
+{2000}{}{I think I'm Radiated.@@Welcome in Junktown!@@Don't Stare at me Like that!@@I am citizen of this city.@@Hi there, what ya need?.@@Hello.@@Hi.@@Do you need something?@@Anything's wrong?@I don't have the Time to talk right now, Sorry.@@Hello there!@@Uff, today its really hot weather.@@ Do you have something to drink?@@Be careful, don't try to do something stupid.@@ Move along, don't look at me like retarded!@@ Am I monument ? NO! So stop staring at me!@@Please, I am busy.@@ Stop doing those weird things, you're ugly@@Excuse me, I am busy.@@This town was made long time ago...Actually I don't know when.@@ When you will stop looking at me? I'd be happy.@@Do NOT touch anything which isn't yours!@@Do you understand me?@}
+
+[pols]
+{100}{}{Citizen.}
+{110}{}{avatar_kirelov.rng}
+{200}{}{You see a citizen.}
+{210}{}{You see a citizen.}
+{1000}{}{Initial preferences}
+{1010}{}{-}
+{2000}{}{I think I'm Radiated.@@Don't get any Wrong Ideas!@@Don't Stare at me Like that!@@Please don't Hurt my Family.@@Please, I need food.@@Hello.@@Hi.@@Do you need something?@@Anything's wrong?@I don't have the Time to talk right now, Sorry.}
+
+[germ]
+{100}{}{none}
+{1000}{}{I?aaaeaeiaiaua onoaiiaee}
+{1010}{}{-}
+{2000}{}{I think I'm Radiated.@@Don't get any Wrong Ideas!@@Don't Stare at me Like that!@@Please don't Hurt my Family.@@Please, I need food.@@Hello.@@Hi.@@Do you need something?@@Anything's wrong?@I don't have the Time to talk right now, Sorry.}
+

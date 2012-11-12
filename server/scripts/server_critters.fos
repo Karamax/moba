@@ -1,0 +1,78 @@
+#include "_teams.fos"
+#include "_defines.fos"
+#include "_itempid.fos"
+#include  "npc_planes.fos"
+#include "_macros.fos"
+#include "_npc_pids.fos"
+#include "_bags.fos"
+
+void Behemoth( Critter& npc, bool firstTime )
+{
+    npc.StatBase[ ST_STRENGTH ] = 8;
+    npc.StatBase[ ST_ENDURANCE ] = 8;
+    npc.StatBase[ ST_LUCK ] = 6;
+    npc.StatBase[ ST_ACTION_POINTS ] = 20;
+    npc.StatBase[ ST_CRITICAL_CHANCE ] = 20;
+    npc.StatBase[ ST_MELEE_DAMAGE ] = 6;
+    npc.SkillBase[ SK_UNARMED ] = 100;
+    npc.SkillBase[ SK_UNARMED ] = 100;
+    npc.SkillBase[ SK_THROWING ] = 80;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ] = 1;
+    npc.StatBase[ ST_KILL_EXPERIENCE ] = 80;
+    npc.StatBase[ ST_BONUS_LOOK ] = 10;
+	npc.StatBase[ST_TEAM_ID]=TEAM_Guard;
+	npc.ModeBase[MODE_UNLIMITED_AMMO]=1;
+	npc.ModeBase[MODE_NO_DROP]=1;
+	npc.ModeBase[MODE_NO_LOOT]=1;
+	npc.ModeBase[MODE_NO_STEAL]=1;
+	npc.StatBase[ST_EXPLODE_ABSORB] = 60;
+    npc.StatBase[ST_EXPLODE_RESIST] = 90;
+	npc.StatBase[ST_REPLICATION_TIME]=__FullSecond+REAL_MINUTE(45);
+	npc.ShowCritterDist1=80;
+	npc.AddItem(PID_MINIGUN,1);
+	npc.SetFavoriteItem(SLOT_HAND1,PID_MINIGUN);
+}
+
+void ghoul( Critter& npc, bool firstTime )
+{
+    npc.StatBase[ ST_STRENGTH ] = 8;
+    npc.StatBase[ ST_ENDURANCE ] = 8;
+    npc.StatBase[ ST_LUCK ] = 10;
+    npc.StatBase[ ST_ACTION_POINTS ] = 20;
+    npc.StatBase[ ST_CRITICAL_CHANCE ] = 20;
+    npc.StatBase[ ST_MELEE_DAMAGE ] = 6;
+    npc.SkillBase[ SK_UNARMED ] = 100;
+    npc.SkillBase[ SK_THROWING ] = 80;
+	npc.StatBase[ ST_DIALOG_ID ] = 21533;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ] = 1;
+    npc.StatBase[ ST_KILL_EXPERIENCE ] = 80;
+    npc.StatBase[ ST_BONUS_LOOK ] = 10;
+	npc.StatBase[ST_TEAM_ID]=TEAM_Guard;
+	npc.ModeBase[MODE_UNLIMITED_AMMO]=1;
+	npc.ModeBase[MODE_NO_DROP]=1;
+	npc.ModeBase[MODE_NO_LOOT]=1;
+	npc.ModeBase[MODE_NO_STEAL]=1;
+	npc.StatBase[ST_EXPLODE_ABSORB] = 60;
+    npc.StatBase[ST_EXPLODE_RESIST] = 90;
+	npc.StatBase[ST_REPLICATION_TIME]=__FullSecond+REAL_MINUTE(45);
+	npc.ShowCritterDist1=80;
+	npc.AddItem(PID_ASSAULT_RIFLE,1);
+	npc.SetFavoriteItem(SLOT_HAND1,PID_ASSAULT_RIFLE);
+}
+
+void guard( Critter& npc, bool firstTime )
+{
+    npc.StatBase[ ST_STRENGTH ] = 8;
+    npc.StatBase[ ST_ENDURANCE ] = 8;
+    npc.StatBase[ ST_LUCK ] = 6;
+    npc.StatBase[ ST_ACTION_POINTS ] = 10;
+    npc.StatBase[ ST_CRITICAL_CHANCE ] = 20;
+    npc.StatBase[ ST_MELEE_DAMAGE ] = 6;
+    npc.SkillBase[ SK_UNARMED ] = 100;
+    npc.SkillBase[ SK_UNARMED ] = 100;
+    npc.SkillBase[ SK_THROWING ] = 80;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ] = 1;
+    npc.StatBase[ ST_KILL_EXPERIENCE ] = 80;
+    npc.StatBase[ ST_BONUS_LOOK ] = 10;
+	npc.StatBase[ST_TEAM_ID]=TEAM_Guard;
+}

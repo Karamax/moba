@@ -1,0 +1,466 @@
+// Author: cvet
+#include "_macros.fos"
+#include "entire.fos"
+#include "_msgstr.fos"
+
+import void DropDrugEffects( Critter& cr ) from "drugs";
+import void DropPoison( Critter& cr ) from "poison";
+import void DropRadiation( Critter& cr ) from "radiation";
+import void PlayVideo( Critter& cr, string& videoName, bool canStop ) from "media";
+import void FindEncounter( Critter@[]& group, Item@ car, uint x, uint y, uint& encounterDescriptor, bool& waitForAnswer, bool empty ) from "worldmap";
+import void InviteToEncounter( Critter@[]& group, Item@ car, uint encounterDescriptor, int combatMode, uint& mapId, uint16& hexX, uint16& hexY, uint8& dir ) from "worldmap";
+import bool NeedReplicateCritterToBattle( Critter& cr ) from "purgatory";
+
+const uint16 HellMapPid = MAP_replication_hell;
+const        uint16[] ReplicatorsMapPids = { MAP_replication1, MAP_replication2, MAP_replication3, MAP_replication4 };
+uint         ReplicatorPos = 0;
+
+// Permanent death
+bool IsPermanentDeathInit = false;
+uint[] PermanentDeath;
+
+bool IsPermanentDeath( uint id ) // Export
+{
+    if( not IsPermanentDeathInit )
+    {
+        GetAnyData( "PermanentDeath", PermanentDeath );
+        IsPermanentDeathInit = true;
+    }
+
+    for( uint i = 0, j = PermanentDeath.length(); i < j; i++ )
+        if( PermanentDeath[ i ] == id )
+            return true;
+    return false;
+}
+
+void ClearPermanentDeath() // Export
+{
+    PermanentDeath.resize( 0 );
+    SetAnyData( "PermanentDeath", PermanentDeath );
+}
+
+void AddPermanentDeath( uint id )
+{
+    if( not IsPermanentDeathInit )
+    {
+        GetAnyData( "PermanentDeath", PermanentDeath );
+        IsPermanentDeathInit = true;
+    }
+
+    if( not IsPermanentDeath( id ) )
+    {
+        PermanentDeath.insertLast( id );
+        SetAnyData( "PermanentDeath", PermanentDeath );
+    }
+}
+
+Map@ GetStartReplicatorMap()
+{
+    return GetMapByPid(ReplicatorsMapPids[Random(0,ReplicatorsMapPids.length()-1)],0);
+}
+
+Map@ GetNearReplicatorMap( Critter& cr )
+{
+    Map@ nearMap = null;
+    int  nearDist = 0;
+    for( uint i = 0, j = ReplicatorsMapPids.length(); i < j; i++ )
+    {
+        Map@ map = GetMapByPid( ReplicatorsMapPids[ i ], 0 );
+        if( valid( map ) )
+        {
+            Location@ loc = map.GetLocation();
+            int       dx = int(cr.WorldX) - int(loc.WorldX);
+            int       dy = int(cr.WorldY) - int(loc.WorldY);
+            int       dist = int( sqrt( dx * dx + dy * dy ) );
+
+            if( not valid( nearMap ) || dist < nearDist )
+            {
+                @nearMap = map;
+                nearDist = dist;
+            }
+        }
+    }
+    return nearMap;
+}
+
+void SetStartLocation( Critter& cr ) // Export
+{
+    Map@ replicator = GetMapByPid( 715, 0 );
+    if( not valid( replicator ) )
+        return;
+
+    // Hidden fog on default player position
+	uint zoneX=cr.WorldX/__GlobalMapZoneLength;
+	uint zoneY=cr.WorldY/__GlobalMapZoneLength;
+		for(zoneX=0;zoneX<__GlobalMapWidth;zoneX++)                   
+	{  
+   		for(zoneY=0;zoneY<__GlobalMapHeight;zoneY++)     
+    		{  
+      		cr.SetFog(zoneX,zoneY,FOG_NONE);      
+  		}  
+	}
+	cr.SetKnownLoc( false, 15 );
+	cr.SetKnownLoc( false, 29000 );
+	cr.SetKnownLoc( false, 670 );
+	cr.SetKnownLoc( false, 678 );
+	//cr.SetKnownLoc( false, 694 );
+	cr.SetKnownLoc( false, 703 );
+	cr.SetKnownLoc( false, 672 );
+	cr.SetKnownLoc( false, 685 );
+	//cr.SetKnownLoc( false, 690 );
+	//cr.SetKnownLoc( false, 705 );
+	//cr.SetKnownLoc( false, 693 );
+    cr.TransitToMap( replicator.Id, 0 );
+}
+
+void SetReplicationTime( Critter& cr ) // Export
+{
+    int replTime = cr.Stat[ ST_REPLICATION_TIME ];
+    if( replTime < 0 )
+        return;                            // No respawn
+    if( replTime == 0 )                    // Take default values
+    {
+        if( cr.IsPlayer() )
+            replTime = 1;                  // 1 minute
+        else
+            replTime = Random( 90, 120 );  // 90-120 minutes
+    }
+    //replTime *= REAL_SECOND( 30 );
+	if(cr.IsNpc())
+		cr.TimeoutBase[ TO_REPLICATION ] = __FullSecond + REAL_MINUTE( 30 );
+	else
+		cr.TimeoutBase[ TO_REPLICATION ] = __FullSecond + REAL_SECOND( 30 );
+}
+
+void ReplicateCritter( Critter& cr ) // Export
+{
+    Map@   dieMap = cr.GetMap();
+    Map@   map = null;
+    uint16 hx = 0, hy = 0, mapId = 0;
+
+    // Check car
+    Item@[] cars;
+    cr.GetItemsByType( ITEM_TYPE_CAR, cars );
+    if( cars.length() > 0 )
+    {
+        // Transit to random encounter
+        bool transferred = false;
+        uint encounterDescriptor = uint( -1 );
+        bool waitForAnswer = false;
+        FindEncounter( cr.GetGlobalGroup(), cars[ 0 ], cr.WorldX, cr.WorldY, encounterDescriptor, waitForAnswer, true );
+        if( encounterDescriptor != uint( -1 ) )
+        {
+            uint   mapId = 0;
+            uint16 hexX = 0;
+            uint16 hexY = 0;
+            uint8  dir = 0;
+            InviteToEncounter( cr.GetGlobalGroup(), cars[ 0 ], encounterDescriptor, COMBAT_MODE_ANY, mapId, hexX, hexY, dir );
+            if( mapId != 0 && cr.TransitToMap( mapId, hexX, hexY, dir ) )
+                transferred = true;
+        }
+
+        // Encounter not founded or transfer fail, delete cars
+        if( !transferred )
+        {
+            for( uint i = 0; i < cars.length(); i++ )
+                DeleteItem( cars[ i ] );
+        }
+
+        // Continue dead
+        cr.TimeoutBase[ TO_REPLICATION ] = __FullSecond + REAL_MINUTE( 1 );
+        return;
+    }
+
+    if( cr.IsPlayer() )
+    {
+		
+		if( _CritCanDropItemsOnDead( cr ) )
+        {
+            Map@ dropMap = cr.GetMap();
+            Item@[] items;
+            cr.GetItems( -1, items );
+
+            // Disable drop of hidden items and delete gag items (sandbags)
+            for( uint i = 0, j = items.length(); i < j; i++ )
+            {
+                if( FLAG( items[ i ].Flags, ITEM_GAG ) )
+                {
+                    DeleteItem( items[ i ] );
+                    @items[ i ] = null;
+                }
+                else if( FLAG( items[ i ].Flags, ITEM_HIDDEN ) )
+                {
+                    @items[ i ] = null;
+                }
+            }
+
+            // Drop
+            if( valid( dropMap ) )
+				DeleteItems( items );
+                //MoveItems( items, dropMap, cr.HexX, cr.HexY );
+            else
+                DeleteItems( items );
+        }
+
+    }
+    else
+    {
+        cr.DropPlanes();
+        cr.ClearEnemyStackNpc();
+        cr.StatBase[ ST_LAST_WEAPON_ID ] = 0;
+        @map = cr.GetMap();
+        if( not valid( map ) )     // On global, delete
+        {
+            DeleteNpc( cr );
+            return;
+        }
+        hx = cr.HexX;
+        hy = cr.HexY;
+
+        if( cr.Stat[ ST_DEAD_BLOCKER_ID ] != 0 )
+        {
+            Item@ block = GetItem( cr.Stat[ ST_DEAD_BLOCKER_ID ] );
+            if( valid( block ) )
+                DeleteItem( block );
+            cr.StatBase[ ST_DEAD_BLOCKER_ID ] = 0;
+        }
+
+        if( not map.IsHexPassed( hx, hy ) )
+        {
+            bool founded = false;
+            for( int x = -1; x <= 1; x++ )
+            {
+                for( int y = -1; y <= 1; y++ )
+                {
+                    if( x == 0 && y == 0 )
+                        continue;                                  // Skip direct position
+
+                    if( __MapHexagonal )
+                    {
+                        if( ( hx % 2 ) == 1 && ( ( x == -1 && y == 1 ) || ( x == 1 && y == 1 ) ) )
+                            continue;
+                        if( ( hx % 2 ) == 0 && ( ( x == -1 && y == -1 ) || ( x == 1 && y == -1 ) ) )
+                            continue;
+                    }
+
+                    if( map.IsHexPassed( hx + x, hy + y ) )
+                    {
+                        hx += x;
+                        hy += y;
+                        founded = true;
+                        break;
+                    }
+                }
+                if( founded )
+                    break;
+            }
+
+            if( not founded )
+            {
+                // Continue dead
+				if(cr.IsNpc())
+				DeleteNpc( cr );
+				else
+                cr.TimeoutBase[ TO_REPLICATION ] = __FullSecond + REAL_MINUTE( 1 );
+                return;
+            }
+        }
+    }
+
+   //replikacja fot
+	for(int i=300; i<=450; i++)
+	{
+			cr.PerkBase[ i ] = 0;
+	}
+	Map @mapa = cr.GetMap();
+	/*if( mapa.GetProtoId()==2700 || mapa.GetProtoId()==2800 || mapa.GetProtoId()==1 || mapa.GetProtoId()==2 || mapa.GetProtoId()==3 || mapa.GetProtoId()==5 || mapa.GetProtoId()==6 || mapa.GetProtoId()==10 || mapa.GetProtoId()==13)
+	{
+		if (cr.ParamBase[PLAYER_MAIN_FACTION] == BROTHERHOOD)
+		{
+			cr.TransitToMap( mapa.Id, 80 );
+		}
+		else if (cr.ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)
+		{
+			cr.TransitToMap( mapa.Id, 90 );
+		}
+	}
+	else
+	{*/
+		if (cr.ParamBase[PLAYER_MAIN_FACTION] == BROTHERHOOD)
+		{
+			Map @map = GetMapByPid( 29000, 0 );
+			cr.TransitToMap( map.Id, 15 );
+			cr.ParamBase[IN_BASE] = 1;
+		}
+		else if (cr.ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)
+		{
+			Map @map = GetMapByPid( 112, 0 );
+			cr.TransitToMap( map.Id, 15 );	
+			cr.ParamBase[IN_BASE] = 1;
+		}
+	//}
+    cr.DamageBase[ DAMAGE_EYE ] = 0;
+    cr.DamageBase[ DAMAGE_RIGHT_ARM ] = 0;
+    cr.DamageBase[ DAMAGE_LEFT_ARM ] = 0;
+    cr.DamageBase[ DAMAGE_RIGHT_LEG ] = 0;
+    cr.DamageBase[ DAMAGE_LEFT_LEG ] = 0;
+    if( cr.Stat[ ST_NEXT_CRTYPE ] > 0 )
+    {
+        cr.ChangeCrType( cr.Stat[ ST_NEXT_CRTYPE ] );
+        cr.StatBase[ ST_BASE_CRTYPE ] = cr.Stat[ ST_NEXT_CRTYPE ];
+        cr.StatBase[ ST_NEXT_CRTYPE ] = 0;
+    }
+    cr.ToLife();
+	
+	//fot weapon back
+	if(cr.StatBase[ST_BASE_CRTYPE]==8)
+	{
+		Item@ item = cr.AddItem( PID_FN_FAL, 1 );
+		cr.AddItem(PID_7_62MM_AMMO , 1 );
+		cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+		cr.ParamBase[CURRENT_STIMPAK]=5;
+	}
+
+	else if(cr.StatBase[ST_BASE_CRTYPE]==38)
+	{
+		Item@ item = cr.AddItem( PID_ROCKET_LAUNCHER, 1 );
+		cr.AddItem( PID_ROCKET_AP, 1 );
+		cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+		cr.ParamBase[CURRENT_STIMPAK]=5;
+	}
+	
+	else if(cr.StatBase[ST_BASE_CRTYPE]==28)
+	{
+		Item@ item = cr.AddItem( PID_ASSAULT_RIFLE, 1 );
+		cr.AddItem( PID_5MM_AP, 1 );
+		cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+		cr.ParamBase[CURRENT_STIMPAK]=5;
+	}
+	
+	else if(cr.StatBase[ST_BASE_CRTYPE]==21)
+	{
+		Item@ item = cr.AddItem( PID_FLAMER, 1 );
+		cr.AddItem( PID_FLAMETHROWER_FUEL, 1 );
+		cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+		cr.ParamBase[CURRENT_STIMPAK]=5;
+	}
+	
+	else if(cr.StatBase[ST_BASE_CRTYPE]==35)
+	{
+		Item@ item = cr.AddItem( PID_PLASMA_RIFLE, 1 );
+		cr.AddItem( PID_SMALL_ENERGY_CELL, 1 );
+		cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+		cr.ParamBase[CURRENT_STIMPAK]=5;
+	}
+	
+	else if(cr.StatBase[ST_BASE_CRTYPE]==9)
+	{
+		Item@ item = cr.AddItem( PID_LIGHT_SUPPORT_WEAPON, 1 );
+		cr.AddItem( PID_223_FMJ, 1 );
+		cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+		cr.ParamBase[CURRENT_STIMPAK]=5;
+	}
+	
+	else if(cr.StatBase[ST_BASE_CRTYPE]==34)
+	{
+		Item@ item = cr.AddItem( PID_LASER_RIFLE, 1 );
+		cr.AddItem( PID_MICRO_FUSION_CELL, 1 );
+		cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+		cr.ParamBase[CURRENT_STIMPAK]=5;
+	}
+	
+	else if(cr.StatBase[ST_BASE_CRTYPE]==3)
+	{
+		Item@ item = cr.AddItem( PID_M60, 1 );
+		cr.AddItem( PID_7_62MM_AMMO, 1 );
+		cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+		cr.ParamBase[CURRENT_STIMPAK]=5;
+	}
+	
+	else if(cr.StatBase[ST_BASE_CRTYPE]==20)
+	{
+		Item@ item = cr.AddItem( PID_MINIGUN, 1 );
+		cr.AddItem( PID_5MM_AP, 1 );
+		cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+		cr.ParamBase[CURRENT_STIMPAK]=5;
+	}
+	
+	else if(cr.StatBase[ST_BASE_CRTYPE]==29)
+	{
+		Item@ item = cr.AddItem( PID_SNIPER_RIFLE, 1 );
+		cr.AddItem( PID_223_FMJ, 1 );
+		cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+		cr.ParamBase[CURRENT_STIMPAK]=5;
+	}
+	
+	else if(cr.StatBase[ST_BASE_CRTYPE]==44)
+	{
+		Item@ item = cr.AddItem( PID_AVENGER_MINIGUN, 1 );
+		cr.AddItem( PID_5MM_AP, 1 );
+		cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+		cr.ParamBase[CURRENT_STIMPAK]=5;
+	}
+	
+	else if(cr.StatBase[ST_BASE_CRTYPE]==460)
+	{
+		Item@ item = cr.AddItem( PID_GATLING_LASER, 1 );
+		cr.AddItem( PID_MICRO_FUSION_CELL, 1 );
+		cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	}
+	
+	else if(cr.StatBase[ST_BASE_CRTYPE]==464)
+	{
+		Item@ item = cr.AddItem( PID_MINIGUN, 1 );
+		cr.AddItem( PID_5MM_AP, 1 );
+		cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	}
+	
+	else if(cr.StatBase[ST_BASE_CRTYPE]==461)
+	{
+		Item@ item = cr.AddItem( PID_MINIGUN, 1 );
+		cr.AddItem( PID_5MM_AP, 1 );
+		cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	}
+	//fot end of weapon back
+    cr.StatBase[ ST_CURRENT_HP ] = cr.Stat[ ST_MAX_LIFE ];
+    cr.StatBase[ ST_CURRENT_AP ] = cr.Stat[ ST_ACTION_POINTS ] * 100;
+    DropPoison( cr );
+    DropRadiation( cr );
+    /*if( cr.IsNpc() || map.GetProtoId() != HellMapPid )
+        DropDrugEffects( cr );                                              // Note: This function clear effects of all active drugs/radiation/poison!*/
+    cr.DropTimers();
+    for( uint i = TIMEOUT_BEGIN; i <= TIMEOUT_END; i++ )
+        if( i != TO_KARMA_VOTING )
+            cr.TimeoutBase[ i ] = 0;
+}
+
+//
+// Turret
+//
+void _TurretInit( Critter& turret, bool firstTime )
+{
+    turret.StatBase[ ST_PERCEPTION ] = 10;
+    turret.SkillBase[ SK_BIG_GUNS ] = 300;
+    turret.SkillBase[ SK_ENERGY_WEAPONS ] = 300;
+    turret.ModeBase[ MODE_NO_ENEMY_STACK ] = 1;
+    turret.ModeBase[ MODE_UNLIMITED_AMMO ] = 1;
+}
+
+//
+// Hubologist
+//
+void _HubologistInit( Critter& hubologist, bool firstTime )
+{
+    hubologist.ModeBase[ MODE_NO_ENEMY_STACK ] = 1;
+}
+void ClearItems( Critter& cr )
+{
+    Item@[] items;
+    if( cr.GetItems( -1, items ) > 0 )
+    {
+        for( uint i = 0, l = items.length(); i < l; i++ )
+        {
+            DeleteItem( items[ i ] );
+        }
+    }
+}

@@ -1,0 +1,723 @@
+#include "_defines.fos"
+#include "_macros.fos"
+
+//fn fall
+void unsafe_build1(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 8 );//zielony zolnierz
+	cr.StatBase[ST_BASE_CRTYPE]=8;
+	Item@ item = cr.AddItem( PID_FN_FAL, 1 );
+	cr.AddItem(PID_7_62MM_AMMO , 1 );
+	cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	cr.StatBase[ST_MAX_LIFE]=230;
+	cr.StatBase[ST_ARMOR_CLASS]=10;
+	cr.StatBase[ST_MELEE_DAMAGE]=10;
+	cr.StatBase[ST_CARRY_WEIGHT]=10;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=10;
+	cr.StatBase[ST_CRITICAL_CHANCE]=10;
+	cr.StatBase[ST_MAX_CRITICAL]=10;
+	cr.StatBase[ST_NORMAL_ABSORB]=10;
+	cr.StatBase[ST_LASER_ABSORB]=10;
+	cr.StatBase[ST_FIRE_ABSORB]=10;
+	cr.StatBase[ST_PLASMA_ABSORB]=10;
+	cr.StatBase[ST_ELECTRO_ABSORB]=10;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=10;
+	cr.StatBase[ST_NORMAL_RESIST]=40;
+	cr.StatBase[ST_LASER_RESIST]=30;
+	cr.StatBase[ST_FIRE_RESIST]=30;
+	cr.StatBase[ST_PLASMA_RESIST]=30;
+	cr.StatBase[ST_ELECTRO_RESIST]=10;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=10;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=10;
+	cr.StatBase[ST_POISON_RESISTANCE]=10;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.SkillBase[SK_TACTICAL]=300;
+	cr.ParamBase[CAN_TACTIC]=1;
+	cr.ParamBase[CURRENT_STIMPAK]=5;
+}
+
+//deathclaw
+void unsafe_build2(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 51 );//deathclaw
+	cr.StatBase[ST_BASE_CRTYPE]=51;
+	cr.StatBase[ST_MAX_LIFE]=260;
+	cr.StatBase[ST_ARMOR_CLASS]=15;
+	cr.StatBase[ST_MELEE_DAMAGE]=260;
+	cr.StatBase[ST_CARRY_WEIGHT]=10;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=10;
+	cr.StatBase[ST_CRITICAL_CHANCE]=40;
+	cr.StatBase[ST_MAX_CRITICAL]=10;
+	cr.StatBase[ST_NORMAL_ABSORB]=10;
+	cr.StatBase[ST_LASER_ABSORB]=10;
+	cr.StatBase[ST_FIRE_ABSORB]=10;
+	cr.StatBase[ST_PLASMA_ABSORB]=10;
+	cr.StatBase[ST_ELECTRO_ABSORB]=10;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=10;
+	cr.StatBase[ST_NORMAL_RESIST]=40;
+	cr.StatBase[ST_LASER_RESIST]=20;
+	cr.StatBase[ST_FIRE_RESIST]=70;
+	cr.StatBase[ST_PLASMA_RESIST]=30;
+	cr.StatBase[ST_ELECTRO_RESIST]=10;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=5;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=10;
+	cr.StatBase[ST_POISON_RESISTANCE]=10;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=300;
+	cr.ParamBase[CAN_TACTIC]=1;
+	cr.ParamBase[CURRENT_STIMPAK]=5;
+}
+
+//rocket luncher
+void unsafe_build3(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 38 );//cycata
+	cr.StatBase[ST_BASE_CRTYPE]=38;
+	Item@ item = cr.AddItem( PID_ROCKET_LAUNCHER, 1 );
+	cr.AddItem( PID_ROCKET_AP, 1 );
+	cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	cr.StatBase[ST_MAX_LIFE]=201;
+	cr.StatBase[ST_ARMOR_CLASS]=10;
+	cr.StatBase[ST_MELEE_DAMAGE]=10;
+	cr.StatBase[ST_CARRY_WEIGHT]=10;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=10;
+	cr.StatBase[ST_CRITICAL_CHANCE]=20;
+	cr.StatBase[ST_MAX_CRITICAL]=10;
+	cr.StatBase[ST_NORMAL_ABSORB]=10;
+	cr.StatBase[ST_LASER_ABSORB]=10;
+	cr.StatBase[ST_FIRE_ABSORB]=10;
+	cr.StatBase[ST_PLASMA_ABSORB]=10;
+	cr.StatBase[ST_ELECTRO_ABSORB]=10;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=10;
+	cr.StatBase[ST_NORMAL_RESIST]=20;
+	cr.StatBase[ST_LASER_RESIST]=30;
+	cr.StatBase[ST_FIRE_RESIST]=30;
+	cr.StatBase[ST_PLASMA_RESIST]=35;
+	cr.StatBase[ST_ELECTRO_RESIST]=10;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=40;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=10;
+	cr.StatBase[ST_POISON_RESISTANCE]=10;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.ParamBase[CAN_TACTIC]=1;
+	cr.ParamBase[CURRENT_STIMPAK]=5;
+}
+
+//PID_ASSAULT_RIFLE
+void unsafe_build4(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 28 );//ghoul
+	cr.StatBase[ST_BASE_CRTYPE]=28;
+	Item@ item = cr.AddItem( PID_ASSAULT_RIFLE, 1 );
+	cr.AddItem( PID_5MM_AP, 1 );
+	cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	cr.StatBase[ST_MAX_LIFE]=180;
+	cr.StatBase[ST_ARMOR_CLASS]=10;
+	cr.StatBase[ST_MELEE_DAMAGE]=10;
+	cr.StatBase[ST_CARRY_WEIGHT]=10;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=10;
+	cr.StatBase[ST_CRITICAL_CHANCE]=40;
+	cr.StatBase[ST_MAX_CRITICAL]=10;
+	cr.StatBase[ST_NORMAL_ABSORB]=10;
+	cr.StatBase[ST_LASER_ABSORB]=10;
+	cr.StatBase[ST_FIRE_ABSORB]=10;
+	cr.StatBase[ST_PLASMA_ABSORB]=10;
+	cr.StatBase[ST_ELECTRO_ABSORB]=10;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=30;
+	cr.StatBase[ST_NORMAL_RESIST]=10;
+	cr.StatBase[ST_LASER_RESIST]=20;
+	cr.StatBase[ST_FIRE_RESIST]=70;
+	cr.StatBase[ST_PLASMA_RESIST]=20;
+	cr.StatBase[ST_ELECTRO_RESIST]=10;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=10;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=10;
+	cr.StatBase[ST_POISON_RESISTANCE]=10;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.SkillBase[SK_TACTICAL]=300;
+	cr.ParamBase[CAN_TACTIC]=1;
+	cr.ParamBase[CURRENT_STIMPAK]=5;
+}
+
+//flamer
+void unsafe_build5(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 21 );//mutant bez armora
+	cr.StatBase[ST_BASE_CRTYPE]=21;
+	Item@ item = cr.AddItem( PID_FLAMER, 1 );
+	cr.AddItem( PID_FLAMETHROWER_FUEL, 1 );
+	cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	cr.StatBase[ST_MAX_LIFE]=310;
+	cr.StatBase[ST_ARMOR_CLASS]=10;
+	cr.StatBase[ST_MELEE_DAMAGE]=10;
+	cr.StatBase[ST_CARRY_WEIGHT]=10;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=10;
+	cr.StatBase[ST_CRITICAL_CHANCE]=10;
+	cr.StatBase[ST_MAX_CRITICAL]=10;
+	cr.StatBase[ST_NORMAL_ABSORB]=10;
+	cr.StatBase[ST_LASER_ABSORB]=10;
+	cr.StatBase[ST_FIRE_ABSORB]=10;
+	cr.StatBase[ST_PLASMA_ABSORB]=10;
+	cr.StatBase[ST_ELECTRO_ABSORB]=10;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=10;
+	cr.StatBase[ST_NORMAL_RESIST]=65;
+	cr.StatBase[ST_LASER_RESIST]=20;
+	cr.StatBase[ST_FIRE_RESIST]=40;
+	cr.StatBase[ST_PLASMA_RESIST]=10;
+	cr.StatBase[ST_ELECTRO_RESIST]=10;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=40;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=10;
+	cr.StatBase[ST_POISON_RESISTANCE]=10;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.SkillBase[SK_TACTICAL]=210;
+	cr.ParamBase[CAN_TACTIC]=1;
+	cr.ParamBase[CURRENT_STIMPAK]=5;
+}
+
+//PID_PLASMA_RIFLE
+void unsafe_build6(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 35 );//bardziej technik
+	cr.StatBase[ST_BASE_CRTYPE]=35;
+	Item@ item = cr.AddItem( PID_PLASMA_RIFLE, 1 );
+	cr.AddItem( PID_SMALL_ENERGY_CELL, 1 );
+	cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	cr.StatBase[ST_MAX_LIFE]=278;
+	cr.StatBase[ST_ACTION_POINTS]=10;
+	cr.StatBase[ST_ARMOR_CLASS]=10;
+	cr.StatBase[ST_MELEE_DAMAGE]=10;
+	cr.StatBase[ST_CARRY_WEIGHT]=10;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=10;
+	cr.StatBase[ST_CRITICAL_CHANCE]=10;
+	cr.StatBase[ST_MAX_CRITICAL]=10;
+	cr.StatBase[ST_NORMAL_ABSORB]=10;
+	cr.StatBase[ST_LASER_ABSORB]=10;
+	cr.StatBase[ST_FIRE_ABSORB]=10;
+	cr.StatBase[ST_PLASMA_ABSORB]=10;
+	cr.StatBase[ST_ELECTRO_ABSORB]=10;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=10;
+	cr.StatBase[ST_NORMAL_RESIST]=10;
+	cr.StatBase[ST_LASER_RESIST]=10;
+	cr.StatBase[ST_FIRE_RESIST]=10;
+	cr.StatBase[ST_PLASMA_RESIST]=10;
+	cr.StatBase[ST_ELECTRO_RESIST]=10;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=10;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=10;
+	cr.StatBase[ST_POISON_RESISTANCE]=10;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.SkillBase[SK_TACTICAL]=300;
+	cr.ParamBase[CAN_TACTIC]=1;
+	cr.ParamBase[CURRENT_STIMPAK]=5;
+}
+//lsw
+void unsafe_build7(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 9 );//bialy zolnierz
+	cr.StatBase[ST_BASE_CRTYPE]=9;
+	Item@ item = cr.AddItem( PID_LIGHT_SUPPORT_WEAPON, 1 );
+	cr.AddItem( PID_223_FMJ, 1 );
+	cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	cr.StatBase[ST_MAX_LIFE]=355;
+	cr.StatBase[ST_ACTION_POINTS]=10;
+	cr.StatBase[ST_ARMOR_CLASS]=10;
+	cr.StatBase[ST_MELEE_DAMAGE]=10;
+	cr.StatBase[ST_CARRY_WEIGHT]=10;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=10;
+	cr.StatBase[ST_CRITICAL_CHANCE]=10;
+	cr.StatBase[ST_MAX_CRITICAL]=10;
+	cr.StatBase[ST_NORMAL_ABSORB]=10;
+	cr.StatBase[ST_LASER_ABSORB]=10;
+	cr.StatBase[ST_FIRE_ABSORB]=10;
+	cr.StatBase[ST_PLASMA_ABSORB]=10;
+	cr.StatBase[ST_ELECTRO_ABSORB]=10;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=10;
+	cr.StatBase[ST_NORMAL_RESIST]=10;
+	cr.StatBase[ST_LASER_RESIST]=10;
+	cr.StatBase[ST_FIRE_RESIST]=10;
+	cr.StatBase[ST_PLASMA_RESIST]=10;
+	cr.StatBase[ST_ELECTRO_RESIST]=10;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=10;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=10;
+	cr.StatBase[ST_POISON_RESISTANCE]=10;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.SkillBase[SK_TACTICAL]=300;
+	cr.ParamBase[CAN_TACTIC]=1;
+	cr.ParamBase[CURRENT_STIMPAK]=5;
+}
+//energy
+void unsafe_build8(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 34 );//kobieta technik
+	cr.StatBase[ST_BASE_CRTYPE]=34;
+	Item@ item = cr.AddItem( PID_LASER_RIFLE, 1 );
+	cr.AddItem( PID_MICRO_FUSION_CELL, 1 );
+	cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	cr.StatBase[ST_MAX_LIFE]=215;
+	cr.StatBase[ST_ACTION_POINTS]=9;
+	cr.StatBase[ST_ARMOR_CLASS]=15;
+	cr.StatBase[ST_MELEE_DAMAGE]=10;
+	cr.StatBase[ST_CARRY_WEIGHT]=10;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=10;
+	cr.StatBase[ST_CRITICAL_CHANCE]=10;
+	cr.StatBase[ST_MAX_CRITICAL]=10;
+	cr.StatBase[ST_NORMAL_ABSORB]=30;
+	cr.StatBase[ST_LASER_ABSORB]=10;
+	cr.StatBase[ST_FIRE_ABSORB]=10;
+	cr.StatBase[ST_PLASMA_ABSORB]=10;
+	cr.StatBase[ST_ELECTRO_ABSORB]=10;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=10;
+	cr.StatBase[ST_NORMAL_RESIST]=60;
+	cr.StatBase[ST_LASER_RESIST]=20;
+	cr.StatBase[ST_FIRE_RESIST]=20;
+	cr.StatBase[ST_PLASMA_RESIST]=40;
+	cr.StatBase[ST_ELECTRO_RESIST]=20;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=20;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=10;
+	cr.StatBase[ST_POISON_RESISTANCE]=10;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.SkillBase[SK_TACTICAL]=300;
+	cr.ParamBase[CAN_TACTIC]=1;
+	cr.ParamBase[CURRENT_STIMPAK]=5;
+}
+//PID_M60
+void unsafe_build9(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 3 );//wojownik z kicem
+	cr.StatBase[ST_BASE_CRTYPE]=3;
+	Item@ item = cr.AddItem( PID_M60, 1 );
+	cr.AddItem( PID_7_62MM_AMMO, 1 );
+	cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	cr.StatBase[ST_MAX_LIFE]=245;
+	cr.StatBase[ST_ACTION_POINTS]=9;
+	cr.StatBase[ST_ARMOR_CLASS]=10;
+	cr.StatBase[ST_MELEE_DAMAGE]=10;
+	cr.StatBase[ST_CARRY_WEIGHT]=10;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=10;
+	cr.StatBase[ST_CRITICAL_CHANCE]=10;
+	cr.StatBase[ST_MAX_CRITICAL]=10;
+	cr.StatBase[ST_NORMAL_ABSORB]=10;
+	cr.StatBase[ST_LASER_ABSORB]=10;
+	cr.StatBase[ST_FIRE_ABSORB]=10;
+	cr.StatBase[ST_PLASMA_ABSORB]=10;
+	cr.StatBase[ST_ELECTRO_ABSORB]=10;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=10;
+	cr.StatBase[ST_NORMAL_RESIST]=40;
+	cr.StatBase[ST_LASER_RESIST]=90;
+	cr.StatBase[ST_FIRE_RESIST]=30;
+	cr.StatBase[ST_PLASMA_RESIST]=90;
+	cr.StatBase[ST_ELECTRO_RESIST]=10;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=10;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=10;
+	cr.StatBase[ST_POISON_RESISTANCE]=10;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.SkillBase[SK_TACTICAL]=190;
+	cr.ParamBase[CAN_TACTIC]=1;
+	cr.ParamBase[CURRENT_STIMPAK]=8;
+}
+//minigun
+void unsafe_build10(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 20 );//mutant z armorem
+	cr.StatBase[ST_BASE_CRTYPE]=20;
+	Item@ item = cr.AddItem( PID_MINIGUN, 1 );
+	cr.AddItem( PID_5MM_AP, 1 );
+	cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	cr.StatBase[ST_MAX_LIFE]=400;
+	cr.StatBase[ST_ACTION_POINTS]=10;
+	cr.StatBase[ST_ARMOR_CLASS]=10;
+	cr.StatBase[ST_MELEE_DAMAGE]=10;
+	cr.StatBase[ST_CARRY_WEIGHT]=10;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=10;
+	cr.StatBase[ST_CRITICAL_CHANCE]=10;
+	cr.StatBase[ST_MAX_CRITICAL]=10;
+	cr.StatBase[ST_NORMAL_ABSORB]=10;
+	cr.StatBase[ST_LASER_ABSORB]=10;
+	cr.StatBase[ST_FIRE_ABSORB]=10;
+	cr.StatBase[ST_PLASMA_ABSORB]=10;
+	cr.StatBase[ST_ELECTRO_ABSORB]=10;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=10;
+	cr.StatBase[ST_NORMAL_RESIST]=30;
+	cr.StatBase[ST_LASER_RESIST]=80;
+	cr.StatBase[ST_FIRE_RESIST]=90;
+	cr.StatBase[ST_PLASMA_RESIST]=70;
+	cr.StatBase[ST_ELECTRO_RESIST]=10;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=10;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=10;
+	cr.StatBase[ST_POISON_RESISTANCE]=10;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.SkillBase[SK_TACTICAL]=190;
+	cr.ParamBase[CAN_TACTIC]=1;
+	cr.ParamBase[CURRENT_STIMPAK]=12;
+}
+
+void unsafe_build11(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 29 );//ciemnieszy ghoul w szmatach
+	cr.StatBase[ST_BASE_CRTYPE]=29;
+	Item@ item = cr.AddItem( PID_SNIPER_RIFLE, 1 );
+	cr.AddItem( PID_223_FMJ, 1 );
+	cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	cr.StatBase[ST_MAX_LIFE]=190;
+	cr.StatBase[ST_ACTION_POINTS]=8;
+	cr.StatBase[ST_ARMOR_CLASS]=10;
+	cr.StatBase[ST_MELEE_DAMAGE]=10;
+	cr.StatBase[ST_CARRY_WEIGHT]=60;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=40;
+	cr.StatBase[ST_CRITICAL_CHANCE]=40;
+	cr.StatBase[ST_MAX_CRITICAL]=200;
+	cr.StatBase[ST_NORMAL_ABSORB]=10;
+	cr.StatBase[ST_LASER_ABSORB]=20;
+	cr.StatBase[ST_FIRE_ABSORB]=10;
+	cr.StatBase[ST_PLASMA_ABSORB]=10;
+	cr.StatBase[ST_ELECTRO_ABSORB]=10;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=10;
+	cr.StatBase[ST_NORMAL_RESIST]=20;
+	cr.StatBase[ST_LASER_RESIST]=60;
+	cr.StatBase[ST_FIRE_RESIST]=70;
+	cr.StatBase[ST_PLASMA_RESIST]=20;
+	cr.StatBase[ST_ELECTRO_RESIST]=10;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=10;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=100;
+	cr.StatBase[ST_POISON_RESISTANCE]=60;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.ParamBase[CAN_TACTIC]=1;
+	cr.ParamBase[CURRENT_STIMPAK]=5;
+}
+
+void unsafe_build12(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 44 );//black soldier
+	cr.StatBase[ST_BASE_CRTYPE]=44;
+	Item@ item = cr.AddItem( PID_AVENGER_MINIGUN, 1 );
+	cr.AddItem( PID_5MM_AP, 1 );
+	cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	cr.StatBase[ST_MAX_LIFE]=260;
+	cr.StatBase[ST_ACTION_POINTS]=8;
+	cr.StatBase[ST_ARMOR_CLASS]=10;
+	cr.StatBase[ST_MELEE_DAMAGE]=10;
+	cr.StatBase[ST_CARRY_WEIGHT]=10;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=10;
+	cr.StatBase[ST_CRITICAL_CHANCE]=20;
+	cr.StatBase[ST_MAX_CRITICAL]=20;
+	cr.StatBase[ST_NORMAL_ABSORB]=10;
+	cr.StatBase[ST_LASER_ABSORB]=10;
+	cr.StatBase[ST_FIRE_ABSORB]=10;
+	cr.StatBase[ST_PLASMA_ABSORB]=10;
+	cr.StatBase[ST_ELECTRO_ABSORB]=10;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=10;
+	cr.StatBase[ST_NORMAL_RESIST]=45;
+	cr.StatBase[ST_LASER_RESIST]=40;
+	cr.StatBase[ST_FIRE_RESIST]=20;
+	cr.StatBase[ST_PLASMA_RESIST]=60;
+	cr.StatBase[ST_ELECTRO_RESIST]=30;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=10;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=10;
+	cr.StatBase[ST_POISON_RESISTANCE]=10;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.ParamBase[CAN_TACTIC]=1;
+	cr.ParamBase[CURRENT_STIMPAK]=12;
+}
+//PID_GATLING_LASER
+void unsafe_build13(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 460 );//humanoid
+	cr.StatBase[ST_BASE_CRTYPE]=460;
+	Item@ item = cr.AddItem( PID_GATLING_LASER, 1 );
+	cr.AddItem( PID_MICRO_FUSION_CELL, 1 );
+	cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	cr.StatBase[ST_MAX_LIFE]=390;
+	cr.StatBase[ST_ACTION_POINTS]=7;
+	cr.StatBase[ST_ARMOR_CLASS]=10;
+	cr.StatBase[ST_MELEE_DAMAGE]=10;
+	cr.StatBase[ST_CARRY_WEIGHT]=100;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=10;
+	cr.StatBase[ST_CRITICAL_CHANCE]=1;
+	cr.StatBase[ST_MAX_CRITICAL]=1;
+	cr.StatBase[ST_NORMAL_ABSORB]=80;
+	cr.StatBase[ST_LASER_ABSORB]=10;
+	cr.StatBase[ST_FIRE_ABSORB]=800;
+	cr.StatBase[ST_PLASMA_ABSORB]=10;
+	cr.StatBase[ST_ELECTRO_ABSORB]=10;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=10;
+	cr.StatBase[ST_NORMAL_RESIST]=80;
+	cr.StatBase[ST_LASER_RESIST]=10;
+	cr.StatBase[ST_FIRE_RESIST]=80;
+	cr.StatBase[ST_PLASMA_RESIST]=20;
+	cr.StatBase[ST_ELECTRO_RESIST]=10;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=40;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=100;
+	cr.StatBase[ST_POISON_RESISTANCE]=100;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.SkillBase[SK_TACTICAL]=300;
+	cr.ParamBase[CAN_TACTIC]=1;
+	cr.ParamBase[CURRENT_STIMPAK]=0;
+}
+//melee
+void unsafe_build14(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 462 );//robot na wa³kach z nozami zamiast rak bez taktyk
+	cr.StatBase[ST_MAX_LIFE]=450;
+	cr.StatBase[ST_ACTION_POINTS]=8;
+	cr.StatBase[ST_ARMOR_CLASS]=20;
+	cr.StatBase[ST_MELEE_DAMAGE]=250;
+	cr.StatBase[ST_CARRY_WEIGHT]=100;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=1;
+	cr.StatBase[ST_CRITICAL_CHANCE]=30;
+	cr.StatBase[ST_MAX_CRITICAL]=300;
+	cr.StatBase[ST_NORMAL_ABSORB]=80;
+	cr.StatBase[ST_LASER_ABSORB]=30;
+	cr.StatBase[ST_FIRE_ABSORB]=20;
+	cr.StatBase[ST_PLASMA_ABSORB]=30;
+	cr.StatBase[ST_ELECTRO_ABSORB]=30;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=30;
+	cr.StatBase[ST_NORMAL_RESIST]=80;
+	cr.StatBase[ST_LASER_RESIST]=30;
+	cr.StatBase[ST_FIRE_RESIST]=20;
+	cr.StatBase[ST_PLASMA_RESIST]=30;
+	cr.StatBase[ST_ELECTRO_RESIST]=30;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=40;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=100;
+	cr.StatBase[ST_POISON_RESISTANCE]=100;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.SkillBase[SK_TACTICAL]=300;
+	cr.ParamBase[CAN_TACTIC]=0;
+}
+//PID_MINIGUN, robot
+void unsafe_build15(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 464 );//robot na 4 nogach bez taktyk
+	cr.StatBase[ST_BASE_CRTYPE]=464;
+	Item@ item = cr.AddItem( PID_MINIGUN, 1 );
+	cr.AddItem( PID_5MM_AP, 1 );
+	cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	cr.StatBase[ST_MAX_LIFE]=500;
+	cr.StatBase[ST_ACTION_POINTS]=8;
+	cr.StatBase[ST_ARMOR_CLASS]=10;
+	cr.StatBase[ST_MELEE_DAMAGE]=10;
+	cr.StatBase[ST_CARRY_WEIGHT]=10;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=10;
+	cr.StatBase[ST_CRITICAL_CHANCE]=1;
+	cr.StatBase[ST_MAX_CRITICAL]=1;
+	cr.StatBase[ST_NORMAL_ABSORB]=90;
+	cr.StatBase[ST_LASER_ABSORB]=20;
+	cr.StatBase[ST_FIRE_ABSORB]=20;
+	cr.StatBase[ST_PLASMA_ABSORB]=20;
+	cr.StatBase[ST_ELECTRO_ABSORB]=10;
+	cr.StatBase[ST_EMP_ABSORB]=10;
+	cr.StatBase[ST_EXPLODE_ABSORB]=10;
+	cr.StatBase[ST_NORMAL_RESIST]=90;
+	cr.StatBase[ST_LASER_RESIST]=10;
+	cr.StatBase[ST_FIRE_RESIST]=60;
+	cr.StatBase[ST_PLASMA_RESIST]=10;
+	cr.StatBase[ST_ELECTRO_RESIST]=10;
+	cr.StatBase[ST_EMP_RESIST]=10;
+	cr.StatBase[ST_EXPLODE_RESIST]=40;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=100;
+	cr.StatBase[ST_POISON_RESISTANCE]=100;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.SkillBase[SK_TACTICAL]=300;
+	cr.ParamBase[CAN_TACTIC]=0;
+}
+//behemot
+void unsafe_build16(Critter& cr, int, int, int, string@, int[]@)
+{
+	Item @weapon=cr.GetItem(0,SLOT_HAND1);
+	if(valid(weapon))
+		cr.MoveItem( weapon.Id, 0, SLOT_INV );
+	ClearItems( cr );
+	cr.ChangeCrType( 461 );//latajacy szpieg bez taktyk
+	cr.StatBase[ST_BASE_CRTYPE]=461;
+	Item@ item = cr.AddItem( PID_MINIGUN, 1 );
+	cr.AddItem( PID_5MM_AP, 1 );
+	cr.MoveItem( item.Id, 0, SLOT_HAND1 );
+	cr.StatBase[ST_MAX_LIFE]=800;
+	cr.StatBase[ST_ACTION_POINTS]=7;
+	cr.StatBase[ST_ARMOR_CLASS]=10;
+	cr.StatBase[ST_MELEE_DAMAGE]=10;
+	cr.StatBase[ST_SEQUENCE]=10;
+	cr.StatBase[ST_HEALING_RATE]=10;
+	cr.StatBase[ST_CRITICAL_CHANCE]=1;
+	cr.StatBase[ST_MAX_CRITICAL]=1;
+	cr.StatBase[ST_NORMAL_ABSORB]=100;
+	cr.StatBase[ST_LASER_ABSORB]=1;
+	cr.StatBase[ST_FIRE_ABSORB]=100;
+	cr.StatBase[ST_PLASMA_ABSORB]=1;
+	cr.StatBase[ST_ELECTRO_ABSORB]=1;
+	cr.StatBase[ST_EMP_ABSORB]=1;
+	cr.StatBase[ST_EXPLODE_ABSORB]=60;
+	cr.StatBase[ST_NORMAL_RESIST]=100;
+	cr.StatBase[ST_LASER_RESIST]=1;
+	cr.StatBase[ST_FIRE_RESIST]=100;
+	cr.StatBase[ST_PLASMA_RESIST]=1;
+	cr.StatBase[ST_ELECTRO_RESIST]=1;
+	cr.StatBase[ST_EMP_RESIST]=1;
+	cr.StatBase[ST_EXPLODE_RESIST]=60;
+	cr.StatBase[ST_RADIATION_RESISTANCE]=100;
+	cr.StatBase[ST_POISON_RESISTANCE]=100;
+	cr.StatBase[ST_CURRENT_HP]=cr.StatBase[ST_MAX_LIFE];
+	//skile
+	cr.SkillBase[SK_TACTICAL]=300;
+	cr.SkillBase[SK_SNEAK]=50;
+	cr.ParamBase[CAN_TACTIC]=0;
+}
+
+void ClearItems( Critter& cr )
+{
+    Item@[] items;
+    if( cr.GetItems( -1, items ) > 0 )
+    {
+        for( uint i = 0, l = items.length(); i < l; i++ )
+        {
+            DeleteItem( items[ i ] );
+        }
+    }
+}
+
+
+//stimpak taken
+void unsafe_stimpak(Critter& cr, int, int, int, string@, int[]@)
+{
+	if(cr.StatBase[ST_CURRENT_AP]<300) return;
+	if(cr.ParamBase[CURRENT_STIMPAK]==0) return;
+	cr.StatBase[ST_CURRENT_AP]-=300;
+	int dif=cr.StatBase[ST_MAX_LIFE] - cr.StatBase[ST_CURRENT_HP];
+	if(dif<200)
+	{
+		cr.StatBase[ST_CURRENT_HP] = cr.StatBase[ST_MAX_LIFE];
+	}	
+	else
+	{
+		cr.StatBase[ST_CURRENT_HP]+=200;
+	}
+	cr.ParamBase[CURRENT_STIMPAK]--;
+}

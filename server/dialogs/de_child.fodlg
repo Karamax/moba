@@ -1,0 +1,28 @@
+[comment]
+
+
+[data]
+lang=pols engl
+
+[dialog]
+&
+1 1000 None 1 #
+2 1010 @
+2 2000 None 0 &
+
+[pols]
+{100}{}{Child}
+{210}{}{You see a child.}
+{210}{}{You see a little dirty child with some rags on him. He looks at you with hungry eyes.}
+{1000}{}{Predialogue installations}
+{1010}{}{Say Over Head}
+{2000}{}{Daddy?@@"Mary had a little lamb,Little lamb, little lamb..."@@"One, two, three, four, five, Once l caught a fish alive..."@@"Chinese dragon, Chinese dragon, Breathing fire, breathing fire, Happy, happy new year, Happy, happy..."@@Do you see ma dad?@@Where is my mommy?@@"Old MacDonald had a farm, Ee-l, Ee-l, Oh, And on his farm he had a cow, Ee-l, Ee-l, Oh..."@@No! I not stop singing@@That nice man wanted me to go with him@@Why that nice man wanted me to go with him ?@@If you give me candy I'll tell you a secret@@I know where my dad buried mom@@Do not tell anyone but there's behind a tree someone buried treasure@@HELP, HELP... PERVERT !@@HELP, He wants to kidnap me !@@ Do you have 223 Pistol?@@I can sell you something@@You're a big@@Maybe you're big but stupid like brahmin@@Horse? what horse?@@Have some lollipops?@@No, thank you@@Not today@@If you give me some candy I will show you how to rob the guard@@I know the secret passage@@My dad saw a white brahmin@@Sir, you stink terrible@@Can you swim?@@I do not have mommy@@I do not have daddy@@My mom is looking for me a new daddy@@My mother told me go play here because some strange man came to fix something@@my mom has a lot of friends@@My sister is stupid@@My sister is stupid and shows all guys tits for money@@I have a big brother, so be careful@@School? What's this?@@If you guess what has large teeth and jumping I give you gift@@Why,you look at me so funny?@@Why,you look at me so weird?@@Look what I can do with my saliva?@@You are a woman?@@You are a man?@@I do not want any more brothers@@As I grow up I will be a guard ...or a bodyguard ...or maybe robber@@Did you know that that the total internal energy E of a body at rest is equal to the product of its rest mass m and a suitable conversion factor to transform from units of mass to units of energy?@@Of course ...not@@Have you seen my dog?@@What has 3 legs and tail?... 3-legs dog@@I do not know@@Did you see what a big rat I killed?}
+
+[engl]
+{100}{}{Child}
+{210}{}{You see a child.}
+{210}{}{You see a little dirty child with some rags on him. He looks at you with hungry eyes.}
+{1000}{}{Predialogue installations}
+{1010}{}{Say Over Head}
+{2000}{}{Daddy?@@"Mary had a little lamb,Little lamb, little lamb..."@@"One, two, three, four, five, Once l caught a fish alive..."@@"Chinese dragon, Chinese dragon, Breathing fire, breathing fire, Happy, happy new year, Happy, happy..."@@Do you see ma dad?@@Where is my mommy?@@"Old MacDonald had a farm, Ee-l, Ee-l, Oh, And on his farm he had a cow, Ee-l, Ee-l, Oh..."@@No! I not stop singing@@That nice man wanted me to go with him@@Why that nice man wanted me to go with him ?@@If you give me candy I'll tell you a secret@@I know where my dad buried mom@@Do not tell anyone but there's behind a tree someone buried treasure@@HELP, HELP... PERVERT !@@HELP, He wants to kidnap me !@@ Do you have 223 Pistol?@@I can sell you something@@You're a big@@Maybe you're big but stupid like brahmin@@Horse? what horse?@@Have some lollipops?@@No, thank you@@Not today@@If you give me some candy I will show you how to rob the guard@@I know the secret passage@@My dad saw a white brahmin@@Sir, you stink terrible@@Can you swim?@@I do not have mommy@@I do not have daddy@@My mom is looking for me a new daddy@@My mother told me go play here because some strange man came to fix something@@my mom has a lot of friends@@My sister is stupid@@My sister is stupid and shows all guys tits for money@@I have a big brother, so be careful@@School? What's this?@@If you guess what has large teeth and jumping I give you gift@@Why,you look at me so funny?@@Why,you look at me so weird?@@Look what I can do with my saliva?@@You are a woman?@@You are a man?@@I do not want any more brothers@@As I grow up I will be a guard ...or a bodyguard ...or maybe robber@@Did you know that that the total internal energy E of a body at rest is equal to the product of its rest mass m and a suitable conversion factor to transform from units of mass to units of energy?@@Of course ...not@@Have you seen my dog?@@What has 3 legs and tail?... 3-legs dog@@I do not know@@Did you see what a big rat I killed?}
+

@@ -1,0 +1,15 @@
+class DeathScreenClass : IGUIScreenCallbackMove
+{
+	void OnMove(int x, int y){}
+}
+
+void InitDeathScreen()
+{
+	DeathScreenClass DeathScreen;
+	GUI_CreateScreen(CLIENT_SCREEN_DEATH,"death.png")
+		.CanMove(false)
+		.Modal(false)
+		.Multiinstance(false)
+		.SizeByMultipleImages(1,1)
+		.CallbackMove(DeathScreen);
+}

@@ -1,0 +1,61 @@
+#include "_teams.fos"
+#include "_defines.fos"
+#include "_itempid.fos"
+#include "_macros.fos"
+#include "_bags.fos"
+import bool AddAttackPlane(Critter& npc, uint priority, uint critId, bool run) from "npc_planes";
+
+void turrentbos( Critter& npc, bool firstTime )
+{
+    uint pid = npc.GetProtoId();
+
+    npc.ModeBase[ MODE_NO_ITEM_GARBAGER ] = 1;
+	npc.ModeBase[ MODE_UNLIMITED_AMMO ] = 1;
+	npc.StatBase[ ST_CRITICAL_CHANCE]= 1000;
+	npc.StatBase[ ST_MAX_CRITICAL]= 1000;
+	npc.StatBase[ST_MAX_LIFE] =999;
+    npc.ModeBase[ MODE_NO_BARTER ]        = 1;
+    npc.ModeBase[ MODE_NO_DROP ]          = 1;
+    npc.ModeBase[ MODE_NO_STEAL ]         = 1;
+    npc.ModeBase[ MODE_NO_LOOT ]          = 1;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ]   = 1;
+	npc.ModeBase[ MODE_INVULNERABLE ]   = 1;
+	npc.SetEvent(CRITTER_EVENT_SHOW_CRITTER, "_ShowCritterEnclave");
+	npc.AddItem( PID_HEAVY_DUAL_MINIGUN_LONG_RANGE, 1 );
+}
+
+void _ShowCritterEnclave(Critter& npc, Critter& cr)
+{
+	if(cr.ParamBase[PLAYER_MAIN_FACTION]!=ENCLAVA) return;
+	AddAttackPlane(npc, 0, cr.Id, false);
+}
+
+void turrentenc( Critter& npc, bool firstTime )
+{
+    uint pid = npc.GetProtoId();
+
+    npc.ModeBase[ MODE_NO_ITEM_GARBAGER ] = 1;
+	npc.ModeBase[ MODE_UNLIMITED_AMMO ] = 1;
+	npc.StatBase[ ST_CRITICAL_CHANCE]= 1000;
+	npc.StatBase[ ST_MAX_CRITICAL]= 1000;
+	npc.StatBase[ST_MAX_LIFE] =999;
+    npc.ModeBase[ MODE_NO_BARTER ]= 1;
+    npc.ModeBase[ MODE_NO_DROP ]= 1;
+    npc.ModeBase[ MODE_NO_STEAL ]= 1;
+    npc.ModeBase[ MODE_NO_LOOT ]= 1;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ]= 1;
+	npc.ModeBase[ MODE_INVULNERABLE ]   = 1;
+	npc.SetEvent(CRITTER_EVENT_SHOW_CRITTER, "_ShowCritterBos");
+	npc.AddItem( PID_HEAVY_DUAL_MINIGUN_LONG_RANGE, 1 );
+}
+
+void _ShowCritterBos(Critter& npc, Critter& cr)
+{
+	if(cr.ParamBase[PLAYER_MAIN_FACTION]!=BROTHERHOOD) return;
+	AddAttackPlane(npc, 0, cr.Id, false);
+}
+
+bool terminal(Critter&,Scenery&,int,Item@)
+{
+	return false;
+}

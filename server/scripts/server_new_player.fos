@@ -1,0 +1,25 @@
+#include "_defines.fos"
+#include "_client_defines.fos"
+
+void unsafe_choose_enclava(Critter& cr, int, int, int, string@, int[]@)
+{
+	if(cr.ParamBase[PLAYER_MAIN_FACTION] == 0)
+	{
+		cr.ParamBase[PLAYER_MAIN_FACTION] = ENCLAVA;
+		Map @map = GetMapByPid( 112, 0 );
+		cr.TransitToMap( map.Id, 15 );
+		cr.ParamBase[IN_BASE] = 1;
+	}
+}
+
+void unsafe_choose_bos(Critter& cr, int, int, int, string@, int[]@)
+{
+	if(cr.ParamBase[PLAYER_MAIN_FACTION] == 0)
+	{
+		cr.ParamBase[PLAYER_MAIN_FACTION] = BROTHERHOOD;
+		Map @map = GetMapByPid( 29000, 0 );
+		cr.TransitToMap( map.Id, 15 );
+		cr.ParamBase[IN_BASE] = 1;
+	}
+}
+

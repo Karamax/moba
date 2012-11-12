@@ -1,0 +1,205 @@
+#include "_defines.fos"
+#include "_names_factions_list.fos"
+
+void unsafe_help_message(Critter& cr, int type, int, int, string@ message, int[]@)
+{
+	if (cr.StatBase[ ST_LEVEL ] < 20) return;
+	
+	//wezwanie pomocy
+	if(type == 1)
+	{
+		if(cr.ParamBase[PLAYER_POINTS] >= 50) cr.ParamBase[PLAYER_POINTS] -= 50;
+		else return;
+		
+		for(uint i=0; i<=__MaxID; i++)
+		{
+			string@ str=GetPlayerName(i);
+			if(@str!=null)
+			{
+				Critter @findcr=GetPlayer(str);
+				if(@findcr!=null) 
+				{
+					if(findcr.ParamBase[PLAYER_MAIN_FACTION] == cr.ParamBase[PLAYER_MAIN_FACTION])
+					{
+						if(findcr.ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)findcr.Say(SAY_ENCLAVA_MESSAGE,message);
+						else if(findcr.ParamBase[PLAYER_MAIN_FACTION] == BROTHERHOOD)findcr.Say(SAY_BOS_MESSAGE,message);
+					}
+				}
+			}
+		}
+	}
+	//gotowosc do walki
+	else if(type == 2)
+	{
+		if(cr.ParamBase[PLAYER_POINTS] >= 20) cr.ParamBase[PLAYER_POINTS] -= 20;
+		else return;
+		if(cr.ParamBase[PLAYER_FACTION] == 0)return;
+		string readyfaction = FACTION_LIST[cr.ParamBase[PLAYER_FACTION]]+" are ready to battle, everyone come to our base.";
+		for(uint i=0; i<=__MaxID; i++)
+		{
+			string@ str=GetPlayerName(i);
+			if(@str!=null)
+			{
+				Critter @findcr=GetPlayer(str);
+				if(@findcr!=null) 
+				{
+					if(findcr.ParamBase[PLAYER_MAIN_FACTION] == cr.ParamBase[PLAYER_MAIN_FACTION])
+					{
+						if(findcr.ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)
+						{
+							findcr.Say(SAY_ENCLAVA_MESSAGE,readyfaction);
+						}
+						else if(findcr.ParamBase[PLAYER_MAIN_FACTION] == BROTHERHOOD)
+						{
+							findcr.Say(SAY_BOS_MESSAGE,readyfaction);
+						}
+					}
+				}
+			}
+		}
+	}
+	//prywatna do frakcji npc
+	else if(type == 3)
+	{
+		if(cr.ParamBase[PLAYER_POINTS] >= 500) cr.ParamBase[PLAYER_POINTS] -= 500;
+		else return;
+		
+		for(uint i=0; i<=__MaxID; i++)
+		{
+			string@ str=GetPlayerName(i);
+			if(@str!=null)
+			{
+				Critter @findcr=GetPlayer(str);
+				if(@findcr!=null) 
+				{
+					if(findcr.ParamBase[PLAYER_MAIN_FACTION] == cr.ParamBase[PLAYER_MAIN_FACTION])
+					{
+						if(findcr.ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)findcr.Say(SAY_ENCLAVA_MESSAGE,message);
+						else if(findcr.ParamBase[PLAYER_MAIN_FACTION] == BROTHERHOOD)findcr.Say(SAY_BOS_MESSAGE,message);
+					}
+				}
+			}
+		}
+	}
+	//globalna
+	else if(type == 4)
+	{
+		if(cr.ParamBase[PLAYER_POINTS] >= 600) cr.ParamBase[PLAYER_POINTS] -= 600;
+		else return;
+		
+		for(uint i=0; i<=__MaxID; i++)
+		{
+			string@ str=GetPlayerName(i);
+			if(@str!=null)
+			{
+				Critter @findcr=GetPlayer(str);
+				if(@findcr!=null) 
+				{
+					if(cr.ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)findcr.Say(SAY_ENCLAVA_MESSAGE,message);
+					else if(cr.ParamBase[PLAYER_MAIN_FACTION] == BROTHERHOOD)findcr.Say(SAY_BOS_MESSAGE,message);
+				}
+			}
+		}
+	}
+}
+
+void unsafe_enclava_message(Critter& cr, int, int, int, string@ message, int[]@)
+{
+	//if(!CheckIfDEV(cr)) return;
+	if(@message==null) return;
+	
+	for(uint i=0; i<=__MaxID; i++)
+	{
+		string@ str=GetPlayerName(i);
+		if(@str!=null)
+		{
+			Critter @findcr=GetPlayer(str);
+			if(@findcr!=null) findcr.Say(SAY_ENCLAVA_MESSAGE,message);
+		}
+	}
+}
+
+void unsafe_private_enclava_message(Critter& cr, int, int, int, string@ message, int[]@)
+{
+	//if(!CheckIfDEV(cr)) return;
+	if(@message==null) return;
+	
+	for(uint i=0; i<=__MaxID; i++)
+	{
+		string@ str=GetPlayerName(i);
+		if(@str!=null)
+		{
+			Critter @findcr=GetPlayer(str);
+			if(@findcr!=null) 
+			{
+				if(findcr.ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)findcr.Say(SAY_ENCLAVA_MESSAGE,message);
+			}
+		}
+	}
+}
+
+
+void enclava_message(string@ message)
+{
+	if(@message==null) return;
+	
+	for(uint i=0; i<=__MaxID; i++)
+	{
+		string@ str=GetPlayerName(i);
+		if(@str!=null)
+		{
+			Critter @findcr=GetPlayer(str);
+			if(@findcr!=null) findcr.Say(SAY_ENCLAVA_MESSAGE,message);
+		}
+	}
+}
+
+void unsafe_bos_message(Critter& cr, int, int, int, string@ message, int[]@)
+{
+	//if(!CheckIfDEV(cr)) return;
+	if(@message==null) return;
+	
+	for(uint i=0; i<=__MaxID; i++)
+	{
+		string@ str=GetPlayerName(i);
+		if(@str!=null)
+		{
+			Critter @findcr=GetPlayer(str);
+			if(@findcr!=null) findcr.Say(SAY_BOS_MESSAGE,message);
+		}
+	}
+}
+
+void unsafe_private_bos_message(Critter& cr, int, int, int, string@ message, int[]@)
+{
+	//if(!CheckIfDEV(cr)) return;
+	if(@message==null) return;
+	
+	for(uint i=0; i<=__MaxID; i++)
+	{
+		string@ str=GetPlayerName(i);
+		if(@str!=null)
+		{
+			Critter @findcr=GetPlayer(str);
+			if(@findcr!=null) 
+			{
+				if(findcr.ParamBase[PLAYER_MAIN_FACTION] == BROTHERHOOD)findcr.Say(SAY_BOS_MESSAGE,message);
+			}
+		}
+	}
+}
+
+void bos_message(string@ message)
+{
+	if(@message==null) return;
+	
+	for(uint i=0; i<=__MaxID; i++)
+	{
+		string@ str=GetPlayerName(i);
+		if(@str!=null)
+		{
+			Critter @findcr=GetPlayer(str);
+			if(@findcr!=null) findcr.Say(SAY_BOS_MESSAGE,message);
+		}
+	}
+}

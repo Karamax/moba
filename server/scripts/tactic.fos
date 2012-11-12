@@ -1,0 +1,84 @@
+#include "_defines.fos"
+#include "_macros.fos"
+
+void unsafe_tactic_normal(Critter& cr, int, int, int, string@, int[]@)
+{
+	if(cr.StatBase[ST_TACTIC] == 0) return;
+	if(cr.StatBase[ST_CURRENT_AP]<500) return;
+	cr.ModeBase[MODE_NO_RUN] = 1;
+	//if(cr.StatBase[ST_CURRENT_AP]<400) return;
+	//cr.StatBase[ST_CURRENT_AP]-=400;
+	
+	if (cr.StatBase[ST_TACTIC]==1)//tactic defensive
+	{	
+		//if(cr.StatBase[ST_POSITION] == 0)cr.ModeBase[MODE_NO_RUN] = 0;
+		cr.StatBase[ST_NORMAL_RESIST]-=15;
+		cr.StatBase[ST_TACTIC]=0;
+	}
+
+	else if (cr.StatBase[ST_TACTIC]==2)//tactic agressive
+	{
+		//if(cr.TraitBase[ TRAIT_FAST_SHOT ] == 1)
+			//cr.ModeBase[MODE_NO_AIM] = 1;
+			//else
+			//cr.ModeBase[MODE_NO_AIM] = 0;
+		cr.StatBase[ST_CRITICAL_CHANCE]-=15;
+		cr.StatBase[ST_NORMAL_RESIST]+=5;
+		cr.StatBase[ST_TACTIC]=0;
+	}
+}
+
+void unsafe_tactic_defensive(Critter& cr, int, int, int, string@, int[]@)
+{
+	if(cr.StatBase[ST_TACTIC] == 1) return;
+	if(cr.StatBase[ST_CURRENT_AP]<500) return;
+	cr.ModeBase[MODE_NO_RUN] = 1;
+	//if(cr.StatBase[ST_CURRENT_AP]<400) return;
+	//cr.StatBase[ST_CURRENT_AP]-=400;
+	
+	if (cr.StatBase[ST_TACTIC]==0)//tactic normal
+	{
+		cr.ModeBase[MODE_NO_RUN] = 1;
+		cr.StatBase[ST_NORMAL_RESIST]+=15;
+		cr.StatBase[ST_TACTIC]=1;
+	}
+
+	else if (cr.StatBase[ST_TACTIC]==2)//tactic agressive
+	{	
+		//if(cr.TraitBase[ TRAIT_FAST_SHOT ] == 1)
+			//cr.ModeBase[MODE_NO_AIM] = 1;
+			//else
+			//cr.ModeBase[MODE_NO_AIM] = 0;
+		//cr.ModeBase[MODE_NO_RUN] = 1;
+		cr.StatBase[ST_CRITICAL_CHANCE]-=15;
+		cr.StatBase[ST_NORMAL_RESIST]+=20;
+		cr.StatBase[ST_TACTIC]=1;
+	}
+
+}
+
+void unsafe_tactic_agressive(Critter& cr, int, int, int, string@, int[]@)
+{
+	if(cr.StatBase[ST_TACTIC] == 2) return;
+	if(cr.StatBase[ST_CURRENT_AP]<500) return;
+	cr.ModeBase[MODE_NO_RUN] = 0;
+	//if(cr.StatBase[ST_CURRENT_AP]<400) return;
+	//cr.StatBase[ST_CURRENT_AP]-=400;
+		
+	if (cr.StatBase[ST_TACTIC]==0)//tactic normal
+	{		
+		//cr.ModeBase[MODE_NO_AIM] = 1;
+		cr.StatBase[ST_CRITICAL_CHANCE]+=15;
+		cr.StatBase[ST_NORMAL_RESIST]-=5;
+		cr.StatBase[ST_TACTIC]=2;
+	}
+
+	else if (cr.StatBase[ST_TACTIC]==1)//tactic agressive
+	{
+		//cr.ModeBase[MODE_NO_AIM] = 1;
+		//if(cr.StatBase[ST_POSITION] == 0) cr.ModeBase[MODE_NO_RUN] = 0;
+		cr.StatBase[ST_CRITICAL_CHANCE]+=15;
+		cr.StatBase[ST_NORMAL_RESIST]-=20;
+		cr.StatBase[ST_TACTIC]=2;
+	}
+}

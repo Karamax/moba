@@ -1,0 +1,940 @@
+#include "_defines.fos"
+#include "_itempid.fos"
+import bool GetFreeHex(Map& map, uint radius, uint16& hx, uint16& hy) from "caravan";
+import bool AddAttackPlane(Critter& npc, uint priority, uint critId, bool run) from "npc_planes";
+
+void unsafe_control_taking(Critter& cr, int, int, int, string@, int[]@)
+{
+	Map@ map = cr.GetMap();
+	
+	//sprawdzenie gracza
+	if (!( cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD || cr.ParamBase[PLAYER_MAIN_FACTION]==ENCLAVA ))
+	{
+		cr.Say(SAY_NETMSG,"You are not in NPC Faction.");
+		return;
+	}
+	if(
+		( map.GetProtoId() == 18) ||
+		( map.GetProtoId() == 31 ) ||
+		( map.GetProtoId() == 115) ||
+		( map.GetProtoId() == 45) ||
+		( map.GetProtoId() == 9 ) ||
+		( map.GetProtoId() == 28000 ) ||
+		( map.GetProtoId() == 27000) ||
+		( map.GetProtoId() == 6) ||
+		( map.GetProtoId() == 62)
+		)
+	cr.Say(SAY_NETMSG,"Script callback:valid map.");
+	else return;
+	
+	
+	//sprawdzenie stanu kontroli miasta
+	if(cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)
+	{
+		if(( map.GetProtoId() == 62 &&  __ReddingControl == BROTHERHOOD) ||
+		( map.GetProtoId() == 18 && __ModocControl == BROTHERHOOD) ||
+		( map.GetProtoId() == 31 && __GeckoControl == BROTHERHOOD) ||
+		( map.GetProtoId() == 115 && __BrokenHillsControl == BROTHERHOOD) ||
+		( map.GetProtoId() == 45 && __NCRControl == BROTHERHOOD) ||
+		( map.GetProtoId() == 9 && __KlamathControl == BROTHERHOOD) ||
+		( map.GetProtoId() == 28000 && __HubControl == BROTHERHOOD) ||
+		( map.GetProtoId() == 27000 && __JunktownControl == BROTHERHOOD) ||
+		( map.GetProtoId() == 6 && __TheDenControl == BROTHERHOOD))
+		{
+		cr.Say(SAY_NETMSG,"Your faction has control on this place.");
+		return;
+		}
+	}
+	if(cr.ParamBase[PLAYER_MAIN_FACTION]==ENCLAVA)
+	{
+		if(( map.GetProtoId() == 62 &&  __ReddingControl == ENCLAVA) ||
+		( map.GetProtoId() == 18 && __ModocControl == ENCLAVA) ||
+		( map.GetProtoId() == 31 && __GeckoControl == ENCLAVA) ||
+		( map.GetProtoId() == 115 && __BrokenHillsControl == ENCLAVA) ||
+		( map.GetProtoId() == 45 && __NCRControl == ENCLAVA) ||
+		( map.GetProtoId() == 9 && __KlamathControl == ENCLAVA) ||
+		( map.GetProtoId() == 28000 && __HubControl == ENCLAVA) ||
+		( map.GetProtoId() == 27000 && __JunktownControl == ENCLAVA) ||
+		( map.GetProtoId() == 6 && __TheDenControl == ENCLAVA))
+		{
+		cr.Say(SAY_NETMSG,"Your faction has control on this place.");
+		return;
+		}
+	}
+	
+	/*//sprawdz npc
+	Critter@[] npcs;
+	map.GetCritters(0,FIND_LIFE|FIND_ONLY_NPC,npcs);
+	for(int i = 0, l=npcs.length(); i < l; i++)
+	{
+		if (cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD && npcs[i].ParamBase[PLAYER_MAIN_FACTION]==ENCLAVA)
+		{
+			cr.Say(SAY_NETMSG,"Here are still your enemies (NPC), you can not take a control.");
+			return;
+		}
+		
+		if (cr.ParamBase[PLAYER_MAIN_FACTION]==ENCLAVA && npcs[i].ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)
+		{
+			cr.Say(SAY_NETMSG,"Here are still your enemies (NPC), you can not take a control.");
+			return;
+		}	
+	}*/
+	//procedura sprawdzenia, czy flagi sa  wszystkie przejete
+	Item@[] flags;
+	map.GetItemsByType(ITEM_TYPE_FLAG, flags);
+	for(int i = 0, l=flags.length(); i < l; i++)
+	{
+		if (	
+		(flags[i].GetProtoId() == 4800) ||
+		((flags[i].GetProtoId() == 4801) &&(cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD))||
+		((flags[i].GetProtoId() == 4802) &&(cr.ParamBase[PLAYER_MAIN_FACTION]==ENCLAVA))
+		)
+		{
+		cr.Say(SAY_NETMSG,"You don't have control on all flags.");
+		return;
+		}
+
+	}
+	//dodawanie punktów za zdobycie miasta
+		cr.ParamBase[PLAYER_POINTS] += 1100;
+		Critter@[] players;
+		map.GetCritters( 0, FIND_LIFE_AND_KO | FIND_ONLY_PLAYERS, players );
+		for( uint i = 0; i < players.length();  i++ )
+		{
+			if (cr.ParamBase[PLAYER_MAIN_FACTION] == players[ i ].ParamBase[PLAYER_MAIN_FACTION])
+				players[ i ].ParamBase[PLAYER_POINTS] += 400;
+		}
+	
+	//procedura zmiany kontroli nad miastem i wyslania messages do reszty zolnierzy
+	if( map.GetProtoId() == 62 )  
+	{	
+		if(cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)
+		{
+			if(__ReddingControl == ENCLAVA)enclava_battle_message("Our brave soldiers lost the battle in Redding!!!");
+			bos_battle_message("Our great soldiers won the battle in Redding!!!");
+		}
+		else
+		{
+			enclava_battle_message("Our great soldiers won the battle in Redding!!!");
+			if(__ReddingControl == BROTHERHOOD)bos_battle_message("Our brave soldiers lost the battle in Redding!!!");
+		}
+		
+		__ReddingControl = cr.ParamBase[PLAYER_MAIN_FACTION];
+		
+		int[] citiesinfo(9);
+		if(!IsAnyData("CITIESINFO"))
+		{
+			Log("Cieties data error");
+		}
+		else
+		{
+			GetAnyData("CITIESINFO",citiesinfo);
+			citiesinfo[0]=__ReddingControl;
+			SetAnyData("CITIESINFO",citiesinfo);
+		}
+		
+		for(uint i=0; i<=__MaxID; i++)
+		{
+			string@ str=GetPlayerName(i);
+			if(@str!=null)
+			{
+				Critter @findcr=GetPlayer(str);
+				if(@findcr!=null) findcr.RunClientScript("client_main@worldmap_control",__ReddingControl,1,0,null,null);
+			}
+		}
+	}
+	else if( map.GetProtoId() == 18 ) 
+	{
+		
+		if(cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)
+		{
+			if(__ModocControl == ENCLAVA)enclava_battle_message("Our brave soldiers lost the battle in Modoc!!!");
+			bos_battle_message("Our great soldiers won the battle in Modoc!!!");
+		}
+		else
+		{
+			enclava_battle_message("Our great soldiers won the battle in Modoc!!!");
+			if(__ModocControl == BROTHERHOOD)bos_battle_message("Our brave soldiers lost the battle in Modoc!!!");
+		}
+		
+		__ModocControl = cr.ParamBase[PLAYER_MAIN_FACTION];
+				
+		int[] citiesinfo(9);
+		if(!IsAnyData("CITIESINFO"))
+		{
+			Log("Cieties data error");
+		}
+		else
+		{
+			GetAnyData("CITIESINFO",citiesinfo);
+			citiesinfo[1]=__ModocControl;
+			SetAnyData("CITIESINFO",citiesinfo);
+		}
+		
+		for(uint i=0; i<=__MaxID; i++)
+		{
+			string@ str=GetPlayerName(i);
+			if(@str!=null)
+			{
+				Critter @findcr=GetPlayer(str);
+				if(@findcr!=null) findcr.RunClientScript("client_main@worldmap_control",__ModocControl,2,0,null,null);
+			}
+		}
+	}
+	else if( map.GetProtoId() == 31 ) 
+	{
+		if(cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)
+		{
+			if(__GeckoControl == ENCLAVA)enclava_battle_message("Our brave soldiers lost the battle in Gecko!!!");
+			bos_battle_message("Our great soldiers won the battle in Gecko!!!");
+		}
+		else
+		{
+			enclava_battle_message("Our great soldiers won the battle in Gecko!!!");
+			if(__GeckoControl == BROTHERHOOD)bos_battle_message("Our brave soldiers lost the battle in Gecko!!!");
+		}
+		
+		__GeckoControl = cr.ParamBase[PLAYER_MAIN_FACTION];
+						
+		int[] citiesinfo(9);
+		if(!IsAnyData("CITIESINFO"))
+		{
+			Log("Cieties data error");
+		}
+		else
+		{
+			GetAnyData("CITIESINFO",citiesinfo);
+			citiesinfo[2]=__GeckoControl;
+			SetAnyData("CITIESINFO",citiesinfo);
+		}
+		
+		for(uint i=0; i<=__MaxID; i++)
+		{
+			string@ str=GetPlayerName(i);
+			if(@str!=null)
+			{
+				Critter @findcr=GetPlayer(str);
+				if(@findcr!=null) findcr.RunClientScript("client_main@worldmap_control",__GeckoControl,3,0,null,null);
+			}
+		}
+	}
+	else if( map.GetProtoId() == 115 ) 
+	{
+		if(cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)
+		{
+			if(__BrokenHillsControl == ENCLAVA)enclava_battle_message("Our brave soldiers lost the battle in Broken Hills!!!");
+			bos_battle_message("Our great soldiers won the battle in Broken Hills!!!");
+		}
+		else
+		{
+			enclava_battle_message("Our great soldiers won the battle in Broken Hills!!!");
+			if(__BrokenHillsControl == BROTHERHOOD)bos_battle_message("Our brave soldiers lost the battle in Broken Hills!!!");
+		}
+		
+		__BrokenHillsControl = cr.ParamBase[PLAYER_MAIN_FACTION];
+		
+		int[] citiesinfo(9);
+		if(!IsAnyData("CITIESINFO"))
+		{
+			Log("Cieties data error");
+		}
+		else
+		{
+			GetAnyData("CITIESINFO",citiesinfo);
+			citiesinfo[3]=__BrokenHillsControl;
+			SetAnyData("CITIESINFO",citiesinfo);
+		}
+		
+		for(uint i=0; i<=__MaxID; i++)
+		{
+			string@ str=GetPlayerName(i);
+			if(@str!=null)
+			{
+				Critter @findcr=GetPlayer(str);
+				if(@findcr!=null) findcr.RunClientScript("client_main@worldmap_control",__BrokenHillsControl,4,0,null,null);
+			}
+		}
+	}
+	else if( map.GetProtoId() == 45 ) 
+	{
+		if(cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)
+		{
+			if(__NCRControl == ENCLAVA)enclava_battle_message("Our brave soldiers lost the battle in NCR!!!");
+			bos_battle_message("Our great soldiers won the battle in NCR!!!");
+		}
+		else
+		{
+			enclava_battle_message("Our great soldiers won the battle in NCR!!!");
+			if(__NCRControl == BROTHERHOOD)bos_battle_message("Our brave soldiers lost the battle in NCR!!!");
+		}
+		
+		__NCRControl = cr.ParamBase[PLAYER_MAIN_FACTION];
+				
+		int[] citiesinfo(9);
+		if(!IsAnyData("CITIESINFO"))
+		{
+			Log("Cieties data error");
+		}
+		else
+		{
+			GetAnyData("CITIESINFO",citiesinfo);
+			citiesinfo[4]=__NCRControl;
+			SetAnyData("CITIESINFO",citiesinfo);
+		}
+		
+		for(uint i=0; i<=__MaxID; i++)
+		{
+			string@ str=GetPlayerName(i);
+			if(@str!=null)
+			{
+				Critter @findcr=GetPlayer(str);
+				if(@findcr!=null) findcr.RunClientScript("client_main@worldmap_control",__NCRControl,5,0,null,null);
+			}
+		}
+	}
+	else if( map.GetProtoId() == 9 ) 
+	{
+		if(cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)
+		{
+			if(__KlamathControl == ENCLAVA)enclava_battle_message("Our brave soldiers lost the battle in Klamath!!!");
+			bos_battle_message("Our great soldiers won the battle in Klamath!!!");
+		}
+		else
+		{
+			enclava_battle_message("Our great soldiers won the battle in Klamath!!!");
+			if(__KlamathControl == BROTHERHOOD)bos_battle_message("Our brave soldiers lost the battle in Klamath!!!");
+		}
+		
+		__KlamathControl = cr.ParamBase[PLAYER_MAIN_FACTION];
+						
+		int[] citiesinfo(9);
+		if(!IsAnyData("CITIESINFO"))
+		{
+			Log("Cieties data error");
+		}
+		else
+		{
+			GetAnyData("CITIESINFO",citiesinfo);
+			citiesinfo[5]=__KlamathControl;
+			SetAnyData("CITIESINFO",citiesinfo);
+		}
+		
+		for(uint i=0; i<=__MaxID; i++)
+		{
+			string@ str=GetPlayerName(i);
+			if(@str!=null)
+			{
+				Critter @findcr=GetPlayer(str);
+				if(@findcr!=null) findcr.RunClientScript("client_main@worldmap_control",__KlamathControl,6,0,null,null);
+			}
+		}
+	}
+	else if( map.GetProtoId() == 28000 ) 
+	{	
+		if(cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)
+		{
+			if(__HubControl == ENCLAVA)enclava_battle_message("Our brave soldiers lost the battle in Hub!!!");
+			bos_battle_message("Our great soldiers won the battle in Hub!!!");
+		}
+		else
+		{
+			enclava_battle_message("Our great soldiers won the battle in Hub!!!");
+			if(__HubControl == BROTHERHOOD)bos_battle_message("Our brave soldiers lost the battle in Hub!!!");
+		}
+		
+		__HubControl = cr.ParamBase[PLAYER_MAIN_FACTION];
+								
+		int[] citiesinfo(9);
+		if(!IsAnyData("CITIESINFO"))
+		{
+			Log("Cieties data error");
+		}
+		else
+		{
+			GetAnyData("CITIESINFO",citiesinfo);
+			citiesinfo[6]=__HubControl;
+			SetAnyData("CITIESINFO",citiesinfo);
+		}
+		
+		for(uint i=0; i<=__MaxID; i++)
+		{
+			string@ str=GetPlayerName(i);
+			if(@str!=null)
+			{
+				GetAnyData("CITIESINFO",citiesinfo);
+				Critter @findcr=GetPlayer(str);
+				if(@findcr!=null) findcr.RunClientScript("client_main@worldmap_control",__HubControl,7,0,null,null);
+			}
+		}
+	}
+	else if( map.GetProtoId() == 27000 ) 
+	{
+		if(cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)
+		{
+			if(__JunktownControl == ENCLAVA)enclava_battle_message("Our brave soldiers lost the battle in Junktown!!!");
+			bos_battle_message("Our great soldiers won the battle in Junktown!!!");
+		}
+		else
+		{
+			enclava_battle_message("Our great soldiers won the battle in Junktown!!!");
+			if(__JunktownControl == BROTHERHOOD)bos_battle_message("Our brave soldiers lost the battle in Junktown!!!");
+		}
+		
+		__JunktownControl = cr.ParamBase[PLAYER_MAIN_FACTION];
+										
+		int[] citiesinfo(9);
+		if(!IsAnyData("CITIESINFO"))
+		{
+			Log("Cieties data error");
+		}
+		else
+		{
+			GetAnyData("CITIESINFO",citiesinfo);
+			citiesinfo[7]=__JunktownControl;
+			SetAnyData("CITIESINFO",citiesinfo);
+		}
+		
+		for(uint i=0; i<=__MaxID; i++)
+		{
+			string@ str=GetPlayerName(i);
+			if(@str!=null)
+			{
+				Critter @findcr=GetPlayer(str);
+				if(@findcr!=null) findcr.RunClientScript("client_main@worldmap_control",__JunktownControl,8,0,null,null);
+			}
+		}
+	}
+	else if( map.GetProtoId() == 6 ) 
+	{
+		if(cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)
+		{
+			if(__TheDenControl == ENCLAVA)enclava_battle_message("Our brave soldiers lost the battle in The Den!!!");
+			bos_battle_message("Our great soldiers won the battle in The Den!!!");
+		}
+		else
+		{
+			enclava_battle_message("Our great soldiers won the battle in The Den!!!");
+			if(__TheDenControl == BROTHERHOOD)bos_battle_message("Our brave soldiers lost the battle in The Den!!!");
+		}
+		
+		__TheDenControl = cr.ParamBase[PLAYER_MAIN_FACTION];
+												
+		int[] citiesinfo(9);
+		if(!IsAnyData("CITIESINFO"))
+		{
+			Log("Cieties data error");
+		}
+		else
+		{
+			GetAnyData("CITIESINFO",citiesinfo);
+			citiesinfo[8]=__TheDenControl;
+			SetAnyData("CITIESINFO",citiesinfo);
+		}
+		
+		for(uint i=0; i<=__MaxID; i++)
+		{
+			string@ str=GetPlayerName(i);
+			if(@str!=null)
+			{
+				Critter @findcr=GetPlayer(str);
+				if(@findcr!=null) findcr.RunClientScript("client_main@worldmap_control",__TheDenControl,9,0,null,null);
+			}
+		}
+	}
+	
+	//procedury inteligentnego spawnu i regulacji sily guardow (zaleznie od ilosci kontrolowanych miast przez frakcje i wroga)
+	count_spawn_system(map.GetProtoId());
+}
+
+//procedury usuwania/dodawania guardow wraz ze zmiana proporcji kontrolowanych miast
+
+//messages
+void enclava_battle_message(string message)
+{
+	for(uint i=0; i<=__MaxID; i++)
+	{
+		string@ str=GetPlayerName(i);
+		if(@str!=null)
+		{
+			Critter @findcr=GetPlayer(str);
+			if(@findcr!=null) 
+			{
+				if(findcr.ParamBase[PLAYER_MAIN_FACTION]==ENCLAVA)findcr.Say(SAY_ENCLAVA_MESSAGE,message);
+			}
+		}
+	}
+}
+
+void bos_battle_message(string message)
+{
+	for(uint i=0; i<=__MaxID; i++)
+	{
+		string@ str=GetPlayerName(i);
+		if(@str!=null)
+		{
+			Critter @findcr=GetPlayer(str);
+			if(@findcr!=null) 
+			{
+				if(findcr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)findcr.Say(SAY_BOS_MESSAGE,message);
+			}
+		}
+	}
+}
+
+void count_spawn_system(uint map)
+{
+	/*
+	__SpawnEnclave = 0;
+	__SpawnBoS = 0;
+	
+	if(__ReddingControl == BROTHERHOOD)__SpawnBoS++;
+	else if(__ReddingControl == ENCLAVA)__SpawnEnclave++;
+	
+	if(__ModocControl == BROTHERHOOD)__SpawnBoS++;
+	else if(__ModocControl == ENCLAVA)__SpawnEnclave++;
+	
+	if(__GeckoControl == BROTHERHOOD)__SpawnBoS++;
+	else if(__GeckoControl == ENCLAVA)__SpawnEnclave++;
+	
+	if(__BrokenHillsControl == BROTHERHOOD)__SpawnBoS++;
+	else if(__BrokenHillsControl == ENCLAVA)__SpawnEnclave++;
+	
+	if(__NCRControl == BROTHERHOOD)__SpawnBoS++;
+	else if(__NCRControl == ENCLAVA)__SpawnEnclave++;
+	
+	if(__KlamathControl == BROTHERHOOD)__SpawnBoS++;
+	else if(__KlamathControl == ENCLAVA)__SpawnEnclave++;
+	
+	if(__HubControl == BROTHERHOOD)__SpawnBoS++;
+	else if(__HubControl == ENCLAVA)__SpawnEnclave++;
+	
+	if(__JunktownControl == BROTHERHOOD)__SpawnBoS++;
+	else if(__JunktownControl == ENCLAVA)__SpawnEnclave++;
+	
+	if(__TheDenControl == BROTHERHOOD)__SpawnBoS++;
+	else if(__TheDenControl == ENCLAVA)__SpawnEnclave++;
+	*/
+	if (map == 62)
+	Redding_spawn_control(true);
+	
+	if (map == 18)
+	Modoc_spawn_control(true);
+	
+	if (map == 31)
+	Gecko_spawn_control(true);
+	
+	if (map == 115)
+	BrokenHills_spawn_control(true);
+	
+	if (map == 45)
+	NCR_spawn_control(true);
+	
+	if (map== 9)
+	Klamath_spawn_control(true);
+	
+	if (map == 28000)
+	Hub_spawn_control(true);
+	
+	if (map == 27000)
+	Junktown_spawn_control(true);
+	
+	if (map == 6)
+	TheDen_spawn_control(true);
+}
+
+void Redding_spawn_control(bool this_city)
+{
+	int[] Guns={8,18,404,94,9,11,16, 402};
+	Map @ map = GetMapByPid(62, 0);
+	int []REDDING_X={306,339,371,399,378,381,413,362,282,300,318,372,370};//13
+	int []REDDING_Y={418,345,445,441,455,476,467,483,356,353,318,370,391};//13
+	if (this_city == true)
+	{		
+		uint16 HeX = 302;
+		uint16 HeY = 440;
+		int i = 0;
+		do
+		{
+			if(__ReddingControl == BROTHERHOOD)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(530, HeX, HeY, 1, null, null, "_BoSInit");
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( REDDING_X[i], REDDING_Y[i], 2 );
+			}
+			if(__ReddingControl == ENCLAVA)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(529, HeX, HeY, 1, null, null, "_EnclaveInit");	
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( REDDING_X[i], REDDING_Y[i], 2 );
+			}	
+			i++;
+		}while ( i <= 12 );	
+	}
+}
+
+void Modoc_spawn_control(bool this_city)
+{
+	int[] Guns={8,18,404,94,9,11,16, 402};
+	Map @ map = GetMapByPid(18, 0);
+	int []MODOC_X={188,166,135,162,178,104, 92,132,126, 72, 74,105, 58};//13
+	int []MODOC_Y={189,189,170,149,144,139,154,118, 86,106, 85, 61, 55};//13
+	if (this_city == true)
+	{
+		uint16 HeX = 178;
+		uint16 HeY = 197;
+		int i = 0;
+		do
+		{
+			if(__ModocControl == BROTHERHOOD)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(530, HeX, HeY, 1, null, null, "_BoSInit");
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( MODOC_X[i], MODOC_Y[i], 2 );
+			}
+			if(__ModocControl == ENCLAVA)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(529, HeX, HeY, 1, null, null, "_EnclaveInit");	
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( MODOC_X[i], MODOC_Y[i], 2 );
+			}	
+			i++;
+		}while ( i <= 12 );
+	}
+}
+
+void Gecko_spawn_control(bool this_city)
+{
+	int[] Guns={8,18,404,94,9,11,16, 402};
+	Map @ map = GetMapByPid(31, 0);
+	int []GECKO_X={449,422,430,376,459,415,394,353,411,361};//10
+	int []GECKO_Y={596,589,569,554,560,499,504,482,467,461};//10
+	if (this_city == true)
+	{
+		uint16 HeX = 441;
+		uint16 HeY = 603;
+		int i = 0;
+		do
+		{
+			if(__GeckoControl == BROTHERHOOD)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(530, HeX, HeY, 1, null, null, "_BoSInit");
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( GECKO_X[i], GECKO_Y[i], 2 );
+			}
+			if(__GeckoControl == ENCLAVA)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(529, HeX, HeY, 1, null, null, "_EnclaveInit");	
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( GECKO_X[i], GECKO_Y[i], 2 );
+			}	
+			i++;
+		}while ( i <= 9 );
+	
+	}
+}
+
+void BrokenHills_spawn_control(bool this_city)
+{
+	int[] Guns={8,18,404,94,9,11,16, 402};
+	Map @ map = GetMapByPid(115, 0);
+	int []BROKEN_X={226,264,230,229,203,206,199,203,221,221,144,143,101,101, 63, 66,103,121,103,148,208,269};//22
+	int []BROKEN_Y={108, 88, 88,106, 89,107,129,145,145,122, 95,114,114, 95, 95,114, 62, 66,142,136,172,133};//22
+	if (this_city == true)
+	{
+		uint16 HeX = 268;
+		uint16 HeY = 98;
+		int i = 0;
+		do
+		{
+			if(__BrokenHillsControl == BROTHERHOOD)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(530, HeX, HeY, 1, null, null, "_BoSInit");
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( BROKEN_X[i], BROKEN_Y[i], 2 );
+			}
+			if(__BrokenHillsControl == ENCLAVA)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(529, HeX, HeY, 1, null, null, "_EnclaveInit");	
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( BROKEN_X[i], BROKEN_Y[i], 2 );
+			}	
+			i++;
+		}while ( i <= 21 );
+	
+	}
+}
+
+void NCR_spawn_control(bool this_city)
+{
+	int[] Guns={8,18,404,94,9,11,16, 402};
+	Map @ map = GetMapByPid(45, 0);
+	int []NCR_X={118,139,155,174,205,224,239,226,236,193,223,187,223,221,223,265,294,303,294,248};//20
+	int []NCR_Y={173,220,174,203,179,135,179,225,272,274,303,312,331,377,406,288,288,317,316,356};//20
+	if (this_city == true)
+	{
+		uint16 HeX = 99;
+		uint16 HeY = 206;
+		int i = 0;
+		do
+		{
+			if(__NCRControl == BROTHERHOOD)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(530, HeX, HeY, 1, null, null, "_BoSInit");
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( NCR_X[i], NCR_Y[i], 2 );
+			}
+			if(__NCRControl == ENCLAVA)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(529, HeX, HeY, 1, null, null, "_EnclaveInit");	
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( NCR_X[i], NCR_Y[i], 2 );
+			}	
+			i++;
+		}while ( i <= 19 );
+	}
+}
+
+void Klamath_spawn_control(bool this_city)
+{
+	int[] Guns={8,18,404,94,9,11,16, 402};
+	Map @ map = GetMapByPid(9, 0);
+	int []KLAMATH_X={187,223,238,266,297,329,259,326,365,358,378,399,443,453,275};//15
+	int []KLAMATH_Y={269,269,299,268,314,394,220,279,278,260,336,318,320,353,345};//15
+	if (this_city == true)
+	{
+		uint16 HeX = 196;
+		uint16 HeY = 290;
+		int i = 0;
+		do
+		{
+			if(__KlamathControl == BROTHERHOOD)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(530, HeX, HeY, 1, null, null, "_BoSInit");
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( KLAMATH_X[i], KLAMATH_Y[i], 2 );
+			}
+			if(__KlamathControl == ENCLAVA)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(529, HeX, HeY, 1, null, null, "_EnclaveInit");	
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( KLAMATH_X[i], KLAMATH_Y[i], 2 );
+			}	
+			i++;
+		}while ( i <= 14 );
+	}
+}
+
+void Hub_spawn_control(bool this_city)
+{
+	int[] Guns={8,18,404,94,9,11,16, 402};
+	Map @ map = GetMapByPid(28000, 0);
+	int []HUB_X={307,290,291,307,307,291,291,308,323,279,294,241,396,417,362,362};//16
+	int []HUB_Y={ 97, 77,120,122,156,154,190,192,253,260,302,249,222,252,297,240};//16
+	if (this_city == true)
+	{
+		uint16 HeX = 190;
+		uint16 HeY = 157;
+		int i = 0;
+		do
+		{
+			if(__HubControl == BROTHERHOOD)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(530, HeX, HeY, 1, null, null, "_BoSInit");
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( HUB_X[i], HUB_Y[i], 2 );
+			}
+			if(__HubControl == ENCLAVA)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(529, HeX, HeY, 1, null, null, "_EnclaveInit");	
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( HUB_X[i], HUB_Y[i], 2 );
+			}	
+			i++;
+		}while ( i <= 15 );
+	}
+}
+
+void Junktown_spawn_control(bool this_city)
+{
+	int[] Guns={8,18,404,94,9,11,16, 402};
+	Map @ map = GetMapByPid(27000, 0);
+	int []JUNKTOWN_X={189,195,197,197,158,134,141,157,157,123,104, 71,116,117, 36, 66, 88, 58};//18 
+	int []JUNKTOWN_Y={274,273,252,217,224,233,201,189,156,168,152,114,125, 88, 73, 80, 37, 49};//18
+	if (this_city == true)
+	{
+		uint16 HeX = 177;
+		uint16 HeY = 286;
+		int i = 0;
+		do
+		{
+			if(__JunktownControl == BROTHERHOOD)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(530, HeX, HeY, 1, null, null, "_BoSInit");
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( JUNKTOWN_X[i], JUNKTOWN_Y[i], 2 );
+			}
+			if(__JunktownControl == ENCLAVA)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(529, HeX, HeY, 1, null, null, "_EnclaveInit");	
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( JUNKTOWN_X[i], JUNKTOWN_Y[i], 2 );
+			}	
+			i++;
+		}while ( i <= 17 );
+	}
+}
+
+void TheDen_spawn_control(bool this_city)
+{
+	int[] Guns={8,18,404,94,9,11,16, 402};
+	Map @ map = GetMapByPid(6, 0);
+	int []DEN_X={249,262,247,267,294,285,247,244,195,161,146,137,111,117,157,186,208,163,132,162,136, 76};//22
+	int []DEN_Y={ 93, 93,134,151,154,184,205,234,239,239,301,301,256,219,206,179,139,140,157,107,115,195};//22
+	if (this_city == true)
+	{
+		uint16 HeX = 233;
+		uint16 HeY = 47;
+		int i = 0;
+		do
+		{
+			if(__TheDenControl == BROTHERHOOD)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(530, HeX, HeY, 1, null, null, "_BoSInit");
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( DEN_X[i], DEN_Y[i], 2 );
+			}
+			if(__TheDenControl == ENCLAVA)
+			{	
+				GetFreeHex(map,7,HeX,HeY);
+				Critter @ npc = map.AddNpc(529, HeX, HeY, 1, null, null, "_EnclaveInit");	
+				int roll=Random(0,7);
+				npc.AddItem( Guns[roll], 1);
+				npc.SetFavoriteItem(SLOT_HAND1,Guns[roll]);
+				npc.SetHomePos( DEN_X[i], DEN_Y[i], 2 );
+			}	
+			i++;
+		}while ( i <= 21 );
+	}
+}
+//529 enclave //530 brotherhood
+
+void _BoSInit(Critter& npc, bool firstTime)
+{
+	npc.ParamBase[PLAYER_MAIN_FACTION]=BROTHERHOOD;
+	npc.ModeBase[ MODE_UNLIMITED_AMMO ] = 1;
+	npc.ModeBase[ MODE_NO_STEAL ] = 1;
+	npc.ModeBase[ MODE_NO_LOOT ] = 1;
+	npc.StatBase[ ST_REPLICATION_TIME ] = -1;
+	npc.StatBase[ ST_CRITICAL_CHANCE]= 1;
+	npc.StatBase[ ST_MAX_CRITICAL]= 1;
+	npc.StatBase[ST_MAX_LIFE] = 50+(__ArmorLevelEnclave * 30) + Random(0,20);
+	npc.SetEvent(CRITTER_EVENT_SHOW_CRITTER, "_ShowCritterBoS");
+	npc.SetEvent(CRITTER_EVENT_DEAD, "_DeadR");
+}
+
+void _EnclaveInit(Critter& npc, bool firstTime)
+{
+	npc.ParamBase[PLAYER_MAIN_FACTION]=ENCLAVA;
+	npc.ModeBase[ MODE_UNLIMITED_AMMO ] = 1;
+	npc.ModeBase[ MODE_NO_STEAL ] = 1;
+	npc.ModeBase[ MODE_NO_LOOT ] = 1;
+	npc.StatBase[ ST_CRITICAL_CHANCE]= 1;
+	npc.StatBase[ ST_MAX_CRITICAL]= 1;
+	npc.StatBase[ ST_REPLICATION_TIME ] = -1;
+	npc.StatBase[ST_MAX_LIFE] = 50+(__ArmorLevelEnclave * 30) + Random(0,20);
+	npc.SetEvent(CRITTER_EVENT_SHOW_CRITTER, "_ShowCritterEnclave");
+	npc.SetEvent(CRITTER_EVENT_DEAD, "_DeadR");
+}
+
+void _DeadR(Critter& npc, Critter@ killer)
+{
+	Map@ map = npc.GetMap();
+	DeleteNpc(npc);
+}
+
+void _ShowCritterBoS(Critter& npc, Critter& cr)
+{
+	if(cr.ParamBase[PLAYER_MAIN_FACTION]!=ENCLAVA) return;
+	
+	//npc.SayMsg( SAY_SHOUT_ON_HEAD, TEXTMSG_TEXT, STR_ALARM );
+	
+	AddAttackPlane(npc, 0, cr.Id, true);
+	
+	Map@ map = npc.GetMap();
+	Critter @[]guards;
+	map.GetCrittersHex(npc.HexX, npc.HexY, 80,  FIND_ALL | FIND_ONLY_NPC, guards);
+	for(uint i=0; i < guards.length(); i++)
+	{
+		if( guards[i].IsNoPlanes() && guards[i].ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD)
+			AddAttackPlane(guards[i], 0, cr.Id, true);
+	}
+}
+
+void _ShowCritterEnclave(Critter& npc, Critter& cr)
+{
+	if(cr.ParamBase[PLAYER_MAIN_FACTION]!=BROTHERHOOD) return;
+
+	//npc.SayMsg( SAY_SHOUT_ON_HEAD, TEXTMSG_TEXT, STR_ALARM );
+
+	AddAttackPlane(npc, 0, cr.Id, true);
+	
+	Map@ map = npc.GetMap();
+	Critter @[]guards;
+	map.GetCrittersHex(npc.HexX, npc.HexY, 80,  FIND_ALL | FIND_ONLY_NPC, guards);
+	for(uint i=0; i < guards.length(); i++)
+	{
+		if( guards[i].IsNoPlanes() && guards[i].ParamBase[PLAYER_MAIN_FACTION]==ENCLAVA)
+			AddAttackPlane(guards[i], 0, cr.Id, true);
+	}
+}

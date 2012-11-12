@@ -1,0 +1,9 @@
+del scripts\*.fosb
+del scripts\*.fosp
+del maps\*.fomapb
+del scripts\*.fosb
+del scripts\*.fosp
+del maps\*.mapb
+del save\*.fo
+del save\clients\*.client
+del save\clients\last_id.txt

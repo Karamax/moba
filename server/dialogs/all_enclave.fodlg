@@ -1,0 +1,32 @@
+[comment]
+Aaoe eiiiaioa?ee / Your comments.
+
+[data]
+lang=russ engl
+
+[dialog]
+&
+1 1000 None 0 #
+2 1010 @
+2 2000 None 0 &
+
+[russ]
+{100}{}{error}
+{200}{}{Вы видите одного из жителей.}
+{210}{}{Вы видите одного из жителей.}
+{1000}{}{russ}
+{1010}{}{Оuss}
+{2000}{}{Нuss}
+
+[engl]
+{100}{}{Enclave Soldier}
+{200}{}{You see one of Enclave soldiers.}
+{210}{}{You see one of Enclave soldiers.}
+{220}{}{You better not stand near when he wakes up. }
+{230}{}{You better not stand near when he wakes up. }
+{260}{}{Oh fuck! He got owned!}
+{270}{}{Oh fuck! He got owned!}
+{1000}{}{Initial preferences}
+{1010}{}{Answer}
+{2000}{}{Hah! Brotherhood stand's no chances!@@I hate taking off that armor when i go to toilet.@@My weapon jammed again....@@Why we have to get that towns full of meat...@@When we will atack their main base?@@Stop talking to me.@@...and then he shot me in the groin...@@Those scientist's are lazy weak piece of junk, and they dont know how to handle the weapons they make.@@I could use bigger ammo ration.@@Any new orders?@@What do You want?!@@Go bother someone other.@@I really can't decide wchich weapons are best... Big guns Blow's em sky high,Small Guns leaves nice holes and Energy Weapons turn your enemy to piece of shit!@@...and then he said leave that woman or i will burst you into pieces! You should see him running...@@How long i have been standing here?@@I'm bored...@@I dont know you, fuck off!@@Do you think that they can atack our base? No shit!@@}
+

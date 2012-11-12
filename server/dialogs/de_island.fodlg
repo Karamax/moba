@@ -1,0 +1,64 @@
+[comment]
+
+
+[data]
+lang=pols engl
+
+[dialog]
+&
+1 1000 None 1 #
+2 1010 D _item p PID_WOOD = 0 #
+3 1020 D _item p PID_WOOD } 13 #
+4 1030 D _item p PID_WOOD { 13 #
+5 1040 D _item p PID_PA = 0 @
+2 2000 None 0 #
+0 2010 R _script dialog@r_TeleportIsland 0  #
+0 2020 @
+3 3000 None 0 #
+0 3010 R _script dialog@r_TeleportIsland 0  R _item p PID_PA - 5 R _item p PID_BUFFOUT - 20 @
+4 4000 None 0 #
+0 4010 R _script dialog@r_TeleportIsland 0  #
+5 4020 D _item p PID_WOOD } 10 D _param p ST_STRENGTH { 3 D _item p PID_PA < 1 D _item p PID_BUFFOUT = 0 @
+5 5000 None 0 #
+0 5010 R _item p PID_PA + 1 R _item p PID_BUFFOUT + 1 &
+
+[pols]
+{100}{}{Dziwny nieznajomy}
+{110}{}{man15.png}
+{210}{}{Gdyby nie te obdarte ubranie wygladal by na kogos inteligentnego.}
+{1000}{}{Predialogue installations}
+{1010}{}{brak drewna}
+{1020}{}{dobra ilosc drewna}
+{1030}{}{za malo drewna}
+{1040}{}{za maly udzwig}
+{2000}{}{Widze ze ciebie tez wyslali na wyspe za kare ale to sie dobrze sklada mam mozliwosc ucieczki ale potrzebuje jeszcze 13 kawalkow drewna do ukonczenia tratwy. Tu masz siekierke, chyba niemusze ci mowic co masz nia zrobic?}
+{2010}{}{Ok, juz sie zabieram.}
+{2020}{}{Nie, dzieki. Moze pozniej sie za to wezme a narazie chce sobie odpoczac.}
+{3000}{}{Widze ze masz juz wystarczajaca ilosc drewna, wspaniale!}
+{3010}{}{Tak...}
+{4000}{}{Jesli chcesz sie wydostac z wyspy potrzebujesz jeszcze wiecej drewna na budowe tratwy. Wroc jak zbierzesz 13 kawalkow.}
+{4010}{}{Eeeeh... Ok}
+{4020}{}{Tylko mam maly problem bo nie mam sily zebrac tyle drewna.}
+{5000}{}{Hmmyy... No dobra pozycze ci na chwile moj pancerz wspomagany nie jest w najlpeszej kondycji po tym jak tu wyladowalem ale bedzie ci lzej i udzwigniesz wiecej. Prawie zapomnia³em... weŸ ten suplement, usprawni prace twoich miêœni.}
+{5010}{}{OK, fantastycznie!}
+
+[engl]
+{100}{}{Weird stranger}
+{110}{}{man15.png}
+{210}{}{{Without these tattered clothes could by look on someone intelligent.}
+{1000}{}{Predialogue installations}
+{1010}{}{brak drewna}
+{1020}{}{dobra ilosc drewna}
+{1030}{}{za malo drewna}
+{1040}{}{za maly udzwig}
+{2000}{}{I see that someone also sent you to the island for a penalty, but it's all to the good I have the opportunity to escape but still needs 13 pieces of wood to complete the raft. Here you have primitive hatchet. I hope you I don't have to tell you what to do?}
+{2010}{}{Okay, I know what to do.}
+{2020}{}{No, thanks. Maybe later I'll take up for it for now and wants to rest.}
+{3000}{}{I see that you already have enough wood, great!}
+{3010}{}{Yeah...}
+{4000}{}{If you want to get out of the island need more wood to build the raft. Come back when you collect 13 pieces wood.}
+{4010}{}{Eeeeh... Ok}
+{4020}{}{But I have a little problem because I do not have enough strength to gather all wood.}
+{5000}{}{Hmmyy ... Okay, I'll lend you for a moment my power armor is not in the best condition after he landed here, but you will more easily carry more. I almost forgot... take this supplement, it improves work your muscle.}
+{5010}{}{OK, fantastic!}
+

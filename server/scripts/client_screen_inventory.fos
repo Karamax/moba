@@ -1,0 +1,10 @@
+IGUIElementTextOpt  @ AnimaText;
+
+
+void InitAnima()
+{
+	@AnimaText=
+	GUI_AddText(CLIENT_SCREEN_INVENTORY,"", -110, 345 )
+		.TextOptions( FONT_FALLOUT, COLOR_GREEN, FT_BORDERED|FT_CENTERX )
+        .TextBoxSize( 400, 40 );
+}

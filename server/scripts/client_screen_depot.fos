@@ -1,0 +1,1391 @@
+IGUIElementButtonOpt@ addhol;
+IGUIElementButtonOpt@ SG_0;
+IGUIElementButtonOpt@ SG_1;
+IGUIElementButtonOpt@ SG_2;
+IGUIElementButtonOpt@ SG_3;
+IGUIElementButtonOpt@ SG_4;
+IGUIElementButtonOpt@ SG_5;
+IGUIElementButtonOpt@ SG_6;
+IGUIElementButtonOpt@ SG_7;
+IGUIElementButtonOpt@ SG_8;
+IGUIElementButtonOpt@ SG_9;
+IGUIElementButtonOpt@ SG_10;
+IGUIElementButtonOpt@ SG_11;
+IGUIElementButtonOpt@ SG_12;
+IGUIElementButtonOpt@ SG_13;
+IGUIElementButtonOpt@ SG_14;
+IGUIElementButtonOpt@ BG_15;
+IGUIElementButtonOpt@ BG_16;
+IGUIElementButtonOpt@ BG_17;
+IGUIElementButtonOpt@ BG_18;
+IGUIElementButtonOpt@ BG_19;
+IGUIElementButtonOpt@ BG_20;
+IGUIElementButtonOpt@ BG_21;
+IGUIElementButtonOpt@ BG_22;
+IGUIElementButtonOpt@ EW_23;
+IGUIElementButtonOpt@ EW_24;
+IGUIElementButtonOpt@ EW_25;
+IGUIElementButtonOpt@ EW_26;
+IGUIElementButtonOpt@ EW_27;
+IGUIElementButtonOpt@ EW_28;
+IGUIElementButtonOpt@ EW_29;
+
+IGUIElementButtonOpt@ AR_0;
+IGUIElementButtonOpt@ AR_1;
+IGUIElementButtonOpt@ AR_2;
+IGUIElementButtonOpt@ AR_3;
+IGUIElementButtonOpt@ AR_4;
+IGUIElementButtonOpt@ AR_5;
+IGUIElementButtonOpt@ AR_6;
+IGUIElementButtonOpt@ AR_7;
+IGUIElementButtonOpt@ AR_8;
+IGUIElementButtonOpt@ AR_9;
+
+IGUIElementButtonOpt@ MD_0;
+IGUIElementButtonOpt@ MD_1;
+IGUIElementButtonOpt@ MD_2;
+IGUIElementButtonOpt@ MD_3;
+IGUIElementButtonOpt@ MD_4;
+IGUIElementButtonOpt@ MD_5;
+IGUIElementButtonOpt@ MD_6;
+IGUIElementButtonOpt@ MD_7;
+IGUIElementButtonOpt@ MD_8;
+IGUIElementButtonOpt@ MD_9;
+IGUIElementButtonOpt@ MD_10;
+IGUIElementButtonOpt@ MD_11;
+IGUIElementButtonOpt@ MD_12;
+
+IGUIElementTextOpt@ WeaTim1Text;
+IGUIElementTextOpt@ WeaTim2Text;
+IGUIElementTextOpt@ WeaTim3Text;
+IGUIElementTextOpt@ ArmTimText;
+IGUIElementTextOpt@ MedTimText;
+
+IGUIElementButtonOpt@ DepotPanelExitButton;
+
+class DepotPanelExitButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		HideScreen(CLIENT_SCREEN_DEPOT,0,0,0);
+	}
+}
+
+class addholClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//ladowanie holodyskow do bazy
+		RunServerScriptUnsafe("server_technology_solution@unsafe_holodisc_change",0,0,0,null,null);
+	}
+}	
+
+class SG_0Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_10MM_PISTOL
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,0,0,null,null);
+	}
+}	
+		
+class SG_1Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_DESERT_EAGLE
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,1,0,null,null);
+	}
+}	
+		
+class SG_2Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_SHOTGUN
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,2,0,null,null);
+	}
+}	
+		
+class SG_3Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_10MM_SMG
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,3,0,null,null);
+	}
+}	
+		
+class SG_4Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_14MM_PISTOL
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,4,0,null,null);
+	}
+}	
+		
+class SG_5Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_HUNTING_RIFLE
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,5,0,null,null);
+	}
+}	
+		
+class SG_6Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_ASSAULT_RIFLE
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,6,0,null,null);
+	}
+}	
+		
+class SG_7Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_GREASE_GUN
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,7,0,null,null);
+	}
+}	
+		
+class SG_8Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_223_PISTOL
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,8,0,null,null);
+	}
+}	
+		
+class SG_9Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_SNIPER_RIFLE
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,9,0,null,null);
+	}
+}	
+		
+class SG_10Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_FN_FAL
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,10,0,null,null);
+	}
+}	
+		
+class SG_11Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_COMBAT_SHOTGUN
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,11,0,null,null);
+	}
+}	
+		
+class SG_12Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_HK_P90C
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,12,0,null,null);
+	}
+}	
+		
+class SG_13Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_HK_G11E
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,13,0,null,null);
+	}
+}	
+		
+class SG_14Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_M72_GAUSS_RIFLE
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,14,0,null,null);
+	}
+}	
+		
+class BG_15Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_FLAMER
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,15,0,null,null);
+	}
+}	
+		
+class BG_16Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_IMPROVED_FLAMETHROWER
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,16,0,null,null);
+	}
+}	
+		
+class BG_17Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_ROCKET_LAUNCHER
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,17,0,null,null);
+	}
+}	
+		
+class BG_18Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_MINIGUN
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,18,0,null,null);
+	}
+}	
+		
+class BG_19Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_LIGHT_SUPPORT_WEAPON
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,19,0,null,null);
+	}
+}	
+		
+class BG_20Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_AVENGER_MINIGUN
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,20,0,null,null);
+	}
+}	
+		
+class BG_21Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_BOZAR
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,21,0,null,null);
+	}
+}	
+		
+class BG_22Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_VINDICATOR_MINIGUN
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,22,0,null,null);
+	}
+}	
+		
+class EW_23Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_LASER_PISTOL
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,23,0,null,null);
+	}
+}	
+		
+class EW_24Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_MAGNETO_LASER_PISTOL
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,24,0,null,null);
+	}
+}	
+		
+class EW_25Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_PLASMA_PISTOL
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,25,0,null,null);
+	}
+}	
+		
+class EW_26Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_LASER_RIFLE
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,26,0,null,null);
+	}
+}	
+		
+class EW_27Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_PLASMA_RIFLE
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,27,0,null,null);
+	}
+}	
+		
+class EW_28Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_TURBO_PLASMA_RIFLE
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,28,0,null,null);
+	}
+}	
+		
+class EW_29Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_YK42B_PULSE_RIFLE
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",0,29,0,null,null);
+	}
+}	
+		
+class AR_0Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_LEATHER_JACKET
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",1,0,0,null,null);
+	}
+}	
+		
+class AR_1Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_LEATHER_ARMOR
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",1,1,0,null,null);
+	}
+}	
+		
+class AR_2Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_LEATHER_ARMOR_MK_II
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",1,2,0,null,null);
+	}
+}	
+		
+class AR_3Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_METAL_ARMOR
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",1,3,0,null,null);
+	}
+}	
+		
+class AR_4Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_METAL_ARMOR_MK_II
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",1,4,0,null,null);
+	}
+}	
+		
+class AR_5Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_TESLA_ARMOR
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",1,5,0,null,null);
+	}
+}	
+		
+class AR_6Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_COMBAT_ARMOR
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",1,6,0,null,null);
+	}
+}	
+		
+class AR_7Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_COMBAT_ARMOR_MK_II
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",1,7,0,null,null);
+	}
+}	
+		
+class AR_8Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_POWERED_ARMOR
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",1,8,0,null,null);
+	}
+}	
+		
+class AR_9Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_ADVANCED_POWER_ARMOR
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",1,9,0,null,null);
+	}
+}	
+		
+class MD_0Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_NUKA_COLA
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",2,0,0,null,null);
+	}
+}	
+		
+class MD_1Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_BEER
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",2,1,0,null,null);
+	}
+}	
+		
+class MD_2Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_ANTIDOTE
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",2,2,0,null,null);
+	}
+}	
+		
+class MD_3Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_HEALING_POWDER
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",2,3,0,null,null);
+	}
+}	
+		
+class MD_4Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_STIMPAK
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",2,4,0,null,null);
+	}
+}	
+		
+class MD_5Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_RADAWAY
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",2,5,0,null,null);
+	}
+}	
+		
+class MD_6Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_RAD_X
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",2,6,0,null,null);
+	}
+}	
+		
+class MD_7Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_MENTATS
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",2,7,0,null,null);
+	}
+}	
+		
+class MD_8Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_BUFFOUT
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",2,8,0,null,null);
+	}
+}	
+		
+class MD_9Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_PSYCHO
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",2,9,0,null,null);
+	}
+}	
+		
+class MD_10Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_JET
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",2,10,0,null,null);
+	}
+}	
+		
+class MD_11Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_SUPER_STIMPAK
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",2,11,0,null,null);
+	}
+}	
+		
+class MD_12Class : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		//PID_COOKIE
+		RunServerScriptUnsafe("server_technology_solution@unsafe_getstuff",2,12,0,null,null);
+	}
+}	
+
+class DepotScreenClass : IGUIScreenCallbackMove
+{
+	void OnMove(int x, int y){}
+}
+
+void InitDepotScreen()
+{
+	DepotScreenClass DepotScreen;
+	GUI_CreateScreen(CLIENT_SCREEN_DEPOT,"stuff_depot.png")
+		.CanMove(false)
+		.Modal(false)
+		.Multiinstance(false)
+		.SizeByMultipleImages(1,1)
+		.CallbackMove(DepotScreen);
+		
+	@WeaTim1Text=
+	GUI_AddText(CLIENT_SCREEN_DEPOT,"", 18, 330)
+	  .TextOptions(FONT_FALLOUT, COLOR_GREEN, FT_BORDERED)
+      .TextBoxSize(200,10);
+	  
+	@WeaTim2Text=
+	GUI_AddText(CLIENT_SCREEN_DEPOT,"", 152, 330)
+	  .TextOptions(FONT_FALLOUT, COLOR_GREEN, FT_BORDERED)
+      .TextBoxSize(200,10);
+	  
+	@WeaTim3Text=
+	GUI_AddText(CLIENT_SCREEN_DEPOT,"", 288, 330)
+	  .TextOptions(FONT_FALLOUT, COLOR_GREEN, FT_BORDERED)
+      .TextBoxSize(200,10);
+	  
+	@ArmTimText=
+	GUI_AddText(CLIENT_SCREEN_DEPOT,"", 420, 330)
+	  .TextOptions(FONT_FALLOUT, COLOR_GREEN, FT_BORDERED)
+      .TextBoxSize(200,10);
+	  
+	@MedTimText=
+	GUI_AddText(CLIENT_SCREEN_DEPOT,"", 556, 330)
+	  .TextOptions(FONT_FALLOUT, COLOR_GREEN, FT_BORDERED)
+      .TextBoxSize(200,10);
+	
+	addholClass addholButton;
+	@addhol=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 550,40)
+		.Text("CLICK HERE TO\nLOAD ALL HOLODISCS\nTO DATABASE.", FONT_FALLOUT, COLOR_GREEN,COLOR_WHITE,0)
+		.ClickableZone(60,30)
+		.CallbackMouseClick(addholButton);
+	addhol.Hide();
+	IGUIElementOpt@ elementaddhol;
+	@elementaddhol = cast<IGUIElementOpt@>(addhol);
+	
+	SG_0Class SG_0Button;
+	@SG_0=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,90)
+		.Text("10MM PISTOL", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_0Button);
+	SG_0.Hide();
+	IGUIElementOpt@ elementSG_0;
+	@elementSG_0 = cast<IGUIElementOpt@>(SG_0);
+	
+	SG_1Class SG_1Button;
+	@SG_1=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,105)
+		.Text("DESERT EAGLE", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_1Button);
+	SG_1.Hide();
+	IGUIElementOpt@ elementSG_1;
+	@elementSG_1 = cast<IGUIElementOpt@>(SG_1);
+	
+	SG_2Class SG_2Button;
+	@SG_2=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,120)
+		.Text("SHOTGUN", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_2Button);
+	SG_2.Hide();
+	IGUIElementOpt@ elementSG_2;
+	@elementSG_2 = cast<IGUIElementOpt@>(SG_2);
+	
+	SG_3Class SG_3Button;
+	@SG_3=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,135)
+		.Text("10MM SMG", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_3Button);
+	SG_3.Hide();
+	IGUIElementOpt@ elementSG_3;
+	@elementSG_3 = cast<IGUIElementOpt@>(SG_3);
+	
+	SG_4Class SG_4Button;
+	@SG_4=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,150)
+		.Text("14MM PISTOL", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_4Button);
+	SG_4.Hide();
+	IGUIElementOpt@ elementSG_4;
+	@elementSG_4 = cast<IGUIElementOpt@>(SG_4);
+	
+	SG_5Class SG_5Button;
+	@SG_5=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,165)
+		.Text("HUNTING RIFLE", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_5Button);
+	SG_5.Hide();
+	IGUIElementOpt@ elementSG_5;
+	@elementSG_5 = cast<IGUIElementOpt@>(SG_5);
+	
+	SG_6Class SG_6Button;
+	@SG_6=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,180)
+		.Text("ASSAULT RIFLE", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_6Button);
+	SG_6.Hide();
+	IGUIElementOpt@ elementSG_6;
+	@elementSG_6 = cast<IGUIElementOpt@>(SG_6);
+	
+	SG_7Class SG_7Button;
+	@SG_7=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,195)
+		.Text("GREASE GUN", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_7Button);
+	SG_7.Hide();
+	IGUIElementOpt@ elementSG_7;
+	@elementSG_7 = cast<IGUIElementOpt@>(SG_7);
+	
+	SG_8Class SG_8Button;
+	@SG_8=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,210)
+		.Text("223 PISTOL", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_8Button);
+	SG_8.Hide();
+	IGUIElementOpt@ elementSG_8;
+	@elementSG_8 = cast<IGUIElementOpt@>(SG_8);
+	
+	SG_9Class SG_9Button;
+	@SG_9=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,225)
+		.Text("SNIPER RIFLE", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_9Button);
+	SG_9.Hide();
+	IGUIElementOpt@ elementSG_9;
+	@elementSG_9 = cast<IGUIElementOpt@>(SG_9);
+	
+	SG_10Class SG_10Button;
+	@SG_10=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,240)
+		.Text("FN FAL", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_10Button);
+	SG_10.Hide();
+	IGUIElementOpt@ elementSG_10;
+	@elementSG_10 = cast<IGUIElementOpt@>(SG_10);
+	
+	SG_11Class SG_11Button;
+	@SG_11=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,255)
+		.Text("COMBAT SHOTGUN", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_11Button);
+	SG_11.Hide();
+	IGUIElementOpt@ elementSG_11;
+	@elementSG_11 = cast<IGUIElementOpt@>(SG_11);
+	
+	SG_12Class SG_12Button;
+	@SG_12=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,270)
+		.Text("HK P90C", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_12Button);
+	SG_12.Hide();
+	IGUIElementOpt@ elementSG_12;
+	@elementSG_12 = cast<IGUIElementOpt@>(SG_12);
+	
+	SG_13Class SG_13Button;
+	@SG_13=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,285)
+		.Text("HK G11E", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_13Button);
+	SG_13.Hide();
+	IGUIElementOpt@ elementSG_13;
+	@elementSG_13 = cast<IGUIElementOpt@>(SG_13);
+	
+	SG_14Class SG_14Button;
+	@SG_14=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 18,300)
+		.Text("M72 GAUSS RIFLE", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(SG_14Button);
+	SG_14.Hide();
+	IGUIElementOpt@ elementSG_14;
+	@elementSG_14 = cast<IGUIElementOpt@>(SG_14);
+	
+	//bg
+	BG_15Class BG_15Button;
+	@BG_15=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 152,90)
+		.Text("FLAMER", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(BG_15Button);
+	BG_15.Hide();
+	IGUIElementOpt@ elementBG_15;
+	@elementBG_15 = cast<IGUIElementOpt@>(BG_15);
+	
+	BG_16Class BG_16Button;
+	@BG_16=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 152,105)
+		.Text("IMP. FLAMER", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(BG_16Button);
+	BG_16.Hide();
+	IGUIElementOpt@ elementBG_16;
+	@elementBG_16 = cast<IGUIElementOpt@>(BG_16);
+	
+	BG_17Class BG_17Button;
+	@BG_17=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 152,120)
+		.Text("ROCKET LAUNCHER", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(BG_17Button);
+	BG_17.Hide();
+	IGUIElementOpt@ elementBG_17;
+	@elementBG_17 = cast<IGUIElementOpt@>(BG_17);
+	
+	BG_18Class BG_18Button;
+	@BG_18=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 152,135)
+		.Text("MINIGUN", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(BG_18Button);
+	BG_18.Hide();
+	IGUIElementOpt@ elementBG_18;
+	@elementBG_18 = cast<IGUIElementOpt@>(BG_18);
+	
+	BG_19Class BG_19Button;
+	@BG_19=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 152,150)
+		.Text("LSW", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(BG_19Button);
+	BG_19.Hide();
+	IGUIElementOpt@ elementBG_19;
+	@elementBG_19 = cast<IGUIElementOpt@>(BG_19);
+	
+	BG_20Class BG_20Button;
+	@BG_20=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 152,165)
+		.Text("AVENGER MINIGUN", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(BG_20Button);
+	BG_20.Hide();
+	IGUIElementOpt@ elementBG_20;
+	@elementBG_20 = cast<IGUIElementOpt@>(BG_20);
+	
+	BG_21Class BG_21Button;
+	@BG_21=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 152,180)
+		.Text("BOZAR", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(BG_21Button);
+	BG_21.Hide();
+	IGUIElementOpt@ elementBG_21;
+	@elementBG_21 = cast<IGUIElementOpt@>(BG_21);
+	
+	BG_22Class BG_22Button;
+	@BG_22=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 152,195)
+		.Text("VINDIC. MINIGUN", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(BG_22Button);
+	BG_22.Hide();
+	IGUIElementOpt@ elementBG_22;
+	@elementBG_22 = cast<IGUIElementOpt@>(BG_22);
+	
+	//ew
+	
+	EW_23Class EW_23Button;
+	@EW_23=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 288,90)
+		.Text("LASER PISTOL", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(EW_23Button);
+	EW_23.Hide();
+	IGUIElementOpt@ elementEW_23;
+	@elementEW_23 = cast<IGUIElementOpt@>(EW_23);
+	
+	EW_24Class EW_24Button;
+	@EW_24=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 288,105)
+		.Text("MAGNETO PISTOL", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(EW_24Button);
+	EW_24.Hide();
+	IGUIElementOpt@ elementEW_24;
+	@elementEW_24 = cast<IGUIElementOpt@>(EW_24);
+	
+	EW_25Class EW_25Button;
+	@EW_25=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 288,120)
+		.Text("PLASMA PISTOL", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(EW_25Button);
+	EW_25.Hide();
+	IGUIElementOpt@ elementEW_25;
+	@elementEW_25 = cast<IGUIElementOpt@>(EW_25);
+	
+	EW_26Class EW_26Button;
+	@EW_26=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 288,135)
+		.Text("LASER RIFLE", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(EW_26Button);
+	EW_26.Hide();
+	IGUIElementOpt@ elementEW_26;
+	@elementEW_26 = cast<IGUIElementOpt@>(EW_26);
+	
+	EW_27Class EW_27Button;
+	@EW_27=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 288,150)
+		.Text("PLASMA RIFLE", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(EW_27Button);
+	EW_27.Hide();
+	IGUIElementOpt@ elementEW_27;
+	@elementEW_27 = cast<IGUIElementOpt@>(EW_27);
+	
+	EW_28Class EW_28Button;
+	@EW_28=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 288,165)
+		.Text("TUR. PLA. RIFLE", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(EW_28Button);
+	EW_28.Hide();
+	IGUIElementOpt@ elementEW_28;
+	@elementEW_28 = cast<IGUIElementOpt@>(EW_28);
+	
+	EW_29Class EW_29Button;
+	@EW_29=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 288,180)
+		.Text("YK42B PULSE", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(EW_29Button);
+	EW_29.Hide();
+	IGUIElementOpt@ elementEW_29;
+	@elementEW_29 = cast<IGUIElementOpt@>(EW_29);
+	
+	//armors
+	AR_0Class AR_0Button;
+	@AR_0=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 420,90)
+		.Text("LEATHER JACKET", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(AR_0Button);
+	AR_0.Hide();
+	IGUIElementOpt@ elementAR_0;
+	@elementAR_0 = cast<IGUIElementOpt@>(AR_0);
+	
+	AR_1Class AR_1Button;
+	@AR_1=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 420,105)
+		.Text("LEATHER ARMOR", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(AR_1Button);
+	AR_1.Hide();
+	IGUIElementOpt@ elementAR_1;
+	@elementAR_1 = cast<IGUIElementOpt@>(AR_1);
+	
+	AR_2Class AR_2Button;
+	@AR_2=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 420,120)
+		.Text("LEATH. ARMOR MKII", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(AR_2Button);
+	AR_2.Hide();
+	IGUIElementOpt@ elementAR_2;
+	@elementAR_2 = cast<IGUIElementOpt@>(AR_2);
+	
+	AR_3Class AR_3Button;
+	@AR_3=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 420,135)
+		.Text("METAL ARMOR", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(AR_3Button);
+	AR_3.Hide();
+	IGUIElementOpt@ elementAR_3;
+	@elementAR_3 = cast<IGUIElementOpt@>(AR_3);
+	
+	AR_4Class AR_4Button;
+	@AR_4=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 420,150)
+		.Text("METAL ARMOR MKII", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(AR_4Button);
+	AR_4.Hide();
+	IGUIElementOpt@ elementAR_4;
+	@elementAR_4 = cast<IGUIElementOpt@>(AR_4);
+	
+	AR_5Class AR_5Button;
+	@AR_5=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 420,165)
+		.Text("TESLA ARMOR", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(AR_5Button);
+	AR_5.Hide();
+	IGUIElementOpt@ elementAR_5;
+	@elementAR_5 = cast<IGUIElementOpt@>(AR_5);
+	
+	AR_6Class AR_6Button;
+	@AR_6=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 420,180)
+		.Text("COMBAT ARMOR", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(AR_6Button);
+	AR_6.Hide();
+	IGUIElementOpt@ elementAR_6;
+	@elementAR_6 = cast<IGUIElementOpt@>(AR_6);
+	
+	AR_7Class AR_7Button;
+	@AR_7=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 420,195)
+		.Text("COMB. ARMOR MKII", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(AR_7Button);
+	AR_7.Hide();
+	IGUIElementOpt@ elementAR_7;
+	@elementAR_7 = cast<IGUIElementOpt@>(AR_7);
+	
+	AR_8Class AR_8Button;
+	@AR_8=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 420,210)
+		.Text("BOS ARMOR", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(AR_8Button);
+	AR_8.Hide();
+	IGUIElementOpt@ elementAR_8;
+	@elementAR_8 = cast<IGUIElementOpt@>(AR_8);
+	
+	AR_9Class AR_9Button;
+	@AR_9=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 420,210)
+		.Text("ENCLAVE ARMOR", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(AR_9Button);
+	AR_9.Hide();
+	IGUIElementOpt@ elementAR_9;
+	@elementAR_9 = cast<IGUIElementOpt@>(AR_9);
+	
+	//medicaments
+	MD_0Class MD_0Button;
+	@MD_0=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 556,90)
+		.Text("NUKA COLA", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(MD_0Button);
+	MD_0.Hide();
+	IGUIElementOpt@ elementMD_0;
+	@elementMD_0 = cast<IGUIElementOpt@>(MD_0);
+	
+	MD_1Class MD_1Button;
+	@MD_1=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 556,105)
+		.Text("BEER", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(MD_1Button);
+	MD_1.Hide();
+	IGUIElementOpt@ elementMD_1;
+	@elementMD_1 = cast<IGUIElementOpt@>(MD_1);
+	
+	MD_2Class MD_2Button;
+	@MD_2=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 556,120)
+		.Text("ANTIDOTE", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(MD_2Button);
+	MD_2.Hide();
+	IGUIElementOpt@ elementMD_2;
+	@elementMD_2 = cast<IGUIElementOpt@>(MD_2);
+	
+	MD_3Class MD_3Button;
+	@MD_3=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 556,135)
+		.Text("HEALING POWDER", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(MD_3Button);
+	MD_3.Hide();
+	IGUIElementOpt@ elementMD_3;
+	@elementMD_3 = cast<IGUIElementOpt@>(MD_3);
+	
+	MD_4Class MD_4Button;
+	@MD_4=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 556,150)
+		.Text("STIMPAK", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(MD_4Button);
+	MD_4.Hide();
+	IGUIElementOpt@ elementMD_4;
+	@elementMD_4 = cast<IGUIElementOpt@>(MD_4);
+	
+	MD_5Class MD_5Button;
+	@MD_5=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 556,165)
+		.Text("RADAWAY", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(MD_5Button);
+	MD_5.Hide();
+	IGUIElementOpt@ elementMD_5;
+	@elementMD_5 = cast<IGUIElementOpt@>(MD_5);
+	
+	MD_6Class MD_6Button;
+	@MD_6=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 556,180)
+		.Text("RAD X", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(MD_6Button);
+	MD_6.Hide();
+	IGUIElementOpt@ elementMD_6;
+	@elementMD_6 = cast<IGUIElementOpt@>(MD_6);
+	
+	MD_7Class MD_7Button;
+	@MD_7=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 556,195)
+		.Text("MENTATS", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(MD_7Button);
+	MD_7.Hide();
+	IGUIElementOpt@ elementMD_7;
+	@elementMD_7 = cast<IGUIElementOpt@>(MD_7);
+	
+	MD_8Class MD_8Button;
+	@MD_8=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 556,210)
+		.Text("BUFFOUT", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(MD_8Button);
+	MD_8.Hide();
+	IGUIElementOpt@ elementMD_8;
+	@elementMD_8 = cast<IGUIElementOpt@>(MD_8);
+	
+	MD_9Class MD_9Button;
+	@MD_9=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 556,225)
+		.Text("PSYCHO", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(MD_9Button);
+	MD_9.Hide();
+	IGUIElementOpt@ elementMD_9;
+	@elementMD_9 = cast<IGUIElementOpt@>(MD_9);
+	
+	MD_10Class MD_10Button;
+	@MD_10=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 556,240)
+		.Text("JET", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(MD_10Button);
+	MD_10.Hide();
+	IGUIElementOpt@ elementMD_10;
+	@elementMD_10 = cast<IGUIElementOpt@>(MD_10);
+	
+	MD_11Class MD_11Button;
+	@MD_11=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 556,255)
+		.Text("SUPER STIMPAK", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(MD_11Button);
+	MD_11.Hide();
+	IGUIElementOpt@ elementMD_11;
+	@elementMD_11 = cast<IGUIElementOpt@>(MD_11);
+	
+	MD_12Class MD_12Button;
+	@MD_12=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 556,270)
+		.Text("COOKIE", FONT_FALLOUT, COLOR_WHITE,COLOR_WHITE,0)
+		.ClickableZone(80,10)
+		.CallbackMouseClick(MD_12Button);
+	MD_12.Hide();
+	IGUIElementOpt@ elementMD_12;
+	@elementMD_12 = cast<IGUIElementOpt@>(MD_12);
+	
+	//exit button
+	
+	DepotPanelExitButtonClass obiektDepot;
+	@DepotPanelExitButton=
+	GUI_AddButton(CLIENT_SCREEN_DEPOT, 0,0)
+		.UpPic("greendot small_x.png")
+		.DownPic("greendot small_x.png")
+		.ClickableZone(33,33)
+		.Visible(true)
+		.CallbackMouseClick(obiektDepot);
+}
+
+void showdepotscreen()
+{	
+	addhol.Show();
+	if(GetChosen().ParamBase[STUFF_TIMEOUT_WEAPON]>__FullSecond + REAL_SECOND( 0 ))
+	{
+		WeaTim1Text.setVisible(true);
+		WeaTim2Text.setVisible(true);
+		WeaTim3Text.setVisible(true);
+	}
+	else 
+	{
+		WeaTim1Text.setVisible(false);
+		WeaTim2Text.setVisible(false);
+		WeaTim3Text.setVisible(false);
+	}
+	
+	if(GetChosen().ParamBase[STUFF_TIMEOUT_ARMORS]>__FullSecond + REAL_SECOND( 0 ))
+	ArmTimText.setVisible(true);
+	else
+	ArmTimText.setVisible(false);
+	
+	if(GetChosen().ParamBase[STUFF_TIMEOUT_MEDICAMENTS]>__FullSecond + REAL_SECOND( 0 ))
+	MedTimText.setVisible(true);
+	else
+	MedTimText.setVisible(false);
+	
+	WeaTim1Text.setText("TIMEOUT:"+((((GetChosen().ParamBase[STUFF_TIMEOUT_WEAPON] - __FullSecond ) / 20)/60)+1)+"min" );
+	WeaTim2Text.setText("TIMEOUT:"+((((GetChosen().ParamBase[STUFF_TIMEOUT_WEAPON] - __FullSecond ) / 20)/60)+1)+"min" );
+	WeaTim3Text.setText("TIMEOUT:"+((((GetChosen().ParamBase[STUFF_TIMEOUT_WEAPON] - __FullSecond ) / 20)/60)+1)+"min" );
+	ArmTimText.setText("TIMEOUT:"+((((GetChosen().ParamBase[STUFF_TIMEOUT_ARMORS] - __FullSecond ) / 20)/60)+1)+"min" );
+	MedTimText.setText("TIMEOUT:"+((((GetChosen().ParamBase[STUFF_TIMEOUT_MEDICAMENTS] - __FullSecond ) / 20)/60)+1)+"min" );
+	SG_0.Show();
+	SG_1.Show();
+	SG_2.Show();
+	SG_3.Show();
+	BG_15.Show();
+	EW_23.Show();
+	EW_24.Show();
+	AR_0.Show();
+	AR_1.Show();
+	AR_2.Show();
+	MD_0.Show();
+	MD_1.Show();
+	MD_2.Show();
+	MD_3.Show();
+	
+	if(GetChosen().ParamBase[TECH_SG] > 1)
+	{
+		SG_4.Show();
+		SG_5.Show();
+		SG_6.Show();
+		SG_7.Show();
+	}
+	else
+	{
+		SG_4.Hide();
+		SG_5.Hide();
+		SG_6.Hide();
+		SG_7.Hide();
+	}
+	if(GetChosen().ParamBase[TECH_SG] > 2)
+	{
+		SG_8.Show();
+		SG_9.Show();
+		SG_10.Show();
+		SG_11.Show();
+	}
+	else
+	{
+		SG_8.Hide();
+		SG_9.Hide();
+		SG_10.Hide();
+		SG_11.Hide();	
+	}
+	if(GetChosen().ParamBase[TECH_SG] > 3)
+	{
+		SG_12.Show();
+		SG_13.Show();	
+	}
+	else
+	{
+		SG_12.Hide();
+		SG_13.Hide();	
+	}
+	if(GetChosen().ParamBase[TECH_SG] >4 )
+	{
+		SG_14.Show();
+	}
+	else
+	{
+		SG_14.Hide();
+	}
+	
+	if(GetChosen().ParamBase[TECH_BG] >1)
+	{
+		BG_16.Show();
+		BG_17.Show();
+	}
+	else
+	{
+		BG_16.Hide();
+		BG_17.Hide();
+	}
+	if(GetChosen().ParamBase[TECH_BG] >2)
+	{
+		BG_18.Show();
+		BG_19.Show();
+	}
+	else
+	{
+		BG_18.Hide();
+		BG_19.Hide();
+	}
+	if(GetChosen().ParamBase[TECH_BG] >3)
+	{
+		BG_20.Show();	
+	}
+	else
+	{
+		BG_20.Hide();
+	}
+	if(GetChosen().ParamBase[TECH_BG] >4)
+	{
+		BG_21.Show();
+		BG_22.Show();
+	}
+	else
+	{
+		BG_21.Hide();
+		BG_22.Hide();
+	}
+	
+	if(GetChosen().ParamBase[TECH_EW] >1)
+	{
+		EW_25.Show();
+	}
+	else
+	{
+		EW_25.Hide();
+	}
+	if(GetChosen().ParamBase[TECH_EW] >2)
+	{
+		EW_26.Show();	
+	}
+	else
+	{
+		EW_26.Hide();
+	}
+	if(GetChosen().ParamBase[TECH_EW] >3)
+	{
+		EW_27.Show();	
+	}
+	else
+	{
+		EW_27.Hide();
+	}
+	if(GetChosen().ParamBase[TECH_EW] >4)
+	{
+		EW_28.Show();
+		EW_29.Show();	
+	}
+	else
+	{
+		EW_28.Hide();
+		EW_29.Hide();
+	}
+	if(GetChosen().ParamBase[TECH_AR] > 1)
+	{
+		AR_3.Show();
+		AR_4.Show();
+		AR_5.Show();
+	}
+	else
+	{
+		AR_3.Hide();
+		AR_4.Hide();
+		AR_5.Hide();
+	}
+	if(GetChosen().ParamBase[TECH_AR] > 2)
+	{
+		AR_6.Show();
+		AR_7.Show();
+	}
+	else
+	{
+		AR_6.Hide();
+		AR_7.Hide();
+	}
+	if(GetChosen().ParamBase[TECH_AR] > 3)
+	{
+		if(GetChosen().ParamBase[PLAYER_MAIN_FACTION]== BROTHERHOOD)AR_8.Show();
+		if(GetChosen().ParamBase[PLAYER_MAIN_FACTION]== ENCLAVA)AR_9.Show();
+	}
+	else
+	{
+		AR_8.Hide();
+		AR_9.Hide();
+	}
+	if(GetChosen().ParamBase[TECH_MD] >1)
+	{
+		MD_4.Show();
+		MD_5.Show();
+		MD_6.Show();
+		MD_7.Show();	
+	}
+	else
+	{
+		MD_4.Hide();
+		MD_5.Hide();
+		MD_6.Hide();
+		MD_7.Hide();
+	}
+	if(GetChosen().ParamBase[TECH_MD] >2)
+	{
+		MD_8.Show();
+		MD_9.Show();
+		MD_10.Show();
+		MD_11.Show();	
+	}
+	else
+	{
+		MD_8.Hide();
+		MD_9.Hide();
+		MD_10.Hide();
+		MD_11.Hide();
+	}
+	if(GetChosen().ParamBase[TECH_MD] >3)
+	{
+		MD_12.Show();	
+	}
+	else
+	{
+		MD_12.Hide();
+	}
+}

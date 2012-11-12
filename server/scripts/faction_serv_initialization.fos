@@ -1,0 +1,56 @@
+//Faction system for fonline engine by Xenom
+//You must put it in parameters.fos
+//_param_[PLAYER_FACTION_RANK]=RANK_NONE;
+//_param_[PLAYER_FACTION] = -1;
+//_param_[PLAYER_FACTION_INVITATION] = -1;
+//
+//And this in _defines.fos as ParamBase
+//#define PLAYER_FACTION              (number)
+//#define PLAYER_FACTION_RANK         (number)
+//#define PLAYER_FACTION_INVITATION   (number)
+//
+// than add in defines.fos new defines
+//#define RANK_NONE   (0)
+//#define RANK_MEMBER (1)
+//#define RANK_LEADER (2)
+//
+//in script.cfg
+//@ server module faction_serv_initialization  #initialization of new faction system
+//@ server module faction_serv_engine   #engine of faction system
+/////////////////////////////////////////////////
+
+#include "_names_factions_list.fos"
+
+void initialisation_of_factions_status()
+{
+	if( !IsAnyData("FactionsStatus") )
+	{		
+		int8[] LIST(FACTION_LIST.length());
+		for ( uint8 i = 0; i < LIST.length(); i++)
+		{
+			LIST[i]=0;
+		}
+		
+		if(FACTION_LIST.length() !=  LIST.length()) 
+		{
+			Log("SYSTEM OF FACTION ERROR!!! uint[]LIST LENGTH IS DIFFERENT LIKE uint[]FACTION_LIST !!!");
+			Log("uint8[]LIST: "+LIST.length());
+			Log("uint[]FACTION_LIST: "+FACTION_LIST.length());
+		}
+		else
+		{
+			SetAnyData("FactionsStatus", LIST);	
+			for(uint i=0;i<FACTION_LIST.length();i++)
+			{
+				int32[] FRACTION_EMPTY(100);
+				for ( uint8 i = 0; i < FRACTION_EMPTY.length(); i++)
+				{
+					FRACTION_EMPTY[i]=0;
+				}
+
+				SetAnyData(FACTION_LIST[i], FRACTION_EMPTY);	
+			}
+			Log("First initialization of Faction System...  Loading "+ (LIST.length()-1) +" indexes + index[0]. Successful!!!");
+		}
+	}
+}

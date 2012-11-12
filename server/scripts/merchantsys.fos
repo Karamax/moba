@@ -1,0 +1,618 @@
+#include "_teams.fos"
+#include "_defines.fos"
+#include "_itempid.fos"
+#include "_macros.fos"
+#include "_bags.fos"
+
+//New Reno
+void nr_drugs( Critter& npc, bool firstTime )
+{
+    uint pid = npc.GetProtoId();
+    npc.StatBase[ ST_REPLICATION_TIME ]       = __FullSecond + REAL_MINUTE( 120 );
+    npc.StatBase[ ST_TALK_DISTANCE ]      = 5;
+    npc.ModeBase[ MODE_NO_ITEM_GARBAGER ] = 1;
+    npc.ModeBase[ MODE_NO_BARTER ]        = 0;
+    npc.ModeBase[ MODE_NO_DROP ]          = 1;
+    npc.ModeBase[ MODE_NO_STEAL ]         = 1;
+    npc.ModeBase[ MODE_NO_LOOT ]          = 1;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ]   = 1;
+    //CreateTimeEvent( __FullSecond + REAL_MINUTE( 1 ), "e_nr_drugs", npc.Id, false );
+}
+
+
+
+uint e_nr_drugs( uint[] @ values )
+{
+    Critter @ npc = ::GetCritter( values[ 0 ] );
+    if( npc.IsDead() )
+    {
+        CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_nr_drugs", npc.Id, false );
+        return 0;
+    }
+	ClearItems( npc );
+    int[] SPAWN_ITEM_PIDS =
+    {
+		PID_MENTATS,
+		PID_BUFFOUT,
+		PID_PSYCHO,
+		PID_JET,
+		PID_NUKA_COLA,
+		PID_COOKIE,
+		PID_CIGARETTES
+    };
+    int[] SPAWN_ITEM_COUNT =
+    {
+		1,
+		1,
+		1,
+		1,
+		2,
+		2,
+		2
+    };
+    int count = Random( 9, 19 );
+    for( int y = 0; y <= count; y++ )
+    {
+        int roll = Random( 1, SPAWN_ITEM_PIDS.length() ) - 1;
+        npc.AddItem( SPAWN_ITEM_PIDS[ roll ], SPAWN_ITEM_COUNT[ roll ] );
+    }
+    CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_nr_drugs", npc.Id, false );
+    return 0;
+}
+
+void nr_weapon( Critter& npc, bool firstTime )
+{
+    uint pid = npc.GetProtoId();
+    npc.StatBase[ ST_REPLICATION_TIME ]   = __FullSecond + REAL_MINUTE( 120 );
+    npc.StatBase[ ST_TALK_DISTANCE ]      = 5;
+    npc.ModeBase[ MODE_NO_ITEM_GARBAGER ] = 1;
+    npc.ModeBase[ MODE_NO_BARTER ]        = 0;
+    npc.ModeBase[ MODE_NO_DROP ]          = 1;
+    npc.ModeBase[ MODE_NO_STEAL ]         = 1;
+    npc.ModeBase[ MODE_NO_LOOT ]          = 1;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ]   = 1;
+   // CreateTimeEvent( __FullSecond + REAL_MINUTE( 1 ), "e_nr_weapon", npc.Id, false );
+}
+
+
+
+uint e_nr_weapon( uint[] @ values )
+{
+    Critter @ npc = ::GetCritter( values[ 0 ] );
+    if( npc.IsDead() )
+    {
+        CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_nr_weapon", npc.Id, false );
+        return 0;
+    }
+	ClearItems( npc );
+    int[] SPAWN_ITEM_PIDS =
+    {
+		PID_ROCKET_AP,
+		PID_FLAMETHROWER_FUEL_MK_II,
+		PID_10MM_AP,
+		PID_4_7MM_CASELESS,
+		PID_14MM_AP,
+		PID_2MM_EC_AMMO,
+		PID_SMALL_ENERGY_CELL,
+		PID_MICRO_FUSION_CELL,
+		PID_5MM_AP
+    };
+    int[] SPAWN_ITEM_COUNT =
+    {
+		10,
+		10,
+		100,
+		300,
+		100,
+		50,
+		200,
+		50,
+		100
+    };
+    int count = Random( 10, 15 );
+    for( int y = 0; y <= count; y++ )
+    {
+        int roll = Random( 1, SPAWN_ITEM_PIDS.length() ) - 1;
+        npc.AddItem( SPAWN_ITEM_PIDS[ roll ], SPAWN_ITEM_COUNT[ roll ] );
+    }
+    CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_nr_weapon", npc.Id, false );
+    return 0;
+}
+
+//san francicso anima merchants 
+void anima( Critter& npc, bool firstTime )
+{
+    uint pid = npc.GetProtoId();
+    npc.StatBase[ ST_REPLICATION_TIME ]   = __FullSecond + REAL_MINUTE( 120 );
+    npc.StatBase[ ST_TALK_DISTANCE ]      = 5;
+    npc.ModeBase[ MODE_NO_ITEM_GARBAGER ] = 1;
+    npc.ModeBase[ MODE_NO_BARTER ]        = 0;
+    npc.ModeBase[ MODE_NO_DROP ]          = 1;
+    npc.ModeBase[ MODE_NO_STEAL ]         = 1;
+    npc.ModeBase[ MODE_NO_LOOT ]          = 1;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ]   = 1;
+    //CreateTimeEvent( __FullSecond + REAL_MINUTE( 1 ), "e_anima", npc.Id, false );
+}
+
+
+
+uint e_anima( uint[] @ values )
+{
+    Critter @ npc = ::GetCritter( values[ 0 ] );
+    if( npc.IsDead() )
+    {
+        CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_anima", npc.Id, false );
+        return 0;
+    }
+	ClearItems( npc );
+    int[] SPAWN_ITEM_PIDS =
+    {
+		PID_BOTTLE_CAPS
+	};
+    int[] SPAWN_ITEM_COUNT =
+    {
+		500
+    };
+    int count = Random( 7, 12 );
+    for( int y = 0; y <= count; y++ )
+    {
+        npc.AddItem( SPAWN_ITEM_PIDS[ 0 ], SPAWN_ITEM_COUNT[ 0 ] );
+    }
+    CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_anima", npc.Id, false );
+    return 0;
+}
+
+//vc
+void vcmed( Critter& npc, bool firstTime )
+{
+    uint pid = npc.GetProtoId();
+    npc.StatBase[ ST_REPLICATION_TIME ]   = __FullSecond + REAL_MINUTE( 120 );
+    npc.StatBase[ ST_TALK_DISTANCE ]      = 5;
+    npc.ModeBase[ MODE_NO_ITEM_GARBAGER ] = 1;
+    npc.ModeBase[ MODE_NO_BARTER ]        = 0;
+    npc.ModeBase[ MODE_NO_DROP ]          = 1;
+    npc.ModeBase[ MODE_NO_STEAL ]         = 1;
+    npc.ModeBase[ MODE_NO_LOOT ]          = 1;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ]   = 1;
+   // CreateTimeEvent( __FullSecond + REAL_MINUTE( 1 ), "e_vc_med", npc.Id, false );
+}
+
+
+
+uint e_vc_med( uint[] @ values )
+{
+    Critter @ npc = ::GetCritter( values[ 0 ] );
+    if( npc.IsDead() )
+    {
+        CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_vc_med", npc.Id, false );
+        return 0;
+    }
+	ClearItems( npc );
+    int[] SPAWN_ITEM_PIDS =
+    {
+		PID_SUPER_STIMPAK,
+		PID_BOTTLE_CAPS
+	};
+    int[] SPAWN_ITEM_COUNT =
+    {
+		10,
+		500
+    };
+    int count = Random( 30, 40 );
+    for( int y = 0; y <= count; y++ )
+    {
+		int roll = Random( 1, SPAWN_ITEM_PIDS.length() ) - 1;
+        npc.AddItem( SPAWN_ITEM_PIDS[ roll ], SPAWN_ITEM_COUNT[ roll ] );
+    }
+    CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_vc_med", npc.Id, false );
+    return 0;
+}
+
+void vc_armors( Critter& npc, bool firstTime )
+{
+    uint pid = npc.GetProtoId();
+    npc.StatBase[ ST_REPLICATION_TIME ]   = __FullSecond + REAL_MINUTE( 120 );
+    npc.StatBase[ ST_TALK_DISTANCE ]      = 5;
+    npc.ModeBase[ MODE_NO_ITEM_GARBAGER ] = 1;
+    npc.ModeBase[ MODE_NO_BARTER ]        = 0;
+    npc.ModeBase[ MODE_NO_DROP ]          = 1;
+    npc.ModeBase[ MODE_NO_STEAL ]         = 1;
+    npc.ModeBase[ MODE_NO_LOOT ]          = 1;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ]   = 1;
+   // CreateTimeEvent( __FullSecond + REAL_MINUTE( 1 ), "e_vcarmors", npc.Id, false );
+}
+
+uint e_vcarmors( uint[] @ values )
+{
+    Critter @ npc = ::GetCritter( values[ 0 ] );
+    if( npc.IsDead() )
+    {
+        CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_vcarmors", npc.Id, false );
+        return 0;
+    }
+	ClearItems( npc );
+    int[] SPAWN_ITEM_PIDS =
+    {
+		PID_2MM_EC_AMMO,
+		PID_223_FMJ,
+		PID_4_7MM_CASELESS,
+		PID_10MM_JHP,
+		PID_5MM_JHP,
+		PID_SMALL_ENERGY_CELL,
+		PID_MICRO_FUSION_CELL,
+		PID_M72_GAUSS_RIFLE,
+		PID_HK_P90C,
+		PID_HK_G11E,
+		PID_AVENGER_MINIGUN,
+		PID_BOZAR,
+		PID_VINDICATOR_MINIGUN,
+		PID_PLASMA_RIFLE,
+		PID_TURBO_PLASMA_RIFLE,
+		PID_YK42B_PULSE_RIFLE,
+		PID_COMBAT_ARMOR,
+		PID_COMBAT_ARMOR_MK_II,
+		PID_POWERED_ARMOR,
+		PID_ADVANCED_POWER_ARMOR
+	};
+    int[] SPAWN_ITEM_COUNT =
+    {
+		300,
+		300,
+		300,
+		300,
+		300,
+		300,
+		300,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1
+    };
+    int count = Random( 8, 20 );
+    for( int y = 0; y <= count; y++ )
+    {
+		int roll = Random( 1, SPAWN_ITEM_PIDS.length() ) - 1;
+        npc.AddItem( SPAWN_ITEM_PIDS[ roll ], SPAWN_ITEM_COUNT[ roll ] );
+    }
+    CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_vcarmors", npc.Id, false );
+    return 0;
+}
+
+//rest of
+
+void bigguns( Critter& npc, bool firstTime )
+{
+    uint pid = npc.GetProtoId();
+    npc.StatBase[ ST_REPLICATION_TIME ]   = __FullSecond + REAL_MINUTE( 120 );
+    npc.StatBase[ ST_TALK_DISTANCE ]      = 5;
+    npc.ModeBase[ MODE_NO_ITEM_GARBAGER ] = 1;
+    npc.ModeBase[ MODE_NO_BARTER ]        = 0;
+    npc.ModeBase[ MODE_NO_DROP ]          = 1;
+    npc.ModeBase[ MODE_NO_STEAL ]         = 1;
+    npc.ModeBase[ MODE_NO_LOOT ]          = 1;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ]   = 1;
+    //CreateTimeEvent( __FullSecond + REAL_MINUTE( 1 ), "e_bigguns", npc.Id, false );
+}
+
+uint e_bigguns( uint[] @ values )
+{
+    Critter @ npc = ::GetCritter( values[ 0 ] );
+    if( npc.IsDead() )
+    {
+        CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_bigguns", npc.Id, false );
+        return 0;
+    }
+	ClearItems( npc );
+    int[] SPAWN_ITEM_PIDS =
+    {
+		PID_ROCKET_LAUNCHER,
+		PID_EXPLOSIVE_ROCKET,
+		PID_MINIGUN,
+		PID_5MM_JHP,
+		PID_LIGHT_SUPPORT_WEAPON,
+		PID_223_FMJ,
+		PID_ENCLAVE_HOLODISK_1
+	};
+    int[] SPAWN_ITEM_COUNT =
+    {
+		1,
+		10,
+		1,
+		300,
+		1,
+		300,
+		10
+    };
+    int count = Random( 6, 12 );
+    for( int y = 0; y <= count; y++ )
+    {
+		int roll = Random( 1, SPAWN_ITEM_PIDS.length() ) - 1;
+        npc.AddItem( SPAWN_ITEM_PIDS[ roll ], SPAWN_ITEM_COUNT[ roll ] );
+    }
+    CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_bigguns", npc.Id, false );
+    return 0;
+}
+
+void smallguns( Critter& npc, bool firstTime )
+{
+    uint pid = npc.GetProtoId();
+    npc.StatBase[ ST_REPLICATION_TIME ]   = __FullSecond + REAL_MINUTE( 120 );
+    npc.StatBase[ ST_TALK_DISTANCE ]      = 5;
+    npc.ModeBase[ MODE_NO_ITEM_GARBAGER ] = 1;
+    npc.ModeBase[ MODE_NO_BARTER ]        = 0;
+    npc.ModeBase[ MODE_NO_DROP ]          = 1;
+    npc.ModeBase[ MODE_NO_STEAL ]         = 1;
+    npc.ModeBase[ MODE_NO_LOOT ]          = 1;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ]   = 1;
+   // CreateTimeEvent( __FullSecond + REAL_MINUTE( 1 ), "e_smallguns", npc.Id, false );
+}
+
+uint e_smallguns( uint[] @ values )
+{
+    Critter @ npc = ::GetCritter( values[ 0 ] );
+    if( npc.IsDead() )
+    {
+        CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_smallguns", npc.Id, false );
+        return 0;
+    }
+	ClearItems( npc );
+    int[] SPAWN_ITEM_PIDS =
+    {
+		PID_14MM_PISTOL,
+		PID_14MM_AP,
+		PID_HUNTING_RIFLE,
+		PID_223_FMJ,
+		PID_ASSAULT_RIFLE,
+		PID_5MM_JHP,
+		PID_GREASE_GUN,
+		PID_45_CALIBER_AMMO,
+		PID_ENCLAVE_HOLODISK_5
+	};
+    int[] SPAWN_ITEM_COUNT =
+    {
+		1,
+		50,
+		1,
+		200,
+		1,
+		200,
+		1,
+		200,
+		10
+    };
+    int count = Random( 5, 10 );
+    for( int y = 0; y <= count; y++ )
+    {
+		int roll = Random( 1, SPAWN_ITEM_PIDS.length() ) - 1;
+        npc.AddItem( SPAWN_ITEM_PIDS[ roll ], SPAWN_ITEM_COUNT[ roll ] );
+    }
+    CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_smallguns", npc.Id, false );
+    return 0;
+}
+
+void energy( Critter& npc, bool firstTime )
+{
+    uint pid = npc.GetProtoId();
+    npc.StatBase[ ST_REPLICATION_TIME ]   = __FullSecond + REAL_MINUTE( 120 );
+    npc.StatBase[ ST_TALK_DISTANCE ]      = 5;
+    npc.ModeBase[ MODE_NO_ITEM_GARBAGER ] = 1;
+    npc.ModeBase[ MODE_NO_BARTER ]        = 0;
+    npc.ModeBase[ MODE_NO_DROP ]          = 1;
+    npc.ModeBase[ MODE_NO_STEAL ]         = 1;
+    npc.ModeBase[ MODE_NO_LOOT ]          = 1;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ]   = 1;
+   // CreateTimeEvent( __FullSecond + REAL_MINUTE( 1 ), "e_energy", npc.Id, false );
+}
+
+uint e_energy( uint[] @ values )
+{
+    Critter @ npc = ::GetCritter( values[ 0 ] );
+    if( npc.IsDead() )
+    {
+        CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_energy", npc.Id, false );
+        return 0;
+    }
+	ClearItems( npc );
+    int[] SPAWN_ITEM_PIDS =
+    {
+		PID_PLASMA_PISTOL,
+		PID_SMALL_ENERGY_CELL,
+		PID_LASER_RIFLE,
+		PID_MICRO_FUSION_CELL,
+		PID_ENCLAVE_HOLODISK_2
+	};
+    int[] SPAWN_ITEM_COUNT =
+    {
+		1,
+		50,
+		1,
+		50,
+		10
+    };
+    int count = Random( 5, 9 );
+    for( int y = 0; y <= count; y++ )
+    {
+		int roll = Random( 1, SPAWN_ITEM_PIDS.length() ) - 1;
+        npc.AddItem( SPAWN_ITEM_PIDS[ roll ], SPAWN_ITEM_COUNT[ roll ] );
+    }
+    CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_energy", npc.Id, false );
+    return 0;
+}
+
+
+void medic( Critter& npc, bool firstTime )
+{
+    uint pid = npc.GetProtoId();
+    npc.StatBase[ ST_REPLICATION_TIME ]   = __FullSecond + REAL_MINUTE( 120 );
+    npc.StatBase[ ST_TALK_DISTANCE ]      = 5;
+    npc.ModeBase[ MODE_NO_ITEM_GARBAGER ] = 1;
+    npc.ModeBase[ MODE_NO_BARTER ]        = 0;
+    npc.ModeBase[ MODE_NO_DROP ]          = 1;
+    npc.ModeBase[ MODE_NO_STEAL ]         = 1;
+    npc.ModeBase[ MODE_NO_LOOT ]          = 1;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ]   = 1;
+    //CreateTimeEvent( __FullSecond + REAL_MINUTE( 1 ), "e_medicaments", npc.Id, false );
+}
+
+uint e_medicaments( uint[] @ values )
+{
+    Critter @ npc = ::GetCritter( values[ 0 ] );
+    if( npc.IsDead() )
+    {
+        CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_medicaments", npc.Id, false );
+        return 0;
+    }
+	ClearItems( npc );
+    int[] SPAWN_ITEM_PIDS =
+    {
+		PID_STIMPAK,
+		PID_RADAWAY,
+		PID_RAD_X,
+		PID_ENCLAVE_HOLODISK_4
+	};
+    int[] SPAWN_ITEM_COUNT =
+    {
+		1,
+		1,
+		1,
+		10
+    };
+    int count = Random( 5, 12 );
+    for( int y = 0; y <= count; y++ )
+    {
+		int roll = Random( 1, SPAWN_ITEM_PIDS.length() ) - 1;
+        npc.AddItem( SPAWN_ITEM_PIDS[ roll ], SPAWN_ITEM_COUNT[ roll ] );
+    }
+    CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_medicaments", npc.Id, false );
+    return 0;
+}
+
+void armorer( Critter& npc, bool firstTime )
+{
+    uint pid = npc.GetProtoId();
+    npc.StatBase[ ST_REPLICATION_TIME ]   = __FullSecond + REAL_MINUTE( 120 );
+    npc.StatBase[ ST_TALK_DISTANCE ]      = 5;
+    npc.ModeBase[ MODE_NO_ITEM_GARBAGER ] = 1;
+    npc.ModeBase[ MODE_NO_BARTER ]        = 0;
+    npc.ModeBase[ MODE_NO_DROP ]          = 1;
+    npc.ModeBase[ MODE_NO_STEAL ]         = 1;
+    npc.ModeBase[ MODE_NO_LOOT ]          = 1;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ]   = 1;
+   // CreateTimeEvent( __FullSecond + REAL_MINUTE( 1 ), "e_armorer", npc.Id, false );
+}
+
+uint e_armorer( uint[] @ values )
+{
+    Critter @ npc = ::GetCritter( values[ 0 ] );
+    if( npc.IsDead() )
+    {
+        CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_armorer", npc.Id, false );
+        return 0;
+    }
+	ClearItems( npc );
+    int[] SPAWN_ITEM_PIDS =
+    {
+		PID_ENCLAVE_HOLODISK_3,
+		PID_METAL_ARMOR,
+		PID_METAL_ARMOR_MK_II,
+		PID_TESLA_ARMOR
+	};
+    int[] SPAWN_ITEM_COUNT =
+    {
+		10,
+		1,
+		1,
+		1
+    };
+    int count = Random( 3, 5 );
+    for( int y = 0; y <= count; y++ )
+    {
+		int roll = Random( 1, SPAWN_ITEM_PIDS.length() ) - 1;
+        npc.AddItem( SPAWN_ITEM_PIDS[ roll ], SPAWN_ITEM_COUNT[ roll ] );
+    }
+    CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_armorer", npc.Id, false );
+    return 0;
+}
+
+void pub( Critter& npc, bool firstTime )
+{
+    uint pid = npc.GetProtoId();
+    npc.StatBase[ ST_REPLICATION_TIME ]   = __FullSecond + REAL_MINUTE( 120 );
+    npc.StatBase[ ST_TALK_DISTANCE ]      = 5;
+    npc.ModeBase[ MODE_NO_ITEM_GARBAGER ] = 1;
+    npc.ModeBase[ MODE_NO_BARTER ]        = 0;
+    npc.ModeBase[ MODE_NO_DROP ]          = 1;
+    npc.ModeBase[ MODE_NO_STEAL ]         = 1;
+    npc.ModeBase[ MODE_NO_LOOT ]          = 1;
+    npc.ModeBase[ MODE_NO_ENEMY_STACK ]   = 1;
+    //CreateTimeEvent( __FullSecond + REAL_MINUTE( 1 ), "e_pub", npc.Id, false );
+}
+
+uint e_pub( uint[] @ values )
+{
+    Critter @ npc = ::GetCritter( values[ 0 ] );
+    if( npc.IsDead() )
+    {
+        CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_pub", npc.Id, false );
+        return 0;
+    }
+	ClearItems( npc );
+    int[] SPAWN_ITEM_PIDS =
+    {
+		PID_BEER,
+		PID_ROENTGEN_RUM,
+		PID_ROT_GUT,
+		PID_MUTATED_FRUIT,
+		PID_IGUANA_ON_A_STICK,
+		PID_MEAT_ON_A_STICK,
+		PID_ENCLAVE_HOLODISK_1,
+		PID_ENCLAVE_HOLODISK_2,
+		PID_ENCLAVE_HOLODISK_3,
+		PID_ENCLAVE_HOLODISK_4,
+		PID_ENCLAVE_HOLODISK_5
+	};
+    int[] SPAWN_ITEM_COUNT =
+    {
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1
+    };
+    int count = Random( 5, 12 );
+    for( int y = 0; y <= count; y++ )
+    {
+		int roll = Random( 1, SPAWN_ITEM_PIDS.length() ) - 1;
+        npc.AddItem( SPAWN_ITEM_PIDS[ roll ], SPAWN_ITEM_COUNT[ roll ] );
+    }
+    CreateTimeEvent( __FullSecond + REAL_MINUTE( 240 ), "e_pub", npc.Id, false );
+    return 0;
+}
+
+void ClearItems( Critter& npc )
+{
+    Item@[] items;
+    if( npc.GetItems( -1, items ) > 0 )
+    {
+        for( uint i = 0, l = items.length(); i < l; i++ )
+        {
+            DeleteItem( items[ i ] );
+        }
+    }
+}
+

@@ -1,0 +1,130 @@
+//Faction system for fonline engine by Xenom
+//You must put it in parameters.fos
+//_param_[PLAYER_FACTION_RANK]=RANK_NONE;
+//_param_[PLAYER_FACTION] = -1;
+//_param_[PLAYER_FACTION_INVITATION] = -1;
+//And this in _defines.fos as ParamBase
+//#define PLAYER_FACTION              (number)
+//#define PLAYER_FACTION_RANK         (number)
+//#define PLAYER_FACTION_INVITATION   (number) 
+
+string []FACTION_LIST=
+{
+/*0 */ "no faction"  ,
+/*1 */ "Chosen Soldiers"  ,
+/*1 */ "3T Lawyers Agency"  ,
+/*2 */ "Dobermen"  ,
+/*3 */ "SOT"  ,
+/*4 */ "KOTW"  ,
+/*5 */ "Black Devils"  ,
+/*6 */ "Crazy 88"  ,
+/*7 */ "The Hawks"  ,
+/*8 */ "One-handed"  ,
+/*9 */ "Rambos" ,
+
+/*0 */ "Protectors"  ,
+/*1 */ "Gunners"  ,
+/*2 */ "Sharp guns"  ,
+/*3 */ "Big Beds"  ,
+/*4 */ "Rogues"  ,
+/*5 */ "Red Dot Army"  ,
+/*6 */ "Radiators"  ,
+/*7 */ "2269"  ,
+/*8 */ "Requiem warriors"  ,
+/*9 */ "Spartans" ,
+
+/*0 */ "Muppets"  ,
+/*1 */ "Gang Bang Smash"  ,
+/*2 */ "Dragons"  ,
+/*3 */ "Crazy Gunners"  ,
+/*4 */ "Force Fighters"  ,
+/*5 */ "Bukkaku"  ,
+/*6 */ "Hub Fellas"  ,
+/*7 */ "7th Division"  ,
+/*8 */ "God's Finger"  ,
+/*9 */ "Ironers" ,
+
+/*0 */ "Den Slaves"  ,
+/*1 */ "Road Warriors"  ,
+/*2 */ "Baseballers"  ,
+/*3 */ "Vault Silene Brahminy"  ,
+/*4 */ "Sunderstorm"  ,
+/*5 */ "Revenge Moslims"  ,
+/*6 */ "Travuccos"  ,
+/*7 */ "Mengeles Force"  ,
+/*8 */ "Silly People"  ,
+/*9 */ "Wasteland Fails" ,
+
+/*0 */ "Crafters"  ,
+/*1 */ "Jinxed"  ,
+/*2 */ "Guardians"  ,
+/*3 */ "Loners"  ,
+/*4 */ "Mr. Handies"  ,
+/*5 */ "Pushers"  ,
+/*6 */ "Silver Brothers"  ,
+/*7 */ "Legion"  ,
+/*8 */ "Eternal Warriors"  ,
+/*9 */ "Fallen" ,
+
+/*0 */ "Knights of Requiem"  ,
+/*1 */ "Unit731"  ,
+/*2 */ "Dark Peeps"  ,
+/*3 */ "Condemned"  ,
+/*4 */ "Horde"  ,
+/*5 */ "Brahmins"  ,
+/*6 */ "Swarm"  ,
+/*7 */ "Crushers"  ,
+/*8 */ "Ironfists"  ,
+/*9 */ "Clubs" ,
+
+/*0 */ "Crimsons"  ,
+/*1 */ "Sect of Steel"  ,
+/*2 */ "Skunks"  ,
+/*3 */ "Workers"  ,
+/*4 */ "Eleven Fighters"  ,
+/*5 */ "Loaded Guns"  ,
+/*6 */ "Alliance"  ,
+/*7 */ "Protectors"  ,
+/*8 */ "Sliders"  ,
+/*9 */ "Terminators" ,
+
+/*0 */ "Naaabz"  ,
+/*1 */ "Demolition Squad"  ,
+/*2 */ "The Tribe"  ,
+/*3 */ "Hookers"  ,
+/*4 */ "Big Tits"  ,
+/*5 */ "Prostitutes"  ,
+/*6 */ "Pokemons"  ,
+/*7 */ "Cocksuckers"  ,
+/*8 */ "Meatpackers"  ,
+/*9 */ "133733R5" ,
+
+/*0 */ "Little Babies"  ,
+/*1 */ "Goon Squad"  ,
+/*2 */ "Vodkamen"  ,
+/*3 */ "Bootle Masters"  ,
+/*4 */ "Masturbators"  ,
+/*5 */ "Unnamed"  ,
+/*6 */ "Boobs Lovers"  ,
+/*7 */ "Helicopters"  ,
+/*8 */ "Pojeby"  ,
+/*9 */ "Czosnki" ,
+
+/*0 */ "Wasteland Hurricane"  ,
+/*1 */ "Poka Cyce"  ,
+/*2 */ "Wesan's Harem"  ,
+/*3 */ "Boobytrap"  ,
+/*4 */ "Blue Dot"  ,
+/*5 */ "Duckies"  ,
+/*6 */ "Minecraftians"  ,
+/*7 */ "Urban Fighters"  ,
+/*8 */ "Followed"  };
+
+string []FACTION_RANK=
+{
+"None",
+"Member",
+"Leader"
+};
+
+

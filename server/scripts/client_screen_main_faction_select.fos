@@ -1,0 +1,68 @@
+IGUIElementTextOpt @ChooseTextOpt;
+IGUIElementButtonOpt@ TeamEnclava;
+IGUIElementButtonOpt@ TeamBos;
+
+class TeamEnclavaClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_new_player@unsafe_choose_enclava",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_CHARACTER_FACTION,0,0,0);
+	}
+}
+
+class TeamBosClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_new_player@unsafe_choose_bos",0,0,0,null,null);
+		HideScreen(CLIENT_SCREEN_CHARACTER_FACTION,0,0,0);
+	}
+}
+
+class CharacterFactionScreenClass : IGUIScreenCallbackMove
+{
+	void OnMove(int x, int y){}
+}
+
+void InitCharacterFactionScreen()
+{
+CharacterFactionScreenClass CharacterFactionScreen;
+	GUI_CreateScreen(CLIENT_SCREEN_CHARACTER_FACTION,"")
+		.CanMove(false)
+		.Modal(false)
+		.Multiinstance(false)
+		.SizeByMultipleImages(1,1)
+		.CallbackMove(CharacterFactionScreen);
+
+	@ChooseTextOpt=
+	GUI_AddText(CLIENT_SCREEN_CHARACTER_FACTION,"WELCOME! CHOOSE YOUR SITE...",__ScreenWidth/2-180,__ScreenHeight/2 -250)
+	  .TextOptions(FONT_BIG, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(500,200)
+	  .AbsolutePosition(true)
+	  .Visible(true);
+	  
+	TeamBosClass TeamBosobject;
+	@TeamBos=
+	GUI_AddButton(CLIENT_SCREEN_CHARACTER_FACTION, __ScreenWidth/2-280,__ScreenHeight/2-200)
+		.UpPic("bos_logo.png")
+		.DownPic("bos_logo.png")
+		.ClickableZone(270,395)
+		.CallbackMouseClick(TeamBosobject);
+	TeamBos.setVisible(true);
+	IGUIElementOpt@ elementTeamBos;
+	@elementTeamBos = cast<IGUIElementOpt@>(TeamBos);
+	elementTeamBos.setAbsolutePosition(true);
+	
+	TeamEnclavaClass TeamEnclavaobject;
+	@TeamEnclava=
+	GUI_AddButton(CLIENT_SCREEN_CHARACTER_FACTION, __ScreenWidth/2+10,__ScreenHeight/2-200)
+		.UpPic("enclava_logo.png")
+		.DownPic("enclava_logo.png")
+		.ClickableZone(270,395)
+		.CallbackMouseClick(TeamEnclavaobject);
+	TeamEnclava.setVisible(true);
+	IGUIElementOpt@ elementTeamEnclava;
+	@elementTeamEnclava = cast<IGUIElementOpt@>(TeamEnclava);
+	elementTeamEnclava.setAbsolutePosition(true);
+}

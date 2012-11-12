@@ -1,0 +1,469 @@
+#include "_defines.fos"
+#include "_npc_pids.fos"
+#include "_macros.fos"
+#include "_msgstr.fos"
+#include "utils_for_array.fos"
+#include "_ai.fos"
+#include "_maps.fos"
+
+import void DropRadiation(Critter& cr) from "radiation";
+import void r_AddMerc2Player(Critter & player, Critter @ npc) from "merc";
+import bool AddAttackPlane(Critter& npc, uint priority, Critter& target, bool run) from "npc_planes";
+import void DropPoison(Critter& cr) from "poison";
+import void DropDrugEffects(Critter& cr) from "drugs";
+import void InjureCritter(Critter& cr, uint dmg, uint dmgType, uint8 dir, uint attackerId, uint forceFlags) from "combat";
+import bool AddWalkPlane(Critter& npc, uint priority, uint16 hexX, uint16 hexY, uint8 dir, bool run, uint cut) from "npc_planes";
+import bool AddAttackPlane(Critter& npc, uint priority, uint critId, bool run) from "npc_planes";
+
+
+void unsafe_TeleportToMe(Critter& player, int id, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Critter@ cr=GetCritter(id);
+	if(!valid(cr.GetMap())) return;
+	if(@cr!=null) cr.TransitToHex(player.HexX,player.HexY,cr.Dir);
+}
+
+void unsafe_hardcored_delete(Critter& player, int crId, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Critter@ npc = GetCritter( crId );
+	DeleteNpc( npc );
+}
+
+void unsafe_GiveItem(Critter& player, int critter_id, int item_pid, int item_count, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	if(item_count<=0) return;
+	Critter@ cr=GetCritter(critter_id);
+	if(@cr!=null) cr.AddItem(item_pid,item_count);
+}
+
+void unsafe_Knockout(Critter& player, int id, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Critter@ cr=GetCritter(id);
+	if(@cr!=null) cr.ToKnockout(KNOCKOUT_ANIM2_DEFAULT(true),5,cr.HexX,cr.HexY);
+}
+/*
+void unsafe_TotalBanPlayer(Critter& player, int id, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Critter@ cr=GetCritter(id);
+	if(@cr!=null)
+	{
+		cr.ParamBase[PLAYER_IS_BANNED]=2;
+		Map @map=GetMapByPid(MAP_island,0);
+		if(@map!=null) cr.TransitToMap(map.Id,0);
+		//Log(player.Name+" ban "+cr.Name);
+	}
+}
+
+void unsafe_ChatBanPlayer(Critter& player, int id, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Critter@ cr=GetCritter(id);
+	if(@cr!=null)
+	{
+		cr.ParamBase[PLAYER_IS_BANNED]=1;
+		//Log(player.Name+" ban from chat "+cr.Name);
+	}
+}
+
+void unsafe_UnBanChatPlayer(Critter& player, int id, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Critter@ cr=GetCritter(id);
+	if(@cr!=null)
+	{
+		cr.ParamBase[PLAYER_IS_BANNED]=0;
+		//Log(player.Name+" unban "+cr.Name);
+	}
+}*/
+
+void unsafe_Kill(Critter& player, int id, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Critter@ cr=GetCritter(id);
+	if(@cr!=null) cr.ToDead(0,cr);
+	//Log(player.Name+" kill "+cr.Name);
+}
+
+void unsafe_Respawn(Critter& player, int id, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Critter@ cr=GetCritter(id);
+	if(@cr!=null) cr.ToLife();
+	//Log(player.Name+" respawn "+cr.Name);
+}
+
+void unsafe_Heal(Critter& player, int id, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Critter@ cr=GetCritter(id);
+	if(@cr!=null)
+	{
+		cr.StatBase[ST_CURRENT_HP]+=1000;//cr.StatBase[ST_MAX_LIFE];
+		DropRadiation(cr);
+		DropPoison(cr);
+		DropDrugEffects(cr);
+		cr.DamageBase[DAMAGE_LEFT_LEG]=0;
+		cr.DamageBase[DAMAGE_RIGHT_LEG]=0;
+		cr.DamageBase[DAMAGE_LEFT_ARM]=0;
+		cr.DamageBase[DAMAGE_RIGHT_ARM]=0;
+		cr.DamageBase[DAMAGE_EYE]=0;
+	}
+	//Log(player.Name+" for "+cr.Name);
+}
+
+void unsafe_DeleteNpc(Critter& player, int id, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Critter @cr=GetCritter(id);
+	if(@cr!=null) if(cr.IsNpc()) DeleteNpc(cr);
+	//Log(player.Name+" delete npc "+id);
+}
+/*
+void unsafe_AddMerc(Critter& player, int to_id, int merc_pid, int count, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Critter @cr=GetCritter(to_id);
+	if(@cr==null) return;
+	Map @map = cr.GetMap();
+	if(!valid(map)) return;
+	if(count>15) count=15;
+	for(int i=0; i<count; i++)
+	{
+		Critter@ merc=map.AddNpc(merc_pid,cr.HexX,cr.HexY,player.Dir,null,null,null);
+		if(merc_pid==3211 || merc_pid==3212 || merc_pid==5101 ||merc_pid==5102 || merc_pid==NPC_PID_guardBLUE || merc_pid==NPC_PID_guardwBLUE || merc_pid==3221 || merc_pid==3222)
+		{
+			merc.AddItem(PID_AK47_DE,1);
+		}
+		else if(merc_pid==5103 || merc_pid==5104)
+		{
+			merc.AddItem(PID_ROCKET_LAUNCHER_DE,1);
+		}
+		r_AddMerc2Player(cr,merc);
+		merc.Say(SAY_NORM_ON_HEAD,"At your service.");
+		merc.ParamBase[MODE_UNLIMITED_AMMO]=1;
+		merc.ModeBase[MODE_NO_DROP]=1;
+		merc.ModeBase[MODE_NO_LOOT]=1;
+		merc.MercBase[MERC_CANCEL_ON_ATTACK]=1;
+		merc.SetEvent(CRITTER_EVENT_DEAD,"RemoveSpawnedCritter");
+		merc.ShowCritterDist1=30;
+		if((merc_pid>=5101 && merc_pid<=5199))
+		{
+			merc.ParamBase[PLAYER_MAIN_FACTION]=1;
+			merc.SetEvent(CRITTER_EVENT_SHOW_CRITTER_1,"ULSEventShowCritter");
+		}
+		else if(merc_pid==NPC_PID_guardBLUE)
+		{
+			merc.ParamBase[PLAYER_MAIN_FACTION]=2;
+			merc.SetEvent(CRITTER_EVENT_SHOW_CRITTER_1,"NECEventShowCritter");
+		}
+	}
+}*/
+
+void unsafe_SetMainFaction(Critter& player, int cr_id, int main_faction, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	if(main_faction<0 || main_faction>3) return;
+	Critter @cr=GetCritter(cr_id);
+	if(@cr==null) return;
+	cr.ParamBase[PLAYER_MAIN_FACTION]=main_faction;
+}
+
+void unsafe_SetParam(Critter& player, int critter_id, int param_pid, int value, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Critter@ cr=GetCritter(critter_id);
+	if(param_pid==947) return;
+	if(@cr!=null) cr.ParamBase[param_pid]=value;
+}
+
+void unsafe_DeleteItem(Critter& player, int id, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Map @map = player.GetMap();
+	if(!valid(map)) return;
+	Item @it=GetItem(id);
+	if(@it!=null) DeleteItem(it);
+}
+
+void unsafe_Take(Critter& player, int id, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Item @it=GetItem(id);
+	Map @map = player.GetMap();
+	if(!valid(map)) return;
+	if(@it!=null)
+	{
+		player.AddItem(it.GetProtoId(),1);
+		DeleteItem(it);
+	}
+}
+
+void unsafe_Clone(Critter& player, int id, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Item @it=GetItem(id);
+	if(@it!=null) player.AddItem(it.GetProtoId(),1);
+}
+
+void unsafe_Teleport(Critter& player, int hx, int hy, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Map @map=player.GetMap();
+	if(!valid(map)) return;
+	player.TransitToHex(hx,hy,player.Dir);
+}
+
+void unsafe_GlobalMap(Critter& player, int, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	player.TransitToGlobal(false);
+}
+
+void unsafe_SpawnItem(Critter& player, int hx, int hy, int pid, string@, int[]@ count)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	if(@count==null) return;
+	if(count.length()==0) return;
+	if(count[0]<=0) return;
+	Map @map = player.GetMap();
+	if(!valid(map)) return;
+	map.AddItem(hx,hy,pid,count[0]);
+}
+
+void unsafe_SpawnCritter(Critter& player, int hx, int hy, int pid, string@, int[]@ count)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	if(@count==null) return;
+	if(count.length()==0) return;
+	if(count[0]<=0) return;
+	if(count[0]>15) count[0]=15;
+	Map @map = player.GetMap();
+	if(!valid(map)) return;
+	for(int i=0; i<count[0]; i++)
+	{
+		Critter@ spawncr;
+		@spawncr=map.AddNpc(pid,hx,hy,player.Dir,null,null,null);
+		//spawncr.StatBase[ST_TEAM_ID]=8;
+		//spawncr.StatBase[ST_AI_ID]=8;
+		spawncr.SetEvent(CRITTER_EVENT_DEAD,"RemoveSpawnedCritter");
+		spawncr.ModeBase[MODE_UNLIMITED_AMMO]=1;
+		spawncr.ModeBase[MODE_NO_DROP]=1;
+		spawncr.ModeBase[MODE_NO_LOOT]=1;
+		spawncr.ShowCritterDist1=52;
+	}
+}
+
+void unsafe_TeleportPlayers(Critter& player, int hx, int hy, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Map @map = player.GetMap();
+	if(!valid(map)) return;
+	Critter@[] crs;
+	uint cr_count=map.GetCritters(0,FIND_ONLY_PLAYERS|FIND_LIFE_AND_KO,crs);
+	for(uint i=0; i<cr_count; i++)
+	{
+		if(crs[i].Id!=player.Id) crs[i].TransitToHex(hx,hy,crs[i].Dir);
+	}
+}
+
+void unsafe_RemoveItemsFromGround(Critter& player, int hx, int hy, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Map @map = player.GetMap();
+	if(!valid(map)) return;
+	Item@[] weapons;
+	Item@[] armors;
+	Item@[] ammo;
+	uint items_count;
+	items_count=map.GetItemsByType(ITEM_TYPE_WEAPON,weapons);
+	for(uint i=0; i<items_count; i++) DeleteItem(weapons[i]);
+	items_count=map.GetItemsByType(ITEM_TYPE_ARMOR,armors);
+	for(uint i=0; i<items_count; i++) DeleteItem(armors[i]);
+	items_count=map.GetItemsByType(ITEM_TYPE_AMMO,ammo);
+	for(uint i=0; i<items_count; i++) DeleteItem(ammo[i]);
+}
+
+void unsafe_TeleportPlayer(Critter& player, int hx, int hy, int, string@ playerName, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	if(@playerName==null) return;
+	Map @map = player.GetMap();
+	if(!valid(map)) return;
+	string original_name=playerName;
+	Critter @find_cr1;
+	Critter @find_cr2;
+	@find_cr1=GetPlayer(playerName);
+	if(@find_cr1==null)
+	{
+		if(playerName.length()>5)
+		{
+			if(substring(playerName,0,5)=="[DEV]")
+				playerName=substring(playerName,6,playerName.length()-6);
+		}
+		@find_cr2=GetPlayer(playerName);
+		if(@find_cr2==null)
+		{
+			player.Say(SAY_NETMSG,"Player "+original_name+" is offline or does not exist.");
+			return;
+		}
+		if( find_cr2.GetAccess() != ACCESS_ADMIN )
+		{
+			player.Say(SAY_NETMSG,"Player "+original_name+" is offline or does not exist.");
+			return;
+		}
+		find_cr2.TransitToMap(player.GetMapId(),hx,hy,find_cr2.Dir);
+		return;
+	}
+	find_cr1.TransitToMap(player.GetMapId(),hx,hy,find_cr1.Dir);
+}
+
+void unsafe_TeleportToPlayer(Critter& player, int, int, int, string@ playerName, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	if(@playerName==null) return;
+	Critter @find_cr;
+	@find_cr=GetPlayer(playerName);
+	if(@find_cr==null)
+	{
+		player.Say(SAY_NETMSG,"Player "+playerName+" is offline or does not exist.");
+		return;
+	}
+	if(!valid(find_cr.GetMap())) player.TransitToGlobalGroup(find_cr.Id);
+	else player.TransitToMap(find_cr.GetMapId(),find_cr.HexX,find_cr.HexY,player.Dir);
+}
+
+void RemoveSpawnedCritter(Critter& cr, Critter@ killer)
+{
+	CreateTimeEvent(__FullSecond+REAL_SECOND(120),"e_RemoveSpawnedCritter",cr.Id,true);
+}
+
+uint e_RemoveSpawnedCritter(uint[]@ id)
+{
+	Critter@ cr=GetCritter(id[0]);
+	if(!valid(cr)) return 0;
+	DeleteNpc(cr);
+	return 0;
+}
+
+void unsafe_TeleportToMap(Critter& player, int id, int idmap, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Map @map=GetMapByPid(idmap,0);
+	Critter@ cr=GetCritter(id);
+	if(cr.GetMap().GetProtoId ()==idmap) return;
+	if(@map!=null) cr.TransitToMap(map.Id,0);
+}
+
+void unsafe_ClearItems(Critter& player, int id, int idmap, int, string@, int[]@)
+{	
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Critter@ cr=GetCritter(id);
+	if(!valid(cr)) return;
+	Item@[] items;
+	if(cr.GetItems(-1, items)>0)
+	{
+		for(uint i=0,l=items.length();i<l;i++)
+		{
+			DeleteItem(items[i]);
+		}
+	}
+}
+
+void unsafe_myvisible(Critter& player, int , int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	if(!valid(player)) return;
+	if(player.ParamBase[CRITER_VISIBLE]==0)	player.ParamBase[CRITER_VISIBLE]=1;
+	else player.ParamBase[CRITER_VISIBLE]=0;
+}
+
+void unsafe_mynick(Critter& player, int , int, int, string@, int[]@)
+{
+	if(player.ParamBase[PLAYER_MAIN_FACTION] != HUNTERS) return;
+	if(player.ParamBase[CRITER_SCOUT]==0)	
+	{	
+		player.ParamBase[CRITER_SCOUT]=1;	
+		player.Say(SAY_NETMSG,"Your nick is NOT visible now.");
+	}
+	else 
+	{
+		player.ParamBase[CRITER_SCOUT]=0;
+		player.Say(SAY_NETMSG,"Your nick is visible now.");
+	}
+}
+
+void unsafe_panel(Critter& player, int , int, int, string@, int[]@)
+{
+	if( player.GetAccess() == ACCESS_ADMIN )
+	{
+		player.ModeBase[MODE_UNLIMITED_AMMO] = 1;
+		player.ModeBase[MODE_NO_LOOSE_LIMBS] = 1;
+		player.ModeBase[MODE_INVULNERABLE] = 1;
+		player.ModeBase[MODE_RANGE_HTH] = 52;
+		player.StatBase[ST_ACTION_POINTS] = 9999;
+		player.StatBase[ST_STRENGTH] = 10;
+		player.StatBase[ST_PERCEPTION] = 10;
+		player.StatBase[ST_ENDURANCE] = 10;
+		player.StatBase[ST_CHARISMA] = 10;
+		player.StatBase[ST_INTELLECT] = 10;
+		player.StatBase[ST_AGILITY] = 10;
+		player.StatBase[ST_LUCK] = 10;
+		player.StatBase[ST_MELEE_DAMAGE] = 400;
+		player.ParamBase[PLAYER_ACCESS] = ACCESS_ADMIN;
+	}
+	return;
+}
+
+//test for other system
+void unsafe_ChangeFlags(Critter& player, int id, int, int, string@, int[]@)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Item@[] flags;
+	Map@ map = player.GetMap();
+	if(!valid(map)) return;
+	map.GetItemsByType(ITEM_TYPE_FLAG, flags);
+	for(int i = 0, l=flags.length(); i < l; i++)
+	{
+		if(flags[i].GetProtoId()==4800)
+		{
+			uint16 x = flags[i].HexX;
+			uint16 y = flags[i].HexY;
+			DeleteItem(flags[i]);
+			map.AddItem(x,y,4801,1);
+		}
+		
+		if(flags[i].GetProtoId()==4801)
+		{
+			uint16 x = flags[i].HexX;
+			uint16 y = flags[i].HexY;
+			DeleteItem(flags[i]);
+			map.AddItem(x,y,4802,1);
+		}
+		
+		if(flags[i].GetProtoId()==4802)
+		{
+			uint16 x = flags[i].HexX;
+			uint16 y = flags[i].HexY;
+			DeleteItem(flags[i]);
+			map.AddItem(x,y,4801,1);
+		}
+	}
+}
+/*
+void unsafe_Boom(Critter &player, int, int, int, string@, int[]@ count)
+{
+	if( player.GetAccess() != ACCESS_ADMIN ) return;
+	Map @map = player.GetMap();
+	if(!valid(map)) return;
+	Critter@[]crs;
+	map.GetCritters(0,FIND_ONLY_PLAYERS|FIND_ALL,crs);
+	for(uint i=0; i<crs.length(); i++)
+	{
+		crs[i].RunClientScript("_FlushScreen",0xFFFFFFFF,0,30000,null,null);
+	}
+}*/

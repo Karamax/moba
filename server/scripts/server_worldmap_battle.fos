@@ -1,0 +1,168 @@
+#include "_defines.fos"
+#include "_maps.fos"
+#include "_macros.fos"
+
+void unsafe_observe_encounters(Critter& cr, int, int, int, string@, int[]@)// this function looking for existing players encounters on global map in some range
+{
+	if(cr.TimeoutBase[ TO_OBSERVE  ] >  int(__FullSecond + REAL_MINUTE( 0 )))
+	{
+		cr.Say(SAY_NETMSG,"You must wait 3 min (timeout).");
+		return;
+	}
+	cr.TimeoutBase[ TO_OBSERVE  ] = __FullSecond + REAL_MINUTE( 3 );
+	int range = (cr.Skill[ SK_OUTDOORSMAN ]/10) + cr.StatBase[ ST_PERCEPTION ] + 10;
+	// Find new locations
+	Location@[] locIds;
+	GetLocations(cr.WorldX, cr.WorldY, range,locIds);
+	for( uint j = 0; j < locIds.length(); j++ )
+	{
+		if(( !cr.IsKnownLoc( true, locIds[ j ].Id)) && (locIds[ j ].GetProtoId() != LOCATION_pbase))// you must change it too not find private plyers bases
+		{
+			cr.SetKnownLoc( true, locIds[ j ].Id);
+		}
+	}
+}
+// looking for friends
+void unsafe_worldmap_observe_normal(Critter& cr, int, int, int, string@, int[]@)
+{
+	if(cr.TimeoutBase[ TO_OBSERVE  ] > int(__FullSecond + REAL_MINUTE( 0 )))
+	{
+		cr.Say(SAY_NETMSG,"You must wait 3 min (timeout).");
+		return;
+	}
+	cr.TimeoutBase[ TO_OBSERVE  ] = __FullSecond + REAL_MINUTE( 3 );	
+	int range = (cr.Skill[ SK_OUTDOORSMAN ]/10) + cr.StatBase[ ST_PERCEPTION ] + 10;
+	string []NICKS_TO_CLIENT=
+	{"none", "none", "none", "none", "none",
+	"none", "none", "none", "none", "none",
+	"none", "none", "none", "none", "none"};
+	uint8 []GROUP_SIZE = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	Critter@[] players;
+	uint count = GetGlobalMapCritters(cr.WorldX, cr.WorldY, range, FIND_ALL, players);
+	uint j = 0;
+	Critter@[] @ groupme = cr.GetGlobalGroup();
+	Critter@ leaderme = groupme[0];
+	for(uint i = 0; i < count; i++)
+	{
+		if (j == 15)break;
+		Critter@[] @ group = players[i].GetGlobalGroup();
+		Critter@ leader = group[0];
+		if((leaderme.Id != leader.Id)&&(cr.Id != leader.Id) && (leader.ParamBase[PLAYER_MAIN_FACTION] == cr.ParamBase[PLAYER_MAIN_FACTION]))//in FoT i have 2 npc factions, you must change this for your solution
+		{
+			for(uint b = 0; b < NICKS_TO_CLIENT.length(); b++)
+			{
+				if (NICKS_TO_CLIENT[b] == GetPlayerName(leader.Id)) break;
+				else if (NICKS_TO_CLIENT[b] == "none")
+				{
+					NICKS_TO_CLIENT[b] = GetPlayerName(leader.Id);
+					GROUP_SIZE[b] = leader.GetGlobalGroup().length();
+					j++;
+					break;
+				}
+			}
+		}
+	}
+	for(uint i = 0; i < NICKS_TO_CLIENT.length(); i++)
+	{
+		if(NICKS_TO_CLIENT[i] != "none")
+		{
+			Critter@[] group = GetPlayer(NICKS_TO_CLIENT[i]).GetGlobalGroup();
+			int size = group.length();
+			cr.RunClientScript("client_main@observe_effect",i,size,0,NICKS_TO_CLIENT[i],null);// you need to create gui on clent site, and tables for string
+		}
+		else cr.RunClientScript("client_main@observe_effect",i,0,0,NICKS_TO_CLIENT[i],null);// you need to create gui on clent site, and tables for string
+	}
+}
+
+// looking for enemies
+void unsafe_worldmap_observe_other(Critter& cr, int, int, int, string@, int[]@)
+{
+	if(cr.TimeoutBase[ TO_OBSERVE  ] > int(__FullSecond + REAL_MINUTE( 0 )))
+	{
+		cr.Say(SAY_NETMSG,"You must wait 3 min (timeout).");
+		return;
+	}
+	cr.TimeoutBase[ TO_OBSERVE  ] = __FullSecond + REAL_MINUTE( 3 );
+	int range = (cr.Skill[ SK_OUTDOORSMAN ]/10) + cr.StatBase[ ST_PERCEPTION ] + 10;
+	string []NICKS_TO_CLIENT=
+	{"none", "none", "none", "none", "none",
+	"none", "none", "none", "none", "none",
+	"none", "none", "none", "none", "none"};
+	uint8 []GROUP_SIZE = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	Critter@[] players;
+	uint count = GetGlobalMapCritters(cr.WorldX, cr.WorldY, range, FIND_ALL, players);
+	uint j = 0;
+	Critter@[] @ groupme = cr.GetGlobalGroup();
+	Critter@ leaderme = groupme[0];
+	for(uint i = 0; i < count; i++)
+	{
+		if (j == 15)break;
+		Critter@[] @ group = players[i].GetGlobalGroup();
+		Critter@ leader = group[0];
+		if((leaderme.Id != leader.Id)&&(cr.Id != leader.Id) && (leader.ParamBase[PLAYER_MAIN_FACTION] != cr.ParamBase[PLAYER_MAIN_FACTION]))//in FoT i have 2 npc factions, you must change this for your solution
+		{
+			for(uint b = 0; b < NICKS_TO_CLIENT.length(); b++)
+			{
+				if (NICKS_TO_CLIENT[b] == GetPlayerName(leader.Id)) break;
+				else if (NICKS_TO_CLIENT[b] == "none")
+				{
+					NICKS_TO_CLIENT[b] = GetPlayerName(leader.Id);
+					GROUP_SIZE[b] = leader.GetGlobalGroup().length();
+					j++;
+					break;
+				}
+			}
+		}
+	}
+	for(uint i = 0; i < NICKS_TO_CLIENT.length(); i++)
+	{
+		if(NICKS_TO_CLIENT[i] != "none")
+		{
+			Critter@[] group = GetPlayer(NICKS_TO_CLIENT[i]).GetGlobalGroup();
+			int size = group.length();
+			cr.RunClientScript("client_main@observe_effect",i,size,0,NICKS_TO_CLIENT[i],null);
+		}
+		else cr.RunClientScript("client_main@observe_effect",i,0,0,NICKS_TO_CLIENT[i],null);
+	}
+}
+
+void unsafe_worldmap_attack(Critter& cr, int, int, int, string@ str, int[]@)
+{
+	if(str=="none")return;
+	Critter@ other=GetPlayer(str);
+	if(@other == null)
+	{
+		cr.Say(SAY_NETMSG,"Player: "+str+" is not online, please refresh your list.");
+		return;
+	}
+	Critter@[]@ group=other.GetGlobalGroup();
+	Critter@[]@ groupme=cr.GetGlobalGroup();
+	int range = (cr.Skill[ SK_OUTDOORSMAN ]/10) + cr.StatBase[ ST_PERCEPTION ] + 10;
+	int distance = sqrt( ((group[0].WorldX  - groupme[0].WorldX)*(group[0].WorldX  - groupme[0].WorldX)) + ((group[0].WorldY  - groupme[0].WorldY)*(group[0].WorldY  - groupme[0].WorldY)) );
+	if (distance > range)
+	{
+		cr.Say(SAY_NETMSG,"Player: "+str+" is too far from you, please refresh your list.");
+		return;
+	}
+	int roll=Random(121,127);//pids of encounters maps, what have ready correct enteries points(look on next comment)
+	uint locId=CreateLocation(roll, other.WorldX, other.WorldY, group);
+	Location@ loc = GetLocation(locId);
+	for(uint i=0; i<group.length(); i++)
+	{
+		group[i].TransitToMap(loc.GetMapByIndex(0).Id,200);//you need to create enter points number 200 on every encounter maps, what you will use for global hunting 
+		group[i].Say(SAY_NETMSG,"This location will exist by 3 real hours.");
+	}	
+	for(uint i=0; i<groupme.length(); i++)
+	{
+		groupme[i].TransitToMap(loc.GetMapByIndex(0).Id,300);//you need to create enter points number 300 on every encounter maps, what you will use for global hunting 
+		groupme[i].Say(SAY_NETMSG,"This location will exist by 3 real hours.");
+	}
+	CreateTimeEvent(__FullSecond+REAL_MINUTE(180),"e_delete_location",locId,true);
+}
+
+uint e_delete_location(uint[]@ values)
+{
+ Location@ loc = GetLocation(values[0]); 
+ DeleteLocation(values[0]);
+ return 0;
+}

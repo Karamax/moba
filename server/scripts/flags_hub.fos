@@ -1,0 +1,167 @@
+#include "_defines.fos"
+#include "_itempid.fos"
+#include "_macros.fos"
+
+int[] __Hub_Flags = { 0, 0, 0, 0 };
+int[] __Hub_FlagsPositions =
+{
+	126,135,
+	169,198,
+	258,203
+};
+void Hub_FlagsUpdate()
+{
+	__Hub_Flags[0]=__Hub1 ;
+	__Hub_Flags[1]=__Hub2 ;
+	__Hub_Flags[2]=__Hub3 ;
+    Map @Hub = GetMapByPid( 28000, 0 );
+    if( @Hub != null )
+    {
+        Critter @[] crs;
+        Item @[] items;
+        int BOSs, ENCs;
+        for( uint j = 0; j < __Hub_FlagsPositions.length(); j += 2 )
+        {
+            crs.resize( 0 );
+            items.resize( 0 );
+            Hub.GetCrittersHex( __Hub_FlagsPositions[ j ], __Hub_FlagsPositions[ j + 1 ], 5, FIND_ONLY_PLAYERS | FIND_LIFE_AND_KO, crs );
+            BOSs = 0;
+            ENCs = 0;
+            for( uint i = 0; i < crs.length(); i++ )
+            {
+                if( crs[ i ].ParamBase[ PLAYER_MAIN_FACTION ] == 1 )
+                    BOSs++;
+                if( crs[ i ].ParamBase[ PLAYER_MAIN_FACTION ] == 2 )
+                    ENCs++;
+            }
+            if( BOSs > ENCs )
+                __Hub_Flags[ j / 2 ] -= 1;
+            else if ( ENCs > BOSs )
+                __Hub_Flags[ j / 2 ] += 1;
+            __Hub_Flags[ j / 2 ] = CLAMP( __Hub_Flags[ j / 2 ], -100, 100 );
+            Hub.GetItems( __Hub_FlagsPositions[ j ], __Hub_FlagsPositions[ j + 1 ], items );
+            if( @items != null && items.length() > 0 )
+            {
+                int current_flag = 0;
+                if( items[ 0 ].GetProtoId() == 4802 )
+                    current_flag = -1;
+                else if( items[ 0 ].GetProtoId() == 4801 )
+                    current_flag = 1;
+                int flag_processed = 0;
+                if( __Hub_Flags[ j / 2 ] <= -75 )
+                    flag_processed = -1;
+                else if( __Hub_Flags[ j / 2 ] >= 75 )
+                    flag_processed = 1;
+                if( current_flag != flag_processed )
+                {
+                    DeleteItem( items[ 0 ] );
+                    if( flag_processed == 0 )
+                        Hub.AddItem( __Hub_FlagsPositions[ j ], __Hub_FlagsPositions[ j + 1 ], 4800, 1 );
+                    else if( flag_processed == -1 )
+                    {
+                        Hub.AddItem( __Hub_FlagsPositions[ j ], __Hub_FlagsPositions[ j + 1 ], 4802, 1 );
+                    }
+                    else if( flag_processed == 1 )
+                    {
+                        Hub.AddItem( __Hub_FlagsPositions[ j ], __Hub_FlagsPositions[ j + 1 ], 4801, 1 );
+                    }
+                }
+
+                if( flag_processed == -1 )
+                {}
+                else if( flag_processed == 1 )
+                {}
+            }
+            for( uint i = 0; i < crs.length(); i++ )
+            {
+                if( __Hub_Flags[ j / 2 ] <= -100 )
+                {}
+                else if( __Hub_Flags[ j / 2 ] >= 100 )
+                {}
+                else if( __Hub_Flags[ j / 2 ] <= -75 )
+                    crs[ i ].Say( SAY_NETMSG, "NEC Flag: " + ( -__Hub_Flags[ j / 2 ] ) + "%" );
+                else if( __Hub_Flags[ j / 2 ] >= 75 )
+                    crs[ i ].Say( SAY_NETMSG, "REF Flag: " + __Hub_Flags[ j / 2 ] + "%" );
+                else if( __Hub_Flags[ j / 2 ] == 0 )
+                    crs[ i ].Say( SAY_NETMSG, "neutral" );
+                else if( __Hub_Flags[ j / 2 ] < 0 )
+                    crs[ i ].Say( SAY_NETMSG, "neutral " + ( -__Hub_Flags[ j / 2 ] ) + "% NEC" );
+                else if( __Hub_Flags[ j / 2 ] > 0 )
+                    crs[ i ].Say( SAY_NETMSG, "neutral " + __Hub_Flags[ j / 2 ] + "% REF" );
+            }
+        }
+    }
+	__Hub1 =__Hub_Flags[0];
+	__Hub2 =__Hub_Flags[1];
+	__Hub3 =__Hub_Flags[2];
+	
+	
+	//system zwyciestwa
+	Item@[] FlagBos;
+	Item@[] FlagEnc;
+	if( Hub.GetItems( 4802, FlagBos ) > Hub.GetItems( 4801, FlagEnc ) )
+	{
+		__BosPLUS++;
+	}
+	else if( Hub.GetItems( 4802, FlagBos ) < Hub.GetItems( 4801, FlagEnc ) )
+	{
+		__EnclavePlus++;
+	}
+	if(( __BosPLUS >= 700)||( __EnclavePlus >= 700))
+	{
+		__IsBattle  = 0;
+		Critter@[] critters;
+        Hub.GetCritters( 0, FIND_ALL | FIND_ONLY_PLAYERS, critters );
+        for( uint i = 0, l = critters.length(); i < l; i++ )
+        {
+			if ( __BosPLUS <= 700)
+			{
+				if(critters[i].ParamBase[ PLAYER_MAIN_FACTION ] == 1)
+				{
+					critters[i].Say(SAY_BOS_MESSAGE,"You win the battle!!! ");
+					Map @base = GetMapByPid( 29000, 0 );
+					critters[i].TransitToMap( base.Id, 15 );
+					critters[i].ParamBase[IN_BASE] = 1;
+				}
+				else
+				{
+					critters[i].Say(SAY_ENCLAVA_MESSAGE,"You loose the battle!!!");
+					critters[i].ToDead(ANIM2_DEAD_EXPLODE,critters[i]);
+				}
+			}
+			if( __EnclavePlus >= 700)
+			{
+				if(critters[i].ParamBase[ PLAYER_MAIN_FACTION ] == 2)
+				{
+					critters[i].Say(SAY_ENCLAVA_MESSAGE,"You win the battle!!!");
+					Map @base = GetMapByPid( 112, 0 );
+					critters[i].TransitToMap( base.Id, 15 );
+					critters[i].ParamBase[IN_BASE] = 1;
+				}
+				else
+				{
+					critters[i].Say(SAY_BOS_MESSAGE,"You loose the battle!!! ");
+					critters[i].ToDead(ANIM2_DEAD_EXPLODE,critters[i]);
+				}	
+			}  
+			if(__BosPLUS > __EnclavePlus)
+			{
+				critters[i].Say(SAY_SERVER_MESSAGE,"NEC win the battle!!!");
+			}
+			else
+			{
+				critters[i].Say(SAY_SERVER_MESSAGE,"REF win the battle!!!");
+			}
+        }
+	__Hub1 =0;
+	__Hub_Flags[0]=0;
+	__Hub2 =0;
+	__Hub_Flags[1]=0;
+	__Hub3 =0;
+	__Hub_Flags[2]=0;
+	__BosPLUS=0;
+	__EnclavePlus=0;
+	__RollMap=0;
+	}
+}
+

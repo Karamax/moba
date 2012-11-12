@@ -1,0 +1,135 @@
+
+IGUIElementTextOpt @ParamPlayerTextOpt;
+
+void InitParamScreen()
+{
+	GUI_CreateScreen(CLIENT_SCREEN_PARAM,"window.png")
+				.Modal(false)
+				.Multiinstance(false)
+				.SizeByMultipleImages(1,1);
+	
+	@ParamPlayerTextOpt = GUI_AddText(CLIENT_SCREEN_PARAM,"Stats:", 25,28)
+		.TextBoxSize(480,435);
+}
+
+void DisplayParamInfo(int cr_id)
+{
+	ShowScreen(CLIENT_SCREEN_PARAM,0,0,0);
+	string param;
+	string result = "Stats:\n";
+	int czas = 0;
+	CritterCl @cr=GetCritter(cr_id);
+	if(@cr==null) return;
+	result= result + "0 ST_STRENGTH" + ": " + cr.ParamBase[ST_STRENGTH] + "\n";
+	result= result + "1 ST_PERCEPTION" + ": " + cr.ParamBase[ST_PERCEPTION] + "\n";
+	result= result + "2 ST_ENDURANCE" + ": " + cr.ParamBase[ST_ENDURANCE] + "\n";
+	result= result + "3 ST_CHARISMA" + ": " + cr.ParamBase[ST_CHARISMA] + "\n";
+	result= result + "4 ST_INTELLECT" + ": " + cr.ParamBase[ST_INTELLECT] + "\n";
+	result= result + "5 ST_AGILITY" + ": " + cr.ParamBase[ST_AGILITY] + "\n";
+	result= result + "6 ST_LUCK" + ": " + cr.ParamBase[ST_LUCK] + "\n";
+	result= result + "7 ST_MAX_LIFE" + ": " + cr.ParamBase[ST_MAX_LIFE] + "\n";
+	result= result + "8 ST_ACTION_POINTS" + ": " + cr.ParamBase[ST_ACTION_POINTS] + "\n";
+	result= result + "9 ST_ARMOR_CLASS" + ": " + cr.ParamBase[ST_ARMOR_CLASS] + "\n";
+	result= result + "11 ST_CARRY_WEIGHT" + ": " + cr.ParamBase[ST_CARRY_WEIGHT] + "\n";
+	result= result + "14 ST_CRITICAL_CHANCE" + ": " + cr.ParamBase[ST_CRITICAL_CHANCE] + "\n";
+	result= result + "15 ST_MAX_CRITICAL" + ": " + cr.ParamBase[ST_MAX_CRITICAL] + "\n";
+	result= result + "32 ST_STRENGTH_EXT" + ": " + cr.ParamBase[ST_STRENGTH_EXT] + "\n";
+	result= result + "33 ST_PERCEPTION_EXT" + ": " + cr.ParamBase[ST_PERCEPTION_EXT] + "\n";
+	result= result + "34 ST_ENDURANCE_EXT" + ": " + cr.ParamBase[ST_ENDURANCE_EXT] + "\n";
+	result= result + "35 ST_CHARISMA_EXT" + ": " + cr.ParamBase[ST_CHARISMA_EXT] + "\n";
+	result= result + "36 ST_INTELLECT_EXT" + ": " + cr.ParamBase[ST_INTELLECT_EXT] + "\n";
+	result= result + "37 ST_AGILITY_EXT" + ": " + cr.ParamBase[ST_AGILITY_EXT] + "\n";
+	result= result + "38 ST_LUCK_EXT" + ": " + cr.ParamBase[ST_LUCK_EXT] + "\n";
+	result= result + "Anima" + ": " + cr.ParamBase[ PLAYER_ANIMA_REDUCTION ] + "\n";
+	result= result + "40 ST_ACTION_POINTS_EXT" + ": " + cr.ParamBase[ST_ACTION_POINTS_EXT] + "\n";
+	result= result + "41 ST_ARMOR_CLASS_EXT" + ": " + cr.ParamBase[ST_ARMOR_CLASS_EXT] + "\n";
+	result= result + "46 ST_CRITICAL_CHANCE_EXT" + ": " + cr.ParamBase[ST_CRITICAL_CHANCE_EXT] + "\n";
+	result= result + "47 ST_MAX_CRITICAL_EXT" + ": " + cr.ParamBase[ST_MAX_CRITICAL_EXT] + "\n";
+	result= result + "55 ST_NORMAL_RESIST_EXT" + ": " + cr.ParamBase[ST_NORMAL_RESIST_EXT] + "\n";
+	result= result + "64 ST_TOXIC" + ": " + cr.ParamBase[ST_TOXIC] + "\n";
+	result= result + "65 ST_RADIOACTIVE" + ": " + cr.ParamBase[ST_RADIOACTIVE] + "\n";
+	result= result + "66 ST_KILL_EXPERIENCE" + ": " + cr.ParamBase[ST_KILL_EXPERIENCE] + "\n";
+	result= result + "67 ST_BODY_TYPE" + ": " + cr.ParamBase[ST_BODY_TYPE] + "\n";
+	result= result + "70 ST_AGE" + ": " + cr.ParamBase[ST_AGE] + "\n";
+	result= result + "72 ST_CURRENT_HP" + ": " + cr.ParamBase[ST_CURRENT_HP] + "\n";
+	result= result + "73 ST_POISONING_LEVEL" + ": " + cr.ParamBase[ST_POISONING_LEVEL] + "\n";
+	result= result + "74 ST_RADIATION_LEVEL" + ": " + cr.ParamBase[ST_RADIATION_LEVEL] + "\n";
+	result= result + "75 ST_CURRENT_AP" + ": " + cr.ParamBase[ST_CURRENT_AP] + "\n";
+	result= result + "76 ST_EXPERIENCE" + ": " + cr.ParamBase[ST_EXPERIENCE] + "\n";
+	result= result + "77 ST_LEVEL" + ": " + cr.ParamBase[ST_LEVEL] + "\n";
+	result= result + "78 ST_UNSPENT_SKILL_POINTS" + ": " + cr.ParamBase[ST_UNSPENT_SKILL_POINTS] + "\n";
+	result= result + "79 ST_UNSPENT_PERKS" + ": " + cr.ParamBase[ST_UNSPENT_PERKS] + "\n";
+	result= result + "80 ST_KARMA" + ": " + cr.ParamBase[ST_KARMA] + "\n";
+	
+	for(uint i=0; i<121; i++)
+	{
+		param=cr.ParamBase[i];
+		if(czas == 8)
+		{
+			czas=0;
+			result= result + i + ": " + param + "\n";
+		}
+		else
+		{
+			czas++;
+			result= result + i + ": " + param + " ";
+		}
+	}
+	for(uint i=200; i<218; i++)
+	{
+		param=cr.ParamBase[i];
+		if(czas == 8)
+		{
+			czas=0;
+			result= result + i + ": " + param + "\n";
+		}
+		else
+		{
+			czas++;
+			result= result + i + ": " + param + " ";
+		}
+	}
+	for(uint i=226; i<249; i++)
+	{
+		param=cr.ParamBase[i];
+		if(czas == 8)
+		{
+			czas=0;
+			result= result + i + ": " + param + "\n";
+		}
+		else
+		{
+			czas++;
+			result= result + i + ": " + param + " ";
+		}
+	}
+	for(uint i=300; i<354; i++)
+	{
+		param=cr.ParamBase[i];
+		if(czas == 8)
+		{
+			czas=0;
+			result= result + i + ": " + param + "\n";
+		}
+		else
+		{
+			czas++;
+			result= result + i + ": " + param + " ";
+		}
+	}
+	for(uint i=380; i<906; i++)
+	{
+		param=cr.ParamBase[i];
+		if(czas == 8)
+		{
+			czas=0;
+			result= result + i + ": " + param + "\n";
+		}
+		else
+		{
+			czas++;
+			result= result + i + ": " + param + " ";
+		}
+	}
+	ParamPlayerTextOpt.setText(result);
+}

@@ -1,0 +1,220 @@
+//wersja "na brudno" do dialogów
+
+//System poziomów technologii pobiera do zmiennych crittera dane - potrzebne dla dialogu do wykupienia broni
+void dlg_tech_status( Critter& player, Critter@ npc )
+{
+	if(player.IsPlayer())
+	{
+		if (player.ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)
+		{
+			player.ParamBase[TECH_SG] = __SmallGunsLevelEnclave;
+			player.ParamBase[TECH_BG] = __BigGunsLevelEnclave;
+			player.ParamBase[TECH_EW] = __EnergyLevelEnclave;
+			player.ParamBase[TECH_AR] = __ArmorLevelEnclave;
+			player.ParamBase[TECH_MD] = __DrugsLevelEnclave;	
+		}
+		else if (player.ParamBase[PLAYER_MAIN_FACTION] == BROTHERHOOD)
+		{
+			player.ParamBase[TECH_SG] = __SmallGunsLevelBoS;
+			player.ParamBase[TECH_BG] = __BigGunsLevelBoS;
+			player.ParamBase[TECH_EW] = __EnergyLevelBoS;
+			player.ParamBase[TECH_AR] = __ArmorLevelBoS;
+			player.ParamBase[TECH_MD] = __DrugsLevelBoS;
+		}
+	}
+}	
+
+//System wrzucania kasy na konto bankowe	
+void dlg_player_caps( Critter& player, Critter@ npc )
+{
+	player.ParamBase[PLAYER_CAPS] += player.CountItem( PID_BOTTLE_CAPS );
+	player.DeleteItem( PID_BOTTLE_CAPS, player.CountItem( PID_BOTTLE_CAPS ));
+}
+
+//System wrzucania kasy na rozwoj technologii sg	
+void dlg_player_caps( Critter& player, Critter@ npc )
+{
+	if (player.ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)
+		__SmallGunsPointsEnclave += player.CountItem( PID_BOTTLE_CAPS );
+		
+	else if (player.ParamBase[PLAYER_MAIN_FACTION] == BROTHERHOOD)	
+		__SmallGunsPointsBoS += player.CountItem( PID_BOTTLE_CAPS );
+	
+	player.ParamBase[PLAYER_POINTS] += (player.CountItem( PID_BOTTLE_CAPS )/2)
+	player.DeleteItem( PID_BOTTLE_CAPS, player.CountItem( PID_BOTTLE_CAPS ));
+	technology_status();
+}
+
+//System wrzucania kasy na rozwoj technologii bg	
+void dlg_player_caps( Critter& player, Critter@ npc )
+{
+	if (player.ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)
+		__BigGunsPointsEnclave += player.CountItem( PID_BOTTLE_CAPS );
+		
+	else if (player.ParamBase[PLAYER_MAIN_FACTION] == BROTHERHOOD)	
+		__BigGunsPointsBoS += player.CountItem( PID_BOTTLE_CAPS );
+	
+	player.ParamBase[PLAYER_POINTS] += (player.CountItem( PID_BOTTLE_CAPS )/2)
+	player.DeleteItem( PID_BOTTLE_CAPS, player.CountItem( PID_BOTTLE_CAPS ));
+	technology_status();
+}
+
+//System wrzucania kasy na rozwoj technologii ew	
+void dlg_player_caps( Critter& player, Critter@ npc )
+{
+	if (player.ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)
+		__EnergyPointsEnclave += player.CountItem( PID_BOTTLE_CAPS );
+		
+	else if (player.ParamBase[PLAYER_MAIN_FACTION] == BROTHERHOOD)	
+		__EnergyPointsBoS += player.CountItem( PID_BOTTLE_CAPS );
+	
+	player.ParamBase[PLAYER_POINTS] += (player.CountItem( PID_BOTTLE_CAPS )/2)
+	player.DeleteItem( PID_BOTTLE_CAPS, player.CountItem( PID_BOTTLE_CAPS ));
+	technology_status();
+}
+
+//System wrzucania kasy na rozwoj technologii armors	
+void dlg_player_caps( Critter& player, Critter@ npc )
+{
+	if (player.ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)
+		__ArmorPointsEnclave += player.CountItem( PID_BOTTLE_CAPS );
+		
+	else if (player.ParamBase[PLAYER_MAIN_FACTION] == BROTHERHOOD)	
+		__ArmorPointsBoS += player.CountItem( PID_BOTTLE_CAPS );
+	
+	player.ParamBase[PLAYER_POINTS] += (player.CountItem( PID_BOTTLE_CAPS )/2)
+	player.DeleteItem( PID_BOTTLE_CAPS, player.CountItem( PID_BOTTLE_CAPS ));
+	technology_status();
+}
+
+//System wrzucania kasy na rozwoj technologii medicaments	
+void dlg_player_caps( Critter& player, Critter@ npc )
+{
+	if (player.ParamBase[PLAYER_MAIN_FACTION] == ENCLAVA)
+		__DrugsPointsEnclave += player.CountItem( PID_BOTTLE_CAPS );
+		
+	else if (player.ParamBase[PLAYER_MAIN_FACTION] == BROTHERHOOD)	
+		__DrugsPointsBoS += player.CountItem( PID_BOTTLE_CAPS );
+	
+	player.ParamBase[PLAYER_POINTS] += (player.CountItem( PID_BOTTLE_CAPS )/2)
+	player.DeleteItem( PID_BOTTLE_CAPS, player.CountItem( PID_BOTTLE_CAPS ));
+	technology_status();
+}
+
+//funkcja sprawdzajaca technolgie 
+void technology_status()
+{
+		if(__SmallGunsPointsEnclave < 1000)
+			__SmallGunsLevelEnclave  = 1;
+		else if(__SmallGunsPointsEnclave < 10000)
+			__SmallGunsLevelEnclave  = 2;
+		else if(__SmallGunsPointsEnclave < 50000)
+			__SmallGunsLevelEnclave  = 3;
+		else if(__SmallGunsPointsEnclave < 100000)
+			__SmallGunsLevelEnclave  = 4;
+		else __SmallGunsLevelEnclave  = 5;
+
+		if(__SmallGunsPointsBoS < 1000)
+			__SmallGunsLevelBoS  = 1;
+		else if(__SmallGunsPointsBoS < 10000)
+			__SmallGunsLevelBoS  = 2;
+		else if(__SmallGunsPointsBoS < 50000)
+			__SmallGunsLevelBoS  = 3;
+		else if(__SmallGunsPointsBoS < 100000)
+			__SmallGunsLevelBoS  = 4;
+		else __SmallGunsLevelBoS  = 5;
+
+		if(__BigGunsPointsEnclave < 1000)
+			__BigGunsLevelEnclave  = 1;
+		else if(__BigGunsPointsEnclave < 10000)
+			__BigGunsLevelEnclave  = 2;
+		else if(__BigGunsPointsEnclave < 50000)
+			__BigGunsLevelEnclave  = 3;
+		else if(__BigGunsPointsEnclave < 100000)
+			__BigGunsLevelEnclave  = 4;
+		else __BigGunsLevelEnclave  = 5;
+
+		if(__BigGunsPointsBoS < 1000)
+			__BigGunsLevelBoS  = 1;
+		else if(__BigGunsPointsBoS < 10000)
+			__BigGunsLevelBoS  = 2;
+		else if(__BigGunsPointsBoS < 50000)
+			__BigGunsLevelBoS  = 3;
+		else if(__BigGunsPointsBoS < 100000)
+			__BigGunsLevelBoS  = 4;
+		else __BigGunsLevelBoS  = 5;
+
+		if(__EnergyPointsEnclave < 1000)
+			__EnergyLevelEnclave  = 1;
+		else if(__EnergyPointsEnclave < 10000)
+			__EnergyLevelEnclave  = 2;
+		else if(__EnergyPointsEnclave < 50000)
+			__EnergyLevelEnclave  = 3;
+		else if(__EnergyPointsEnclave < 100000)
+			__EnergyLevelEnclave  = 4;
+		else __EnergyLevelEnclave  = 5;
+
+		if(__EnergyPointsBoS < 1000)
+			__EnergyLevelBoS  = 1;
+		else if(__EnergyPointsBoS < 10000)
+			__EnergyLevelBoS  = 2;
+		else if(__EnergyPointsBoS < 50000)
+			__EnergyLevelBoS  = 3;
+		else if(__EnergyPointsBoS < 100000)
+			__EnergyLevelBoS  = 4;
+		else __EnergyLevelBoS  = 5;
+
+		if(__ArmorPointsEnclave < 1000)
+			__ArmorLevelEnclave  = 1;
+		else if(__ArmorPointsEnclave < 10000)
+			__ArmorLevelEnclave  = 2;
+		else if(__ArmorPointsEnclave < 50000)
+			__ArmorLevelEnclave  = 3;
+		else if(__ArmorPointsEnclave < 100000)
+			__ArmorLevelEnclave  = 4;
+		else __ArmorLevelEnclave  = 5;
+
+		if(__ArmorPointsBoS < 1000)
+			__ArmorLevelBoS  = 1;
+		else if(__ArmorPointsBoS < 10000)
+			__ArmorLevelBoS  = 2;
+		else if(__ArmorPointsBoS < 50000)
+			__ArmorLevelBoS  = 3;
+		else if(__ArmorPointsBoS < 100000)
+			__ArmorLevelBoS  = 4;
+		else __ArmorLevelBoS  = 5;
+
+		if(__DrugsPointsEnclave < 1000)
+			__DrugsLevelEnclave  = 1;
+		else if(__DrugsPointsEnclave < 10000)
+			__DrugsLevelEnclave  = 2;
+		else if(__DrugsPointsEnclave < 50000)
+			__DrugsLevelEnclave  = 3;
+		else if(__DrugsPointsEnclave < 100000)
+			__DrugsLevelEnclave  = 4;
+		else __DrugsLevelEnclave  = 5;
+
+		if(__DrugsPointsBoS < 1000)
+			__DrugsLevelBoS  = 1;
+		else if(__DrugsPointsBoS < 10000)
+			__DrugsLevelBoS  = 2;
+		else if(__DrugsPointsBoS < 50000)
+			__DrugsLevelBoS  = 3;
+		else if(__DrugsPointsBoS < 100000)
+			__DrugsLevelBoS  = 4;
+		else __DrugsLevelBoS  = 5;
+	
+	//zapis do save'ow poziomow technologicznych(w wypadkach ponizej kolejnosc elementow tablicy jest zajebiscie istotna)
+	int[] technologyinfo(10);
+	technologyinfo[0] =__SmallGunsPointsEnclave;
+	technologyinfo[1] =__SmallGunsPointsBoS;
+	technologyinfo[2] =__BigGunsPointsEnclave;
+	technologyinfo[3] =__BigGunsPointsBoS;
+	technologyinfo[4] =__EnergyPointsEnclave;
+	technologyinfo[5] =__EnergyPointsBoS;
+	technologyinfo[6] =__ArmorPointsEnclave;
+	technologyinfo[7] =__ArmorPointsBoS;
+	technologyinfo[8] =__DrugsPointsEnclave;
+	technologyinfo[9] =__DrugsPointsBoS;
+	SetAnyData("TECHNOLOGYINFO",technologyinfo);
+}

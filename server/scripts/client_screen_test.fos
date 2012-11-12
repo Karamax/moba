@@ -1,0 +1,344 @@
+// Author: JohnPL
+// Test script
+// Client GUI mod v0.4 sample script
+
+#include "_defines.fos"
+#include "client_gui_h.fos"
+#include "_colors.fos"
+
+
+IGUIElementImageOpt@ avantImage;
+IGUIElementImageOpt@ cubikImage;
+IGUIElementImageOpt@ daxmanImage;
+
+IGUIElementImageOpt@ lastImage;
+IGUIElementTextOpt@ descriptionText;
+IGUIElementTextOpt@ SoundVauleText;
+IGUIElementTextOpt@ MusicVauleText;
+
+string avantText;
+string cubikText;
+string daxmanText;
+
+class TestScreenButtonShow : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		::ShowScreen(CLIENT_SCREEN_TEST,3,3,3);
+	}
+}
+
+class CreditsButton : IGUIElementCallbackMouseClick
+{
+	CreditsButton(IGUIElementImageOpt@ img, string@ decription)
+	{
+		@image = img;
+		image.SetVisible(false);
+		this.decription = decription;
+	}
+
+	void OnMouseClick(int id, int click)
+	{
+		lastImage.SetVisible(false);
+		@lastImage = image;
+		image.SetVisible(true);
+		descriptionText.SetText(decription);
+		descriptionText.SetVisible(true);
+	}
+
+	IGUIElementImageOpt@ image;
+	string decription;
+}
+
+
+class PasswordShowButton : IGUIElementCallbackMouseClick
+{
+	PasswordShowButton(IGUIElementTextOpt@ uncodedPassText, IGUIElementEditBoxOpt@ passwordInput)
+	{
+		@this.uncodedPassText = uncodedPassText;
+		@this.passwordInput = passwordInput;
+	}
+
+	void OnMouseClick(int id, int click)
+	{
+		string paswd = passwordInput.GetText();
+		if(paswd.length()==0) paswd = "Password field is emty!";
+		uncodedPassText.SetText(paswd);
+	}
+
+	IGUIElementTextOpt@ uncodedPassText;
+	IGUIElementEditBoxOpt@ passwordInput;
+}
+
+
+class MusicVolume : IGUIElementCallbackValueChange
+{
+	MusicVolume(IGUIElementTextOpt@ tekst)
+	{
+		@informationText = tekst;
+		if(@informationText != null) informationText.SetText("0 %");
+	}
+
+	void OnValueChange(int newValue)
+	{
+		 if(@informationText != null) informationText.SetText(""+newValue+" %");
+		 if(@secondSlidder != null) secondSlidder.Pos(100-newValue);
+		 informationText.TextColor(COLOR_RGB(2*(100-newValue),2*newValue,0));
+	}
+
+	void setSecondSlidder(IGUIElementSliderControlOpt@ sec)
+	{
+		@secondSlidder=sec;
+	}
+
+	IGUIElementTextOpt@ informationText;
+	IGUIElementSliderControlOpt@ secondSlidder;
+}
+
+
+
+class TestScreen : IGUIScreenCallbackShow, IGUIScreenCallbackHide, IGUIScreenCallbackMove, IGUIElementCallbackInit, IGUIElementCallbackKeyPress
+{
+
+        void OnShow(int p0, int p1, int p2)
+        {
+                @ScreenOpt=GUI_GetScreenOptions();
+        }
+
+        void OnHide(int p0, int p1, int p2)
+        {
+        }
+
+        void OnMove(int posX, int posY)
+        {
+
+        }
+
+        void OnInit(int aa)
+        {
+                @InputBoxOpt=GUI_GetElementOptions();
+        }
+
+        bool OnKeyPress(uint8 key, uint8 letter)
+        {
+                string letter_=" ";
+                letter_[0]=(letter!=0?letter:'?');
+                ::Message("OnKeyPress key code "+key+" letter "+letter_+".");
+		return true; // Zwrocenie false wlaczy zdarzenia hardcodowane w silniku
+        }
+
+        IGUIScreenOpt@ ScreenOpt;
+        IGUIElementOpt@ InputBoxOpt;
+}
+
+void InitTestScreen()
+{
+#ifdef CLIENT_GUI_MOD_V04
+	TestScreenButtonShow buttonShow;
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, 0, 0)
+		.UpPic("ebut_out.frm")
+		.DownPic("ebut_in.frm")
+		.CallbackMouseClick(buttonShow);
+
+	TestScreen testScreen;
+	GUI_CreateScreen(CLIENT_SCREEN_TEST,"prefback.frm")
+                .CallbackShow(testScreen)
+                .CallbackHide(testScreen)
+                .CallbackMove(testScreen)
+                .CanMove(true)
+                .Modal(false)
+                .Multiinstance(true); //.CallbackHide(testScreen)
+
+	// Adding "Fallout" image in left down corner
+	GUI_AddImage(CLIENT_SCREEN_TEST, "falltext.frm", PT_ART_INTRFACE, 290, 290);
+
+	@MusicVauleText = GUI_AddText(CLIENT_SCREEN_TEST, "0", 195, 165)
+			.TextOptions(FONT_FAT, COLOR_RED, COLOR_TEXT, FT_BORDERED)
+			.TextBoxSize(150,10);
+
+	@SoundVauleText = GUI_AddText(CLIENT_SCREEN_TEST, "50", 195, 225)
+			.TextOptions(FONT_FAT, COLOR_DRED, COLOR_TEXT, FT_BORDERED)
+			.TextBoxSize(150,10);
+
+	MusicVolume musicVolume(MusicVauleText), soundVolume(SoundVauleText);
+
+	IGUIElementSliderControlOpt@ musicSlider;
+	IGUIElementSliderControlOpt@ soundSlider;
+
+	@musicSlider = GUI_AddSlidderControl(CLIENT_SCREEN_TEST, 0, 0)
+		.CallbackValueChange(musicVolume)
+		.ElementBoxSize(175,45)
+		.ElementBoxPosition(20, 150)
+		.TickTrackPic("preftrck.frm")
+		.TickTrackPosition(5,22)
+		.TicTrackWidth(136)
+		.TicPic("prfsldof.frm")
+		.ActiveTicPic("prfsldon.frm")
+		.TicZeroPosition(8,20)
+		.TitleText("Music")
+		.TitleTextPosition(5,0)
+		.TitleTextOptions(FONT_FAT, COLOR_SAND, 0)
+		.LeftText("Silent")
+		.LeftTextPosition(0,35)
+		.LeftTextOptions(FONT_FALLOUT, COLOR_SAND, 0)
+		.MidleText("Normal")
+		.MidleTextPosition(70,35)
+		.MidleTextOptions(FONT_FALLOUT, COLOR_SAND, 0)
+		.RightText("Loud")
+		.RightTextPosition(145,35)
+		.RightTextOptions(FONT_FALLOUT, COLOR_SAND, 0)
+		.Range(0,100)
+		.TicFreq(1);
+
+	@soundSlider = GUI_AddSlidderControl(CLIENT_SCREEN_TEST, 20, 210)
+		.CallbackValueChange(soundVolume)
+		.TitleText("Sound")
+		.LeftText("Silent")
+		.MidleText("Normal")
+		.RightText("Loud")
+		.Range(0,100)
+		.Pos(93);
+
+	musicVolume.setSecondSlidder(soundSlider);
+	soundVolume.setSecondSlidder(musicSlider);
+
+	GUI_AddEditBox(CLIENT_SCREEN_TEST, 30, 270)
+		.BackgroundPic("invdkbox.frm")
+		.Text("Type text here...")
+		.LeftMargin(2)
+		.RightMargin(2)
+		.UpMargin(3)
+		.DownMargin(1);
+
+	GUI_AddEditBox(CLIENT_SCREEN_TEST, 110, 270)
+		.BackgroundPic("chosen_tab.png")
+		.VisibleText("Login")
+		.MaxLen(17)
+		.LeftMargin(6)
+		.RightMargin(6)
+		.UpMargin(6)
+		.DownMargin(6);
+
+	IGUIElementEditBoxOpt@ passwordInput = GUI_AddEditBox(CLIENT_SCREEN_TEST, 110, 297)
+		.BackgroundPic("chosen_tab.png")
+		.VisibleText("Password")
+		.MaxLen(13)
+		.PasswordMode(true)
+		.LeftMargin(6)
+		.RightMargin(6)
+		.UpMargin(6)
+		.DownMargin(6);
+
+	IGUIElementTextOpt@ uncodedPassText = GUI_AddText(CLIENT_SCREEN_TEST, "", 110, 330) 
+											.TextBoxSize(300,30);
+
+	PasswordShowButton passButt(uncodedPassText, passwordInput);
+
+	GUI_AddButton(CLIENT_SCREEN_TEST, 10, 340)
+		.UpPic("menuup.frm")
+		.DownPic("menudown.frm")
+		.Text("Show Password", FONT_FALLOUT, COLOR_CONTOUR_YELLOW, COLOR_DDRED, FT_CENTERY)
+		.TextShift(30, -2, 0, 0)
+		.TextWidth(100)
+		.CallbackMouseClick(passButt);
+
+	
+
+	@avantImage = GUI_AddImage(CLIENT_SCREEN_TEST, "action.frm", PT_ART_SKILLDEX, 310, 18);
+	@cubikImage = GUI_AddImage(CLIENT_SCREEN_TEST, "repair.frm", PT_ART_SKILLDEX, 310, 18);
+	@daxmanImage = GUI_AddImage(CLIENT_SCREEN_TEST, "gambling.frm", PT_ART_SKILLDEX, 310, 18);
+	
+	//GUI_AddImage(CLIENT_SCREEN_TEST, "preftrck.frm", PT_ART_INTRFACE, 5, 350);
+
+	@lastImage = cubikImage;
+
+	avantText = "To upload holodisk message to your Pip-boy select \"Hand\" icon on tape in inventory. To read message open your Pip-Boy archives. To write your own message select \"Skilldex\" icon on holodisk in inventory and then choose \"Science\" from list.";
+	cubikText = "The Pip-Boy 2000 (Personal Information Processor) is a small hand held device, much like a PDA. Not to be confused with the Pip-Boy 2000 plus, a wrist worn model, which is used by The Chosen One , and Vault Dweller.";
+	daxmanText = "War. War never changes. The Romans waged war to gather slaves and wealth. Spain built an empire from its lust for gold and territory. Hitler shaped a battered Germany into an economic superpower.";
+
+	@descriptionText = GUI_AddText(CLIENT_SCREEN_TEST, avantText, 305, 150)
+					   .TextBoxSize(150,300);
+	descriptionText.SetVisible(false);
+
+	CreditsButton cAvant(avantImage, avantText), 
+				  cCubik(cubikImage, cubikText),
+				  cDax(daxmanImage, daxmanText);
+
+	GUI_AddButton(CLIENT_SCREEN_TEST, 10, 10)
+		.UpPic("lilredup.frm")
+		.DownPic("lilreddn.frm")
+		.Text("[Clicable]", FONT_FALLOUT, COLOR_CONTOUR_YELLOW, COLOR_TEXT, FT_CENTERY)
+		.TextShift(20, -2, 0, 0)
+		.TextWidth(100)
+		.ClickableZone(100, 20);
+
+	GUI_AddButton(CLIENT_SCREEN_TEST, 10, 30)
+		.UpPic("lilredup.frm")
+		.DownPic("lilreddn.frm")
+		.Text("Button - 2", FONT_FALLOUT, COLOR_CONTOUR_YELLOW, COLOR_TEXT, FT_CENTERY)
+		.TextShift(20, -2, 0, 0)
+		.TextWidth(100);
+
+	GUI_AddButton(CLIENT_SCREEN_TEST, 10, 50)
+		.UpPic("lilredup.frm")
+		.DownPic("lilreddn.frm")
+		.Text("Button - 3", FONT_FALLOUT, COLOR_CONTOUR_YELLOW, COLOR_TEXT, FT_CENTERY)
+		.TextShift(20, -2, 0, 0)
+		.TextWidth(100);
+
+	GUI_AddCheckBox(CLIENT_SCREEN_TEST, 10, 80)
+		.CheckedPic("prfxin.frm")
+		.UnCheckedPic("prfxout.frm")
+		.Text("Check box - 1");
+
+	GUI_AddCheckBox(CLIENT_SCREEN_TEST, 10, 100)
+		.CheckedPic("prfxin.frm")
+		.UnCheckedPic("prfxout.frm")
+		.Text("Check box - 2");
+
+	GUI_AddCheckBox(CLIENT_SCREEN_TEST, 10, 120)
+		.CheckedPic("prfxin.frm")
+		.UnCheckedPic("prfxout.frm")
+		.Text("Check box - 3");
+
+	GUI_AddButton(CLIENT_SCREEN_TEST, 150, 10)
+		.UpPic("opbtnoff.frm")
+		.DownPic("opbtnon.frm")
+		.Text("Avant", FONT_FAT, COLOR_SAND)
+		.TextShift(0, -1, 0, -1)
+		.CallbackMouseClick(cAvant);
+
+	GUI_AddButton(CLIENT_SCREEN_TEST, 150, 50)
+		.UpPic("opbtnoff.frm")
+		.DownPic("opbtnon.frm")
+		.Text("Cubic2k", FONT_FAT, COLOR_SAND)
+		.TextShift(0, -1, 0, -1)
+		.CallbackMouseClick(cCubik);
+
+	GUI_AddButton(CLIENT_SCREEN_TEST, 150, 90)
+		.UpPic("opbtnoff.frm")
+		.DownPic("opbtnon.frm")
+		.Text("Daxman", FONT_FAT, COLOR_SAND)
+		.TextShift(0, -1, 0, -1)
+		.CallbackMouseClick(cDax);
+#endif
+#ifndef CLIENT_GUI_MOD_V04
+	Message("Error, you need CLIENT_GUI_MOD_V04 to use this script!");
+#endif
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

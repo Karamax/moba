@@ -1,0 +1,83 @@
+
+IGUIElementTextOpt @BosMessageTextOpt;
+IGUIElementTextOpt @BosMessageGlobalMapTextOpt;
+IGUIElementButtonOpt @BosPic;
+IGUIElementButtonOpt @BosPicGlobal;
+IGUIElementTextOpt @EnclavaMessageTextOpt;
+IGUIElementTextOpt @EnclavaMessageGlobalMapTextOpt;
+IGUIElementButtonOpt @EnclavaPic;
+IGUIElementButtonOpt @EnclavaPicGlobal;
+uint BosMessageDissappearTime=0;
+uint EnclavaMessageDissappearTime=0;
+
+void InitBosMessageScreen()
+{
+	@BosPic = GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, __ScreenWidth-340, 10)
+	.UpPic("bos.png")
+	.DownPic("bos.png")
+	.Text("", 0,0);
+	BosPic.Hide();
+	IGUIElementOpt@ element1;
+	@element1 = cast<IGUIElementOpt@>(BosPic);
+	element1.setAbsolutePosition(true);
+	
+	@BosMessageTextOpt=
+	GUI_AddText(CLIENT_MAIN_SCREEN_GAME,"",__ScreenWidth-305, 30)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED|FT_CENTERX)
+      .TextBoxSize(200,50)
+	  .AbsolutePosition(true)
+	  .Visible(false);
+	  
+		@BosPicGlobal = GUI_AddButton(CLIENT_MAIN_SCREEN_GLOBAL_MAP, __ScreenWidth-340, 10)
+	.UpPic("bos.png")
+	.DownPic("bos.png")
+	.Text("", 0,0);
+	BosPicGlobal.Hide();
+	IGUIElementOpt@ element2;
+	@element2 = cast<IGUIElementOpt@>(BosPicGlobal);
+	element2.setAbsolutePosition(true);
+	
+	  @BosMessageGlobalMapTextOpt=
+	GUI_AddText(CLIENT_MAIN_SCREEN_GLOBAL_MAP,"",__ScreenWidth-305, 30)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED|FT_CENTERX)
+      .TextBoxSize(200,50)
+	  .AbsolutePosition(true)
+	  .Visible(false);
+	
+}
+
+void InitEnclavaMessageScreen()
+{
+	  
+	@EnclavaPic = GUI_AddButton(CLIENT_MAIN_SCREEN_GAME, 10, 10)
+	.UpPic("enclava.png")
+	.DownPic("enclava.png")
+	.Text("", 0,0);
+	EnclavaPic.Hide();
+	IGUIElementOpt@ element3;
+	@element3 = cast<IGUIElementOpt@>(EnclavaPic);
+	element3.setAbsolutePosition(true);
+	
+	@EnclavaMessageTextOpt=
+	GUI_AddText(CLIENT_MAIN_SCREEN_GAME,"",100,30)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED|FT_CENTERX)
+      .TextBoxSize(200,50)
+	  .AbsolutePosition(true)
+	  .Visible(false);
+	  
+	@EnclavaPicGlobal = GUI_AddButton(CLIENT_MAIN_SCREEN_GLOBAL_MAP, 10, 10)
+	.UpPic("enclava.png")
+	.DownPic("enclava.png")
+	.Text("", 0,0);
+	EnclavaPicGlobal.Hide();
+	IGUIElementOpt@ element4;
+	@element4 = cast<IGUIElementOpt@>(EnclavaPicGlobal);
+	element4.setAbsolutePosition(true);
+	
+	@EnclavaMessageGlobalMapTextOpt=
+	GUI_AddText(CLIENT_MAIN_SCREEN_GLOBAL_MAP,"",100,30)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED|FT_CENTERX)
+      .TextBoxSize(200,50)
+	  .AbsolutePosition(true)
+	  .Visible(false);
+}

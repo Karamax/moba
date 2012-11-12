@@ -1,0 +1,475 @@
+//Faction system for fonline engine by Xenom
+//You must put it in parameters.fos
+//_param_[PLAYER_FACTION_RANK]=RANK_NONE;
+//_param_[PLAYER_FACTION] = -1;
+//_param_[PLAYER_FACTION_INVITATION] = -1;
+//
+//And this in _defines.fos as ParamBase
+//#define PLAYER_FACTION              (number)
+//#define PLAYER_FACTION_RANK         (number)
+//#define PLAYER_FACTION_INVITATION   (number)
+//
+// than add in defines.fos new defines
+//#define RANK_NONE   (0)
+//#define RANK_MEMBER (1)
+//#define RANK_LEADER (2)
+//
+//in script.cfg
+//@ server module faction_serv_initialization  #initialization of new faction system
+//@ server module faction_serv_engine   #engine of faction system
+/////////////////////////////////////////////////
+
+#include "_defines.fos"
+#include "_itempid.fos"
+#include "_names_factions_list.fos"
+
+void unsafe_create_faction(Critter& cr, int id, int, int, string@, int[]@)
+{
+	if(IsAnyData("FactionsStatus"))
+	{
+		if(id < int(FACTION_LIST.length()))//!!!!int id changed to uint id - can make bugs
+		{
+			int8[] LIST;
+			int8 []CRITTERDATA(4);
+			int32[] FACTION_MEMBERS;
+			string critterid = cr.Id;
+			GetAnyData("FactionsStatus", LIST);
+			GetAnyData(critterid, CRITTERDATA);
+			
+			if(LIST[id]!=0) //chack that faction name is free
+			{
+				cr.Say(SAY_NETMSG,"Name of this faction is not free");
+				return;
+			}
+			if(CRITTERDATA[0] != 0)
+			{
+				cr.Say(SAY_NETMSG,"You are now in the faction.");
+				return; 
+			}
+						
+			else if(cr.ParamBase[PLAYER_POINTS]<15000)
+			{
+				cr.Say(SAY_NETMSG,"You don't have enought honor (You need 10.000).");
+				return;
+			}
+			
+			else 
+			{
+				if(IsAnyData(FACTION_LIST[id]))//chack for table of choosen faction
+				{
+					CRITTERDATA[0]=id;
+					CRITTERDATA[1]=RANK_LEADER;
+					CRITTERDATA[2] = id;
+					LIST[id] = 1; //is choosen, and nobody other can take this faction
+					SetAnyData("FactionsStatus", LIST);
+					GetAnyData(FACTION_LIST[id], FACTION_MEMBERS);
+					FACTION_MEMBERS[0]= cr.Id;
+					SetAnyData(FACTION_LIST[id], FACTION_MEMBERS);
+					SetAnyData(critterid, CRITTERDATA);
+					cr.ParamBase[PLAYER_POINTS]=cr.ParamBase[PLAYER_POINTS]-10000;
+					cr.Say(SAY_NETMSG,"Congratulation. You did create new faction.");
+					if(@cr != null)update_critter_from_data(cr);
+				}
+				else 
+				{
+					cr.Say(SAY_NETMSG,"Data error. Write to developers.");
+					return;
+				}
+			}
+		}
+		else
+		{
+			cr.Say(SAY_NETMSG,"Bad ID, write the number.");
+			return;
+		}
+	}
+	else 
+	{
+		cr.Say(SAY_NETMSG,"Data error. Write to developers");
+		return;
+	}
+}
+
+void unsafe_invinite_new_member(Critter& cr, int, int, int, string@ name, int[]@)
+{
+	if(!IsAnyData(name))
+	{
+		cr.Say(SAY_NETMSG,"Bad player name.");
+		return;
+	}
+	int32 []CRITTER_NAME(1);
+	GetAnyData(name, CRITTER_NAME);
+	
+	if((cr.ParamBase[PLAYER_FACTION] == 0) || (cr.ParamBase[PLAYER_FACTION_RANK] != RANK_LEADER))
+	{
+		cr.Say(SAY_NETMSG,"Bad player name.");
+		return;
+	}
+	string critterid = CRITTER_NAME[0];
+	int8 []CRITTERDATA(4);
+	if(IsAnyData(critterid))
+	{
+		GetAnyData(critterid, CRITTERDATA);
+	}
+	else
+	{
+		cr.Say(SAY_NETMSG,"Bad player name.");
+		return;
+	}
+	
+	//sprawdzanie zgodnosci frakcji
+	if(CRITTERDATA[3] != cr.ParamBase[PLAYER_MAIN_FACTION])
+	{
+		cr.Say(SAY_NETMSG,"This player is your enemy.");
+		return;
+	}
+	
+	if((CRITTERDATA[0] == 0) && (CRITTERDATA[2] == 0))
+	{
+		CRITTERDATA[2] = cr.ParamBase[PLAYER_FACTION];
+		SetAnyData(critterid, CRITTERDATA);
+		Critter @newmember = GetPlayer(name);
+		if(@newmember != null) update_critter_from_data(newmember);
+		cr.Say(SAY_NETMSG,"Information was send to this person");
+		return;
+	}
+	else
+	{
+		cr.Say(SAY_NETMSG,"You can not invinite this person.");
+		return;
+	}
+}
+
+void unsafe_resign_from_membership(Critter& cr, int, int, int, string@, int[]@)
+{
+	if(cr.ParamBase[PLAYER_FACTION_RANK] == RANK_LEADER)
+	{
+		cr.Say(SAY_NETMSG,"You must at first resign from leader position.");
+		return;
+	}
+	
+	string critterid = cr.Id;
+	int8 []CRITTERDATA(4);
+	GetAnyData(critterid, CRITTERDATA);
+	
+	if( CRITTERDATA[0] != 0)
+	{
+		int id = CRITTERDATA[0];
+		uint32[] FACTION_MEMBERS;
+		GetAnyData(FACTION_LIST[id], FACTION_MEMBERS);
+
+		for(uint16 i = 0; i < FACTION_MEMBERS.length(); i++)
+		{
+			if (FACTION_MEMBERS[i] == cr.Id)
+			{
+				FACTION_MEMBERS[i] = 0;
+				SetAnyData(FACTION_LIST[id], FACTION_MEMBERS);
+				CRITTERDATA[1] = RANK_NONE;
+				CRITTERDATA[0] = 0;
+				CRITTERDATA[2] = 0;
+				SetAnyData(critterid, CRITTERDATA);
+				if(@cr != null) update_critter_from_data(cr);
+				cr.Say(SAY_NETMSG,"You did resign from faction membership.");
+				break;
+			}	
+		}
+	}
+	else
+	{
+		cr.Say(SAY_NETMSG,"You are not in the faction.");
+		return;
+	}
+}
+
+void unsafe_apply_membership(Critter& cr, int, int, int, string@, int[]@)
+{
+	if((cr.ParamBase[PLAYER_FACTION_INVITATION] != 0) && (cr.ParamBase[PLAYER_FACTION] == 0))
+	{
+		int id = cr.ParamBase[PLAYER_FACTION_INVITATION];
+		int32[] FACTION_MEMBERS;
+		string critterid = cr.Id;
+		int8 []CRITTERDATA(4);
+		GetAnyData(critterid, CRITTERDATA);
+		GetAnyData(FACTION_LIST[id], FACTION_MEMBERS);
+		for(uint8 i = 0; i < FACTION_MEMBERS.length(); i++)
+		{
+			if (FACTION_MEMBERS[i] == 0)
+			{
+				FACTION_MEMBERS[i] = cr.Id;
+				SetAnyData(FACTION_LIST[id], FACTION_MEMBERS);
+				CRITTERDATA[1] = RANK_MEMBER;
+				CRITTERDATA[0] = id;
+				CRITTERDATA[2] = id;
+				SetAnyData(critterid, CRITTERDATA);
+				if(@cr != null) update_critter_from_data(cr);
+				cr.Say(SAY_NETMSG,"Registration confirmed.");
+				return;
+			}	
+		}
+		cr.Say(SAY_NETMSG,"There is nothing empty position for you. Faction is full.");
+		return;
+	}
+	else
+	{
+		cr.Say(SAY_NETMSG,"You don't have any proposition.");
+		return;
+	}
+}
+
+void unsafe_dont_apply_membership(Critter& cr, int, int, int, string@, int[]@)
+{
+	string critterid = cr.Id;
+	int8 []CRITTERDATA(4);
+	GetAnyData(critterid, CRITTERDATA);
+	
+	if(CRITTERDATA[2] != 0)
+	{
+		CRITTERDATA[2] = 0;
+		SetAnyData(critterid, CRITTERDATA);
+		if(@cr != null) update_critter_from_data(cr);
+		cr.Say(SAY_NETMSG,"You didn't apply membership proposition.");
+		return;
+	}
+}
+
+void unsafe_del_member(Critter& cr, int, int, int, string@ name, int[]@)
+{
+	if(!IsAnyData(name))
+	{
+		cr.Say(SAY_NETMSG,"Bad player name.");
+		return;
+	}
+	int32 []CRITTER_NAME(1);
+	GetAnyData(name, CRITTER_NAME);
+	
+	string critterid = CRITTER_NAME[0];
+	int8 []CRITTERDATA(4);
+	
+	if(!IsAnyData(critterid))
+	{
+		cr.Say(SAY_NETMSG,"You can not kick this person.");
+		return;
+	}
+	
+	GetAnyData(critterid, CRITTERDATA);
+	
+	if((cr.ParamBase[PLAYER_FACTION] != CRITTERDATA[0]))
+	{
+		cr.Say(SAY_NETMSG,"You can not kick this person.");
+		return;
+	}
+	
+	if((cr.ParamBase[PLAYER_FACTION_RANK] != RANK_LEADER) || (CRITTERDATA[1] == RANK_LEADER))
+	{
+		cr.Say(SAY_NETMSG,"You can not kick this person.");
+		return;
+	}
+	
+	if( CRITTERDATA[0] != 0)
+	{
+		int id = cr.ParamBase[PLAYER_FACTION];
+		int32[] FACTION_MEMBERS;
+		GetAnyData(FACTION_LIST[id], FACTION_MEMBERS);
+
+		for(uint8 i = 0; i < FACTION_MEMBERS.length(); i++)
+		{
+			if (FACTION_MEMBERS[i] == CRITTER_NAME[0])
+			{
+				FACTION_MEMBERS[i] = 0;
+				SetAnyData(FACTION_LIST[id], FACTION_MEMBERS);
+				CRITTERDATA[1] = RANK_NONE;
+				CRITTERDATA[0] = 0;
+				CRITTERDATA[2] = 0;
+				SetAnyData(critterid, CRITTERDATA);
+				Critter @member = GetPlayer(name);
+				if(@member != null) update_critter_from_data(member);
+				cr.Say(SAY_NETMSG,"Player was kicked from your faction");
+				return;
+			}	
+		}
+		cr.Say(SAY_NETMSG,"This person is not in your faction.");
+		return;
+	}
+	else
+	{
+		cr.Say(SAY_NETMSG,"This person is not in your faction.");
+		return;
+	}
+}
+
+void unsafe_give_leading(Critter& cr, int, int, int, string@ name, int[]@)
+{
+	if(!IsAnyData(name))
+	{
+		cr.Say(SAY_NETMSG,"Bad player name.");
+		return;
+	}
+	int32 []CRITTER_NAME(1);
+	GetAnyData(name, CRITTER_NAME);
+	
+	string critterid = CRITTER_NAME[0];
+	int8 []CRITTERDATA(4);
+	
+	if(!IsAnyData(critterid))
+	{
+		return;
+	}
+	
+	GetAnyData(critterid, CRITTERDATA);
+	
+	if((cr.ParamBase[PLAYER_FACTION_RANK]==RANK_LEADER) && (cr.ParamBase[PLAYER_FACTION] == CRITTERDATA[0]))
+	{
+		CRITTERDATA[1]=RANK_LEADER;
+		SetAnyData(critterid, CRITTERDATA);
+		Critter @newleader = GetPlayer(name);
+		if(@newleader != null) update_critter_from_data(newleader);
+	}
+	else
+	{
+		cr.Say(SAY_NETMSG,"Invalid operation. You are not leader or this player is not in your faction.");
+	}
+}
+
+void unsafe_resign_from_leading(Critter& cr, int, int, int, string@, int[]@)
+{
+	string critterid = cr.Id;
+	int8 []CRITTERDATA(4);
+	int8 []DATABASE(3);
+	GetAnyData(critterid, CRITTERDATA);
+
+	if((CRITTERDATA[1]==RANK_LEADER) && (CRITTERDATA[0] != 0))
+	{
+		int id = CRITTERDATA[0];
+		int32[] FACTION_MEMBERS;
+		int8 is_other_leader = 0;
+		GetAnyData(FACTION_LIST[id], FACTION_MEMBERS);
+		for(uint8 i = 0; i < FACTION_MEMBERS.length(); i++)
+		{
+			
+			if (FACTION_MEMBERS[i] != 0)
+			{
+				string members = FACTION_MEMBERS[i];
+				GetAnyData(members, DATABASE);
+				if(DATABASE[1] == RANK_LEADER)
+				{
+					is_other_leader++;
+				}
+			}	
+		}
+		
+		if (is_other_leader > 1)
+		{
+			CRITTERDATA[1]=RANK_MEMBER;
+			SetAnyData(critterid, CRITTERDATA);
+			if(@cr != null) update_critter_from_data(cr);
+			cr.Say(SAY_NETMSG,"You did resign from leader position.");
+			return;
+		}
+		else
+		{
+			cr.Say(SAY_NETMSG,"You must choosse at first new leader.");
+			return;
+		}
+	}
+	else
+	{
+		cr.Say(SAY_NETMSG,"You can not resign from leader position.");
+		return;
+	}
+}
+
+void unsafe_see_proposition(Critter& cr, int, int, int, string@, int[]@)
+{
+	update_critter_from_data(cr);
+	if(cr.ParamBase[PLAYER_FACTION_INVITATION] != 0)
+	{
+		cr.Say(SAY_NETMSG, "You are invinited by "+FACTION_LIST[cr.ParamBase[PLAYER_FACTION_INVITATION]]);
+	}
+	else
+	{
+		cr.Say(SAY_NETMSG, "Nothing propositions from other factions.");
+	}
+}
+
+void unsafe_list_free_factions(Critter& cr, int, int, int, string@, int[]@)
+{
+	int8[] LIST;
+	GetAnyData("FactionsStatus", LIST);
+	for (uint i = 1; i < LIST.length(); i++)
+	{
+		if(LIST[i] == 0)
+		{
+			cr.Say(SAY_NETMSG,"Id: "+i+" Name: "+FACTION_LIST[i]);
+		}
+	}
+}
+
+void unsafe_list_players_faction(Critter& cr, int, int, int, string@, int[]@)
+{
+	if (cr.ParamBase[PLAYER_FACTION] == 0)
+	{
+		cr.Say(SAY_NETMSG,"You are not in faction.");
+		return;
+	}
+	int id = cr.ParamBase[PLAYER_FACTION];
+	int32[] FACTION_MEMBERS;
+	int8 []CRITTERDATA(4);
+	GetAnyData(FACTION_LIST[id], FACTION_MEMBERS);
+	for(uint8 i = 0; i < FACTION_MEMBERS.length(); i++)
+	{
+		if(FACTION_MEMBERS[i] != 0)
+		{
+			string critterid = FACTION_MEMBERS[i];
+			GetAnyData(critterid, CRITTERDATA);
+			string@ str=GetPlayerName(FACTION_MEMBERS[i]);
+			if (CRITTERDATA[1]==RANK_LEADER)
+			{
+				cr.Say(SAY_NETMSG,"Name: "+str+"  Status: Leader");
+			}
+			else
+			{
+				cr.Say(SAY_NETMSG,"Name: "+str+"  Status: Member");
+			}
+		}
+	}
+}
+
+void unsafe_online_players_faction(Critter& cr, int, int, int, string@, int[]@)
+{
+	if (cr.ParamBase[PLAYER_FACTION] == 0)
+	{
+		cr.Say(SAY_NETMSG,"You are not in faction.");
+		return;
+	}
+	int id = cr.ParamBase[PLAYER_FACTION];
+	int32[] FACTION_MEMBERS;
+	uint8 count = 0;
+	GetAnyData(FACTION_LIST[id], FACTION_MEMBERS);
+	for(uint8 i = 0; i < FACTION_MEMBERS.length(); i++)
+	{
+		if(FACTION_MEMBERS[i] != 0)
+		{
+			string name = GetPlayerName(FACTION_MEMBERS[i]);
+			Critter @member = GetPlayer(name);
+			if(@member != null) 
+			{
+				count++;
+				cr.Say(SAY_NETMSG,"Player: "+name);
+			}
+		}
+	}	
+	cr.Say(SAY_NETMSG,"Players online from your faction: "+count);
+}
+
+void update_critter_from_data(Critter& cr)
+{
+	if(cr.IsPlayer() && @cr != null)
+	{
+		string critterid = cr.Id;
+		int8 []CRITTERDATA(4);
+		GetAnyData(critterid, CRITTERDATA);
+		cr.ParamBase[PLAYER_FACTION] = CRITTERDATA[0];
+		cr.ParamBase[PLAYER_FACTION_RANK] = CRITTERDATA[1];
+		cr.ParamBase[PLAYER_FACTION_INVITATION] = CRITTERDATA[2];
+	}
+}

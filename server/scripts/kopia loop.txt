@@ -1,0 +1,105 @@
+/*else if(PlayerDisplayType==PLAYER_DISPLAY_MAIN_FACTION)
+			{
+				crs[i].SetVisible(true);
+				if(crs[ i ].ParamBase[PLAYER_MAIN_FACTION]==0) crs[ i ].NameOnHead="none";
+				else if(crs[ i ].ParamBase[PLAYER_MAIN_FACTION]==1)
+				{
+					crs[ i ].NameColor=COLOR_LBLUE2;
+					crs[ i ].NameOnHead="Brotherhood";
+				}
+				else if(crs[ i ].ParamBase[PLAYER_MAIN_FACTION]==2)
+				{
+					crs[ i ].NameColor=COLOR_LRED2;
+					crs[ i ].NameOnHead="Enclave";
+				}
+				else if(crs[ i ].ParamBase[PLAYER_MAIN_FACTION]==3)
+				{
+					crs[ i ].NameColor=COLOR_SBLACK;
+					crs[ i ].NameOnHead="Raider";
+				}
+				else if(crs[ i ].ParamBase[PLAYER_MAIN_FACTION]==4)
+				{
+					crs[ i ].NameColor=COLOR_SAND;
+					crs[ i ].NameOnHead="Bounty Hunter";
+				}
+			}*/
+			
+	//if( GUI_GetActiveScreen() == CLIENT_SCREEN_DEPOT )
+	//showdepotscreen();
+	
+	//if( GUI_GetActiveScreen() == CLIENT_SCREEN_TECHNOLOGY )
+	//ShowTechnologyScreen();
+	/*if(GetChosen().ParamBase[PLAYER_PERMAMENT_DEATH]==1)
+	{
+		ShowScreen(CLIENT_SCREEN_DEATH,0,0,0);
+	}
+	if(GetChosen().ParamBase[PLAYER_PERMAMENT_CONFIRM]==1)
+	{
+		RunServerScriptUnsafe("anima_reduction@unsafe_death_confirm",0,0,0,null,null);
+	}
+	
+	if ((GetChosen().ParamBase[PLAYER_ANIMA] == 0)&&(GetChosen().ParamBase[PLAYER_ANIMA_REDUCTION]>0))
+	{
+		RunServerScriptUnsafe("anima_reduction@unsafe_anima_reduction",0,0,0,null,null);
+	}*/
+	
+	//if( GUI_GetActiveScreen() == CLIENT_SCREEN_FIX_BOY )
+	//HideScreen(CLIENT_SCREEN_FIX_BOY,0,0,0);
+	
+	/*if(GetChosen().ParamBase[PLAYER_MAIN_FACTION] == 0) 
+	{
+		ShowScreen(CLIENT_SCREEN_CHARACTER_FACTION,0,0,0);
+	}
+	else 
+	{
+		HideScreen(CLIENT_SCREEN_CHARACTER_FACTION,0,0,0);
+	}*/
+	/*if(GetChosen().ParamBase[PLAYER_ANIMA_REDUCTION]<=90)
+	{
+		PermaText.setVisible(true);
+		PermaText.setText("Low Anima level!!! You will die permamently in "+GetChosen().ParamBase[PLAYER_ANIMA_REDUCTION]+" min.");
+	}
+	else
+		PermaText.setVisible(false);*/
+		
+		if(last_command!=CurrentCommand)
+		{
+			//uint[] actions = { CHOSEN_USE_ITEM, 0, 120, TARGET_SELF_ITEM, 0, ITEM_MODE_RELOAD, 0 };
+			//uint[] actions={CHOSEN_DIR,0,0,0,0,0,0};
+			//SetChosenActions(actions);
+			//Message("A");
+		}
+		
+/*
+	if( GUI_GetActiveScreen() == CLIENT_SCREEN_INVENTORY )
+	{
+		AnimaText.setText("Anima: "+GetChosen().ParamBase[PLAYER_ANIMA_REDUCTION]+" (mg)\nto permament death" );
+	}
+	//blad access admin - nie binduje
+	if(GetChosen().ParamBase[PLAYER_ACCESS] == ACCESS_ADMIN)
+	{
+		DEVTextOpt.setVisible(true);
+		DEVTextWorldMapOpt.setVisible(true);
+	}
+	else
+	{
+		DEVTextOpt.setVisible(false);
+		DEVTextWorldMapOpt.setVisible(false);
+	}
+	*/
+	
+/*
+		if(__FullSecond>=BosMessageDissappearTime)
+		{
+			BosMessageTextOpt.setVisible(false);
+			BosMessageGlobalMapTextOpt.setVisible(false);
+			BosPic.Hide();
+			BosPicGlobal.Hide();
+		}
+		if(__FullSecond>=EnclavaMessageDissappearTime)
+		{
+			EnclavaMessageTextOpt.setVisible(false);
+			EnclavaMessageGlobalMapTextOpt.setVisible(false);
+			EnclavaPic.Hide();
+			EnclavaPicGlobal.Hide();
+		} */

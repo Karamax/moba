@@ -1,0 +1,45 @@
+#include "_defines.fos"
+#include "_macros.fos"
+
+void unsafe_anima_reduction(Critter& player, int, int, int, string@, int[]@)
+{
+	//player.ParamBase[PLAYER_ANIMA]=1;
+	//CreateTimeEvent( __FullSecond + REAL_SECOND( 60 ), "e_reduce", player.Id, false );
+}
+
+uint e_reduce( uint[] @ values )
+{
+	return 0;
+    /*Critter@ player = GetCritter( values[ 0 ] );
+    if( valid( player ) && player.IsPlayer() )
+    {
+        player.ParamBase[PLAYER_ANIMA_REDUCTION]--;
+		player.ParamBase[PLAYER_ANIMA]=0;
+		if(player.ParamBase[PLAYER_ANIMA_REDUCTION] <= 0)
+		{
+			//player.ParamBase[PLAYER_PERMAMENT_DEATH]=1;
+			player.ParamBase[PLAYER_PERMAMENT_CONFIRM]=1;
+		}
+    }
+    return 0;*/
+}
+
+void unsafe_death_confirm(Critter& player, int, int, int, string@, int[]@)
+{
+	/*
+	player.ParamBase[PLAYER_PERMAMENT_CONFIRM]=2;
+	player.StatBase[ ST_REPLICATION_TIME ] = -1;
+	player.ToDead(ANIM2_DEAD_EXPLODE,player);
+	player.ParamBase[CRITER_VISIBLE]=1;
+	player.StatBase[ ST_ACTION_POINTS ] = 1;
+	CreateTimeEvent( __FullSecond + REAL_SECOND( 10 ), "e_confirm", player.Id, false );
+	*/
+}
+
+uint e_confirm( uint[] @ values )
+{
+	/*
+    Critter@ player = GetCritter( values[ 0 ] );
+	player.ParamBase[PLAYER_PERMAMENT_DEATH]=1;*/
+	return 0;
+}

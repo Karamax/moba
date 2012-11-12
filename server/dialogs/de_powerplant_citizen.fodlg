@@ -1,0 +1,26 @@
+[comment]
+
+
+[data]
+lang=pols engl
+
+[dialog]
+&
+1 1000 None 1 #
+2 1010 @
+2 2000 None 0 &
+
+[pols]
+{100}{}{Inhabitant}
+{210}{}{You see citizen of Power Plant.}
+{1000}{}{Predialogue installations}
+{1010}{}{Say Over Head}
+{2000}{}{What's up Jimmy?@@Man! hands off@@How's it going?@@I do not have watch@@Really?@@There is no better place to live@@Yes I know, safe place but it's hard get here@@I do not have time I hurry to the shop@@Come on@@You're funny@@Do not tell anyone but I think join to NEC@@Do not tell anyone but I think join to REF@@Megan?@@You also know the Michelin?@@Do not talk with Albert. This idiot pushes bullshit@@Do you have a cigarette?@@Have a smoke?@@Got a light?@@Hey you@@What are you standing there?@@Do not look at me@@That damn molerat bit me in the hand@@My stupid neighbor holds in house small deathclaw@@Sometimes fall here bandits but we have a good guards@@These stray dogs piss me off@@John?@@This city goes to the dogs@@...Whores, junkies, drug addicts, robbers, rapists and now you@@I always wanted a car@@Have you ever been out of town?@@Reportedly outside the city does not have a life?@@Reportedly outside the city does not have a life. It's true?@@Actually, I do not know what I'm doing here@@Do not ask stupid questions@@Hello and... Goodbye@@I'm trying to just survive. This is all my story@@The history of this place? I do not know@@I have no clue@@I have no idea@@Actually, why you asking me?@@Can you hear the birds?@@Will you do something for me?@@Looking for me?}
+
+[engl]
+{100}{}{Inhabitant}
+{210}{}{You see citizen of Power Plant.}
+{1000}{}{Predialogue installations}
+{1010}{}{Say Over Head}
+{2000}{}{What's up Jimmy?@@Man! hands off@@How's it going?@@I do not have watch@@Really?@@There is no better place to live@@Yes I know, safe place but it's hard get here@@I do not have time I hurry to the shop@@Come on@@You're funny@@Do not tell anyone but I think join to NEC@@Do not tell anyone but I think join to REF@@Megan?@@You also know the Michelin?@@Do not talk with Albert. This idiot pushes bullshit@@Do you have a cigarette?@@Have a smoke?@@Got a light?@@Hey you@@What are you standing there?@@Do not look at me@@That damn molerat bit me in the hand@@My stupid neighbor holds in house small deathclaw@@Sometimes fall here bandits but we have a good guards@@These stray dogs piss me off@@John?@@This city goes to the dogs@@...Whores, junkies, drug addicts, robbers, rapists and now you@@I always wanted a car@@Have you ever been out of town?@@Reportedly outside the city does not have a life?@@Reportedly outside the city does not have a life. It's true?@@Actually, I do not know what I'm doing here@@Do not ask stupid questions@@Hello and... Goodbye@@I'm trying to just survive. This is all my story@@The history of this place? I do not know@@I have no clue@@I have no idea@@Actually, why you asking me?@@Can you hear the birds?@@Will you do something for me?@@Looking for me?}
+

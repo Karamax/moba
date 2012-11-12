@@ -1,0 +1,133 @@
+#include "_defines.fos"
+#include "_macros.fos"
+#include "_msgstr.fos"
+
+
+void unsafe_create_base(Critter& cr, int x, int, int, string@, int[]@)
+{
+	
+        Map@ map = cr.GetMap();
+        uint mapPid = map.GetProtoId();
+        if( valid( map )&& (( mapPid >= 150 && mapPid <= 198 )||( mapPid >= 301 && mapPid <= 392 ) ))
+        {
+			uint[] bases = {PLAYER_BASE_1, PLAYER_BASE_2, PLAYER_BASE_3, PLAYER_BASE_4};
+            Critter@[] group = { cr };
+            Critter @ Founder = cr;
+            if( valid( cr.GetFollowLeader() ) )
+            {
+                if( cr.Id != cr.GetFollowLeader().Id )
+                {
+                    //Founder.SayMsg( SAY_NETMSG, TEXTMSG_GAME, 3000000010 );
+                    return;
+                }
+            }
+            if( !valid( Founder ) )
+                @Founder = cr;
+            Founder.GetFollowGroup( FIND_LIFE, group );
+            if( cr.ParamBase[ bases[x]] != 0 )
+            {
+               // DeleteLocation( cr.ParamBase[ bases[x] ] );
+               // cr.ParamBase[ bases[x] ] = 0;
+			   cr.Say(SAY_NETMSG,"This record is used. Please use other records, or delete old base.");
+			   return;
+            }
+            uint locId = 0;
+                locId = CreateLocation( LOCATION_pbase, cr.WorldX, cr.WorldY, null );
+            Location@ loc = GetLocation( locId );
+            if( !valid( loc ) )
+            {
+                //Founder.SayMsg( SAY_NETMSG, TEXTMSG_GAME, 3000000011 );
+                return;
+            }
+            cr.ParamBase[ bases[x] ] = locId;
+            Founder.SetKnownLoc( true, locId );
+			cr.Say(SAY_NETMSG,"Ok, go on worldmap to see Your new base");
+            //Founder.SayMsg( SAY_NETMSG, TEXTMSG_GAME, 3000000012 );
+            /*if(valid(group))
+               {
+                    for(uint i=0; i<group.length(); i++)
+                    {
+                            group[i].TransitToMap(loc.Id,0);
+                    }
+               }
+               else
+               {
+                    Founder.TransitToMap(loc.Id,0);
+               }*/
+            return;
+        }
+        else
+        {
+            //cr.SayMsg( SAY_NETMSG, TEXTMSG_GAME, 3000000013 );
+            return;
+        }
+    
+}
+
+void unsafe_delete_base(Critter& cr, int x, int, int, string@, int[]@)
+{
+	Map@ map = cr.GetMap();
+	Location @ loc = map.GetLocation();
+	
+	if(cr.ParamBase[PLAYER_BASE_1] == loc.Id)
+	{
+		cr.ParamBase[PLAYER_BASE_1] = 0;
+		cr.TransitToGlobal( true );
+		DeleteLocation( loc.Id);
+	}
+	else if(cr.ParamBase[PLAYER_BASE_2] == loc.Id)
+	{
+		cr.ParamBase[PLAYER_BASE_2] = 0;
+		cr.TransitToGlobal( true );
+		DeleteLocation( loc.Id);
+	}
+	else if(cr.ParamBase[PLAYER_BASE_3] == loc.Id)
+	{
+		cr.ParamBase[PLAYER_BASE_3] = 0;
+		cr.TransitToGlobal( true );
+		DeleteLocation( loc.Id);
+	}
+	else
+	{
+		cr.Say(SAY_NETMSG,"You must be in your base to delete this location.");
+	}
+}
+
+void unsafe_addto_base(Critter& cr, int record, int, int, string@ name, int[]@)
+{
+	if(cr.ParamBase[record] == 0)
+	{
+		cr.Say(SAY_NETMSG,"Bad operation.");
+		return;
+	}
+	uint locId = cr.ParamBase[record];
+	Critter @Founder  = GetPlayer(name);
+	if(@Founder != null) 
+	{
+		Founder.SetKnownLoc( true, locId );
+		cr.Say(SAY_NETMSG,"You add new player to base.");
+		Founder.Say(SAY_NETMSG,"You know new base.");
+	}
+	else
+	cr.Say(SAY_NETMSG,"Player not online, or bad palyer name.");
+	return;
+}
+
+void unsafe_delfrom_base(Critter& cr, int record, int, int, string@ name, int[]@)
+{
+	if(cr.ParamBase[record] == 0)
+	{
+		cr.Say(SAY_NETMSG,"Bad operation.");
+		return;
+	}
+	uint locId = cr.ParamBase[record];
+	Critter @Founder  = GetPlayer(name);
+	if(@Founder != null) 
+	{
+		Founder.UnsetKnownLoc( true, locId );
+		cr.Say(SAY_NETMSG,"You delete that player from base.");
+	}
+	else
+	cr.Say(SAY_NETMSG,"Player not online, or bad palyer name.");
+	return;
+}

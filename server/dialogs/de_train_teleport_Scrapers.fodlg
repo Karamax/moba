@@ -1,0 +1,55 @@
+[comment]
+
+
+[data]
+lang=engl pols russ
+
+[dialog]
+&
+1 1000 None 1 #
+2 1010 @
+2 2000 None 0 #
+3 2010 #
+0 2020 @
+3 3000 None 0 #
+0 3010 D _item p PID_BOTTLE_CAPS } 200 R _script dialog@r_TeleportToMap2 0  #
+0 3020 &
+
+[engl]
+{100}{}{Skipper Ivan}
+{110}{}{man5.png}
+{210}{}{Old hunched but sure of himself man.}
+{1000}{}{Predialogue installations}
+{1010}{}{Start}
+{2000}{}{Am going fishing on the western water near the harbor of Dark Waters. If you are going in those world side I'll drop you to Dark Waters harbor for only 100 caps .@@If you are interested, I'm going to the Dark Waters. Do you want to sail with me?}
+{2010}{}{Yes@@I am interested}
+{2020}{}{No, thanks}
+{3000}{}{Just add a bit for fuel and I'll drop you at the port in the Scrapers.}
+{3010}{}{Okay, take 200 caps.@@Here's 200 caps.}
+{3020}{}{I do not have enough.@@Maybe some other time.}
+
+[pols]
+{100}{}{Skipper Ivan}
+{110}{}{man5.png}
+{210}{}{Stary przygarbiony ale pewny siebie cz³owiek.}
+{1000}{}{Predialogue installations}
+{1010}{}{Start}
+{2000}{}{Wybieram siê ³owiæ na zachodnie wody niedaleko portu Dark Waters. Jeœli jestes zainteresowany mogê ciebie zabraæ nawet do portu w tym mieœcie za jedyne 200 kapsli.@@Jeœli jesteœ zainteresowany to wybieram siê do portu w Dark Waters. Chcesz p³yn¹æ ze mn¹?}
+{2010}{}{Tak@@Jestem zainteresowany}
+{2020}{}{Nie, dziekuje}
+{3000}{}{Dorzuæ siê tylko do paliwa te 200 kapsli i ju¿ p³yniemy.}
+{3010}{}{Prosze.@@O to 200 kapsli.}
+{3020}{}{Nie mam tyle.@@Mo¿e innym razem.}
+
+[russ]
+{100}{}{none}
+{110}{}{man12.png}
+{1000}{}{Predialogue installations}
+{1010}{}{Start}
+{2000}{}{Witaj.Jestes zainteresowany transportem na druga strone}
+{2010}{}{Tak}
+{2020}{}{Nie, dziekuje}
+{3000}{}{Koszt to 100 kapsli.@@Dawaj 100 kapsli}
+{3010}{}{Prosze.@@O to 100 kapsli.}
+{3020}{}{Nie mam tyle.}
+

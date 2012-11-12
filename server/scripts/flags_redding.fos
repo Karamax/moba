@@ -1,0 +1,171 @@
+#include "_defines.fos"
+#include "_itempid.fos"
+#include "_macros.fos"
+
+int[] __Redding_Flags = { 0, 0, 0, 0 };
+int[] __Redding_FlagsPositions =
+{
+	119,113,
+	131,185,
+	172,165,
+	97,33
+	
+};
+void Redding_FlagsUpdate()
+{
+	__Redding_Flags[0] = __Redding1;
+	__Redding_Flags[1] = __Redding2;
+	__Redding_Flags[2] = __Redding3 ;
+    Map @Redding = GetMapByPid( 62, 0 );
+    if( @Redding != null )
+    {
+        Critter @[] crs;
+        Item @[] items;
+        int BOSs, ENCs;
+        for( uint j = 0; j < __Redding_FlagsPositions.length(); j += 2 )
+        {
+            crs.resize( 0 );
+            items.resize( 0 );
+            Redding.GetCrittersHex( __Redding_FlagsPositions[ j ], __Redding_FlagsPositions[ j + 1 ], 5, FIND_ONLY_PLAYERS | FIND_LIFE_AND_KO, crs );
+            BOSs = 0;
+            ENCs = 0;
+            for( uint i = 0; i < crs.length(); i++ )
+            {
+                if( crs[ i ].ParamBase[ PLAYER_MAIN_FACTION ] == 1 )
+                    BOSs++;
+                if( crs[ i ].ParamBase[ PLAYER_MAIN_FACTION ] == 2 )
+                    ENCs++;
+            }
+            if( BOSs > ENCs )
+                __Redding_Flags[ j / 2 ] -= 1;
+            else if ( ENCs > BOSs )
+                __Redding_Flags[ j / 2 ] += 1;
+            __Redding_Flags[ j / 2 ] = CLAMP( __Redding_Flags[ j / 2 ], -100, 100 );
+            Redding.GetItems( __Redding_FlagsPositions[ j ], __Redding_FlagsPositions[ j + 1 ], items );
+            if( @items != null && items.length() > 0 )
+            {
+                int current_flag = 0;
+                if( items[ 0 ].GetProtoId() == 4802 )
+                    current_flag = -1;
+                else if( items[ 0 ].GetProtoId() == 4801 )
+                    current_flag = 1;
+                int flag_processed = 0;
+                if( __Redding_Flags[ j / 2 ] <= -75 )
+                    flag_processed = -1;
+                else if( __Redding_Flags[ j / 2 ] >= 75 )
+                    flag_processed = 1;
+                if( current_flag != flag_processed )
+                {
+                    DeleteItem( items[ 0 ] );
+                    if( flag_processed == 0 )
+                        Redding.AddItem( __Redding_FlagsPositions[ j ], __Redding_FlagsPositions[ j + 1 ], 4800, 1 );
+                    else if( flag_processed == -1 )
+                    {
+                        Redding.AddItem( __Redding_FlagsPositions[ j ], __Redding_FlagsPositions[ j + 1 ], 4802, 1 );
+                    }
+                    else if( flag_processed == 1 )
+                    {
+                        Redding.AddItem( __Redding_FlagsPositions[ j ], __Redding_FlagsPositions[ j + 1 ], 4801, 1 );
+                    }
+                }
+
+                if( flag_processed == -1 )
+                {}
+                else if( flag_processed == 1 )
+                {}
+            }
+            for( uint i = 0; i < crs.length(); i++ )
+            {
+                if( __Redding_Flags[ j / 2 ] <= -100 )
+                {}
+                else if( __Redding_Flags[ j / 2 ] >= 100 )
+                {}
+                else if( __Redding_Flags[ j / 2 ] <= -75 )
+                    crs[ i ].Say( SAY_NETMSG, "NEC Flag: " + ( -__Redding_Flags[ j / 2 ] ) + "%" );
+                else if( __Redding_Flags[ j / 2 ] >= 75 )
+                    crs[ i ].Say( SAY_NETMSG, "REF Flag: " + __Redding_Flags[ j / 2 ] + "%" );
+                else if( __Redding_Flags[ j / 2 ] == 0 )
+                    crs[ i ].Say( SAY_NETMSG, "neutral" );
+                else if( __Redding_Flags[ j / 2 ] < 0 )
+                    crs[ i ].Say( SAY_NETMSG, "neutral " + ( -__Redding_Flags[ j / 2 ] ) + "% NEC" );
+                else if( __Redding_Flags[ j / 2 ] > 0 )
+                    crs[ i ].Say( SAY_NETMSG, "neutral " + __Redding_Flags[ j / 2 ] + "% REF" );
+            }
+        }
+    }
+	__Redding1 =__Redding_Flags[0];
+	__Redding2 =__Redding_Flags[1];
+	__Redding3 =__Redding_Flags[2];
+	__Redding4 =__Redding_Flags[3];
+	
+	//system zwyciestwa
+	Item@[] FlagBos;
+	Item@[] FlagEnc;
+	if( Redding.GetItems( 4802, FlagBos ) > Redding.GetItems( 4801, FlagEnc ) )
+	{
+		__BosPLUS++;
+	}
+	else if( Redding.GetItems( 4802, FlagBos ) < Redding.GetItems( 4801, FlagEnc ) )
+	{
+		__EnclavePlus++;
+	}
+	if(( __BosPLUS >= 700)||( __EnclavePlus >= 700))
+	{
+		__IsBattle  = 0;
+		Critter@[] critters;
+        Redding.GetCritters( 0, FIND_ALL | FIND_ONLY_PLAYERS, critters );
+        for( uint i = 0, l = critters.length(); i < l; i++ )
+        {
+			if ( __BosPLUS <= 700)
+			{
+				if(critters[i].ParamBase[ PLAYER_MAIN_FACTION ] == 1)
+				{
+					critters[i].Say(SAY_BOS_MESSAGE,"You win the battle!!! ");
+					Map @base = GetMapByPid( 29000, 0 );
+					critters[i].TransitToMap( base.Id, 15 );
+					critters[i].ParamBase[IN_BASE] = 1;
+				}
+				else
+				{
+					critters[i].Say(SAY_ENCLAVA_MESSAGE,"You loose the battle!!!");
+					critters[i].ToDead(ANIM2_DEAD_EXPLODE,critters[i]);
+				}
+			}
+			if( __EnclavePlus >= 700)
+			{
+				if(critters[i].ParamBase[ PLAYER_MAIN_FACTION ] == 2)
+				{
+					critters[i].Say(SAY_ENCLAVA_MESSAGE,"You win the battle!!!");
+					Map @base = GetMapByPid( 112, 0 );
+					critters[i].TransitToMap( base.Id, 15 );
+					critters[i].ParamBase[IN_BASE] = 1;
+				}
+				else
+				{
+					critters[i].Say(SAY_BOS_MESSAGE,"You loose the battle!!! ");
+					critters[i].ToDead(ANIM2_DEAD_EXPLODE,critters[i]);
+				}	
+			}  
+			if(__BosPLUS > __EnclavePlus)
+			{
+				critters[i].Say(SAY_SERVER_MESSAGE,"NEC win the battle!!!");
+			}
+			else
+			{
+				critters[i].Say(SAY_SERVER_MESSAGE,"REF win the battle!!!");
+			}
+        }
+	__Redding_Flags[0] = 0;
+	__Redding1= 0;
+	__Redding_Flags[1] = 0;
+	__Redding2= 0;
+	__Redding_Flags[2] = 0;
+	__Redding3= 0;
+	__Redding_Flags[3] = 0;
+	__Redding4= 0;
+	__BosPLUS=0;
+	__EnclavePlus=0;
+	__RollMap=0;
+	}
+}
+

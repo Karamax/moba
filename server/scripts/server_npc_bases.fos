@@ -1,0 +1,107 @@
+#include "_defines.fos"
+#include "_client_defines.fos"
+#include "_itempid.fos"
+#include "_teams.fos"
+#include "_maps.fos"
+#include "_time.fos"
+import bool AddAttackPlane(Critter& npc, uint priority, uint critId, bool run) from "npc_planes";
+//widocznosc terminalu z depotem
+bool sd( Critter& player, Scenery& terminal, int skill, Item@ item )//showdepot
+{
+    if( player.IsPlayer())
+        player.RunClientScript("client_main@show_depot",0,0,0,null,null);
+    return true;
+}
+//skrypty npc w bazach
+void _GI( Critter& npc, bool firstTime )
+{
+	npc.SetEvent(CRITTER_EVENT_SHOW_CRITTER, "_ShowCritter");
+    npc.ModeBase[ MODE_UNLIMITED_AMMO ] = 1;
+    npc.ModeBase[ MODE_NO_DROP ] = 1;
+    npc.ModeBase[ MODE_NO_LOOT ] = 1;
+    npc.ModeBase[ MODE_NO_STEAL ] = 1;
+    npc.StatBase[ ST_EXPLODE_RESIST ] = 99;
+    npc.StatBase[ ST_REPLICATION_TIME ] = __FullSecond + REAL_MINUTE( 1 );
+	npc.StatBase[ ST_TEAM_ID ] = TEAM_Guard;
+	npc.StatBase[ ST_NORMAL_RESIST ] = 99;
+	npc.StatBase[ ST_PLASMA_RESIST ] = 99;
+	npc.StatBase[ ST_LASER_RESIST ] = 99;
+	npc.StatBase[ ST_FIRE_RESIST ] = 99;
+	npc.StatBase[ ST_CRITICAL_CHANCE ] = 99;
+	npc.StatBase[ST_MAX_LIFE] = 999;
+	npc.StatBase[ST_CURRENT_HP] = 999;
+	npc.SkillBase[ SK_SMALL_GUNS ] = 300;
+	npc.SkillBase[ SK_BIG_GUNS ] = 300;
+	npc.SkillBase[ SK_ENERGY_WEAPONS ] = 300;
+    npc.ShowCritterDist1 = 100;
+    // to random
+   /* int stuff = Random( 1, 4 );
+    if( stuff == 1 )
+    {*/
+        npc.AddItem( PID_M72_GAUSS_RIFLE, 1 );
+        npc.SetFavoriteItem( SLOT_HAND1, PID_M72_GAUSS_RIFLE );
+    /*}
+    else if( stuff == 2 )
+    {
+        npc.AddItem( PID_BOZAR, 1 );
+        npc.SetFavoriteItem( SLOT_HAND1, PID_BOZAR );
+    }
+    else if( stuff == 3 )
+    {
+        npc.AddItem( PID_TURBO_PLASMA_RIFLE, 1 );
+		npc.AddItem( PID_MICRO_FUSION_CELL, 9000 );
+        npc.SetFavoriteItem( SLOT_HAND1, PID_TURBO_PLASMA_RIFLE );
+    }
+    else if( stuff == 4 )
+    {
+        npc.AddItem( PID_YK42B_PULSE_RIFLE, 1 );
+		npc.AddItem( PID_MICRO_FUSION_CELL, 9000 );
+        npc.SetFavoriteItem( SLOT_HAND1, PID_YK42B_PULSE_RIFLE );
+    }*/
+	npc.SetEvent( CRITTER_EVENT_ATTACKED, "_Attacked" );
+}
+
+void _ShowCritter(Critter& npc, Critter& cr)
+{	
+	if(cr.IsNpc())return;
+	
+	if((cr.ParamBase[PLAYER_MAIN_FACTION]==ENCLAVA) &&( npc.GetProtoId()==529))
+	return;
+	if((cr.ParamBase[PLAYER_MAIN_FACTION]==ENCLAVA) &&( npc.GetProtoId()==533))
+	return;
+	if((cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD) &&( npc.GetProtoId()==122))
+	return;
+	if((cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD) &&( npc.GetProtoId()==530))
+	return;
+	if((cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD) &&( npc.GetProtoId()==531))
+	return;
+	if((cr.ParamBase[PLAYER_MAIN_FACTION]==BROTHERHOOD) &&( npc.GetProtoId()==532))
+	return;
+	
+	AddAttackPlane(npc, 0, cr.Id, true);
+	
+	Map@ map = npc.GetMap();
+	Critter @[]guards;
+	map.GetCrittersHex(npc.HexX, npc.HexY, 40,  FIND_ALL | FIND_ONLY_NPC, guards);
+	for(uint i=0; i < guards.length(); i++)
+	{
+			AddAttackPlane(guards[i], 0, cr.Id, true);
+	}
+}
+
+bool _Attacked(Critter& npc, Critter& cr)
+{
+	if(cr.IsNpc())
+	return false;
+	
+	AddAttackPlane(npc, 0, cr.Id, true);
+	
+	Map@ map = npc.GetMap();
+	Critter @[]guards;
+	map.GetCrittersHex(npc.HexX, npc.HexY, 40,  FIND_ALL | FIND_ONLY_NPC, guards);
+	for(uint i=0; i < guards.length(); i++)
+	{
+			AddAttackPlane(guards[i], 0, cr.Id, true);
+	}
+	return true;
+}

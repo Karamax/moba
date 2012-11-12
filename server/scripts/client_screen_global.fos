@@ -1,0 +1,571 @@
+string []NICKS_GLOBAL=
+{"none", "none", "none", "none", "none",
+"none", "none", "none", "none", "none",
+"none", "none", "none", "none", "none"};
+uint8 []GROUP_SIZE = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+IGUIElementImageOpt@ wmpicture;
+IGUIElementButtonOpt@ EncountersButton;
+IGUIElementButtonOpt@ ObserveButton;
+IGUIElementButtonOpt@ CloseWmButton;
+IGUIElementButtonOpt@ String1Button;
+IGUIElementTextOpt@ String1Text;
+IGUIElementButtonOpt@ String2Button;
+IGUIElementTextOpt@ String2Text;
+IGUIElementButtonOpt@ String3Button;
+IGUIElementTextOpt@ String3Text;
+IGUIElementButtonOpt@ String4Button;
+IGUIElementTextOpt@ String4Text;
+IGUIElementButtonOpt@ String5Button;
+IGUIElementTextOpt@ String5Text;
+IGUIElementButtonOpt@ String6Button;
+IGUIElementTextOpt@ String6Text;
+IGUIElementButtonOpt@ String7Button;
+IGUIElementTextOpt@ String7Text;
+IGUIElementButtonOpt@ String8Button;
+IGUIElementTextOpt@ String8Text;
+IGUIElementButtonOpt@ String9Button;
+IGUIElementTextOpt@ String9Text;
+IGUIElementButtonOpt@ String10Button;
+IGUIElementTextOpt@ String10Text;
+IGUIElementButtonOpt@ String11Button;
+IGUIElementTextOpt@ String11Text;
+IGUIElementButtonOpt@ String12Button;
+IGUIElementTextOpt@ String12Text;
+IGUIElementButtonOpt@ String13Button;
+IGUIElementTextOpt@ String13Text;
+IGUIElementButtonOpt@ String14Button;
+IGUIElementTextOpt@ String14Text;
+IGUIElementButtonOpt@ String15Button;
+IGUIElementTextOpt@ String15Text;
+IGUIElementButtonOpt@ FriendsButton;
+IGUIElementButtonOpt@ EnemiesButton;
+
+class EncountersButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_observe_encounters",0,0,0,null,null);
+	}
+}
+class ObserveButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+		SetScreenPos(CLIENT_SCREEN_GLOBAL_HUNT,__ScreenWidth/2-250,__ScreenHeight-275);
+		ShowScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+	}
+}
+class FriendsButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_observe_normal",0,0,0,null,null);
+	}
+}
+class EnemiesButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_observe_other",0,0,0,null,null);
+	}
+}
+class String1ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[0],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+class String2ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[1],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+class String3ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[2],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+class String4ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[3],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+class String5ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[4],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+class String6ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[5],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+class String7ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[6],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+class String8ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[7],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+class String9ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[8],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+class String10ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[9],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+class String11ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[10],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+class String12ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[11],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+class String13ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[12],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+class String14ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[13],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+class String15ButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		RunServerScriptUnsafe("server_worldmap_battle@unsafe_worldmap_attack",0,0,0,NICKS_GLOBAL[14],null);
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+		for(uint i = 0; i < NICKS_GLOBAL.length(); i++)
+		{
+			NICKS_GLOBAL[i] = "none";
+			GROUP_SIZE[i] = 0;
+		}
+	}
+}
+
+class CloseWmButtonClass : IGUIElementCallbackMouseClick
+{
+	void OnMouseClick(int id, int click)
+	{
+		HideScreen(CLIENT_SCREEN_GLOBAL_HUNT,0,0,0);
+	}
+}
+
+class HuntingScreenClass : IGUIScreenCallbackMove
+{
+	void OnMove(int x, int y){}
+}
+
+void InitWmPanel()
+{
+HuntingScreenClass HuntingScreen;
+	GUI_CreateScreen(CLIENT_SCREEN_GLOBAL_HUNT,"wm_hunt.png")
+		.CanMove(false)
+		.Modal(false)
+		.Multiinstance(false)
+		.SizeByMultipleImages(1,1)
+		.CallbackMove(HuntingScreen);
+
+	
+ObserveButtonClass ObserveButtonObiect;
+	@ObserveButton=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GLOBAL_MAP, 10,10)
+		.UpPic("town_view_gm_x.png")
+		.DownPic("town_view_gm_x.png")
+		.ClickableZone(70,50)
+		.CallbackMouseClick(ObserveButtonObiect);
+	ObserveButton.setVisible(true);
+	IGUIElementOpt@ ObserveButtonx;
+	@ObserveButtonx = cast<IGUIElementOpt@>(ObserveButton);
+	ObserveButtonx.setAbsolutePosition(true);
+	
+EncountersButtonClass EncountersButtonObiect;
+	@EncountersButton=
+	GUI_AddButton(CLIENT_MAIN_SCREEN_GLOBAL_MAP, 80,21)
+		.Text("FIND ENCOUNTERS", FONT_FAT, COLOR_GREEN,COLOR_LGREEN,0)
+		.ClickableZone(140,20)
+		.CallbackMouseClick(EncountersButtonObiect);
+	EncountersButton.setVisible(true);
+	IGUIElementOpt@ EncountersButtonx;
+	@EncountersButtonx = cast<IGUIElementOpt@>(EncountersButton);
+	EncountersButtonx.setAbsolutePosition(true);
+	
+FriendsButtonClass FriendsButtonObiect;
+	@FriendsButton=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 360,35)
+		.Text("FIND FRIENDS", FONT_FAT, COLOR_GREEN,COLOR_DDGREEN,0)
+		.ClickableZone(100,19)
+		.CallbackMouseClick(FriendsButtonObiect);
+	FriendsButton.setVisible(true);
+	
+EnemiesButtonClass EnemiesButtonObiect;
+	@EnemiesButton=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 360,80)
+		.Text("FIND ENEMIES", FONT_FAT, COLOR_RED,COLOR_DDRED,0)
+		.ClickableZone(100,19)
+		.CallbackMouseClick(EnemiesButtonObiect);
+	EnemiesButton.setVisible(true);
+	
+CloseWmButtonClass CloseWmButtonObiect;
+	@CloseWmButton=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 480,3)
+		.UpPic("cancel.png")
+		.DownPic("cancel.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(CloseWmButtonObiect);
+	CloseWmButton.setVisible(true);
+
+String1ButtonClass String1Obiect;
+	@String1Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 10,5)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String1Obiect);
+		
+	String1Button.setVisible(true);
+@String1Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",30,10)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+
+String2ButtonClass String2Obiect;
+	@String2Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 10,30)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String2Obiect);
+	String2Button.setVisible(true);
+	
+@String2Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",30,35)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+	  
+String3ButtonClass String3Obiect;
+	@String3Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 10,55)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String3Obiect);
+	String3Button.setVisible(true);
+	
+@String3Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",30,60)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+	  
+String4ButtonClass String4Obiect;
+	@String4Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 10,80)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String4Obiect);
+	String4Button.setVisible(true);
+	
+@String4Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",30,85)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+	  
+String5ButtonClass String5Obiect;
+	@String5Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 10,105)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String5Obiect);
+	String5Button.setVisible(true);
+	
+@String5Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",30,110)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+	  
+/////////////////
+
+String6ButtonClass String6Obiect;
+	@String6Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 130,5)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String6Obiect);
+		
+	String6Button.setVisible(true);
+@String6Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",150,10)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+
+String7ButtonClass String7Obiect;
+	@String7Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 130,30)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String7Obiect);
+	String7Button.setVisible(true);
+	
+@String7Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",150,35)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+	  
+String8ButtonClass String8Obiect;
+	@String8Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 130,55)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String8Obiect);
+	String8Button.setVisible(true);
+	
+@String8Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",150,60)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+	  
+String9ButtonClass String9Obiect;
+	@String9Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 130,80)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String9Obiect);
+	String9Button.setVisible(true);
+	
+@String9Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",150,85)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+	  
+String10ButtonClass String10Obiect;
+	@String10Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 130,105)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String10Obiect);
+	String10Button.setVisible(true);
+	
+@String10Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",150,110)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+////////////
+String11ButtonClass String11Obiect;
+	@String11Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 250,5)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String11Obiect);
+		
+	String11Button.setVisible(true);
+@String11Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",270,10)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+
+String12ButtonClass String12Obiect;
+	@String12Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 250,30)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String12Obiect);
+	String12Button.setVisible(true);
+	
+@String12Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",270,35)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+	  
+String13ButtonClass String13Obiect;
+	@String13Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 250,55)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String13Obiect);
+	String13Button.setVisible(true);
+	
+@String13Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",270,60)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+	  
+String14ButtonClass String14Obiect;
+	@String14Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 250,80)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String14Obiect);
+	String14Button.setVisible(true);
+	
+@String14Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",270,85)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+	  
+String15ButtonClass String15Obiect;
+	@String15Button=
+	GUI_AddButton(CLIENT_SCREEN_GLOBAL_HUNT, 250,105)
+		.UpPic("red.png")
+		.DownPic("red.png")
+		.ClickableZone(20,20)
+		.CallbackMouseClick(String15Obiect);
+	String15Button.setVisible(true);
+	
+@String15Text=
+	GUI_AddText(CLIENT_SCREEN_GLOBAL_HUNT,"",270,110)
+	  .TextOptions(FONT_FALLOUT, COLOR_WHITE, FT_BORDERED)
+      .TextBoxSize(90,10)
+	  .Visible(true);
+}

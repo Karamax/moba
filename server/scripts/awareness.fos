@@ -1,0 +1,256 @@
+// Author: JohnPL, poprawki Xenom
+// Skrypt awarenessa
+
+
+#include "_client_defines.fos"
+#include "_defines.fos"
+#include "_msgstr.fos"
+#include "_macros.fos"
+#include "client_gui_h.fos"
+#include "_colors.fos"
+
+IGUIElementTextOpt@ awarenessHp;
+IGUIElementTextOpt@ awarenessArmor;
+IGUIElementTextOpt@ awarenessWeapon;
+IGUIElementTextOpt@ awarenessCripled;
+
+RuchyMyszy mouseMove();
+
+class RuchyMyszy : IGUIElementCallbackMouseMove
+{
+	void OnMouseMove(int x, int y)
+	{
+		CritterCl @ gracz = GetMonitorCritter(x, y); //Na podstawie pozycji x,y pobiera klase CritterCl
+		if(@gracz == null)
+		{
+			CritterCl@[] critters;
+			uint16 hx = 0;
+			uint16 hy = 0;
+			GetMonitorHex (x, y, hx, hy) ;
+			if(hx==0 || hy == 0) return;
+			GetCrittersHex (hx, hy, 1, FIND_ALL, critters);
+			if(critters.length()>0) @gracz=critters[0];
+		}
+		if(@gracz != null)
+		{
+			CritterCl@ chosen=GetChosen();
+			if(chosen.Perk[PE_AWARENESS]==0) // Wersja dla gracza bez awarenessa
+			{
+				awarenessHp.Visible(true);
+				if(_CritIsInjured(gracz))awarenessCripled.Visible(true); 
+				else awarenessCripled.Visible(false);
+	
+				//awarenessNick.setText(gracz.Name);
+				awarenessHp.setText(getSimpleHealthState(gracz));
+				if(_CritIsInjured(gracz)) awarenessCripled.setText(GetMsgStr(TEXTMSG_GAME,STR_CRIT_LOOK_LIMBS(gracz.Stat[ST_GENDER],false)));
+				else awarenessCripled.Visible(false);
+
+				AktualizujPozycje(x+20, y-10, 10);
+			}
+			else // gracz ma awarenessa
+			{
+				awarenessHp.Visible(true);
+				if(gracz.IsPlayer()) awarenessArmor.Visible(true);
+				else awarenessArmor.Visible(false);
+				awarenessWeapon.Visible(true);
+				if(_CritIsInjured(gracz))awarenessCripled.Visible(true); 
+				else awarenessCripled.Visible(false);
+			
+				awarenessHp.setText(gracz.Stat[ST_CURRENT_HP] + "/" + gracz.Stat[ST_MAX_LIFE] +" HP");
+				setHpTexColor(gracz);
+				awarenessArmor.setText(getArmorName(gracz));
+				awarenessWeapon.setText(getWeapoonName(gracz));
+				awarenessWeapon.setText(getWeapoonName(gracz));
+				awarenessCripled.setText(getCripledDetailedStuff(gracz));
+
+				AktualizujPozycje(x+20, y-10, 10);
+			}
+		} 
+		else
+		{
+			awarenessHp.Visible(false);
+			awarenessArmor.Visible(false);
+			awarenessWeapon.Visible(false);
+			awarenessCripled.Visible(false);
+		}
+	
+	}
+
+	void AktualizujPozycje(int startX, int startY, int step)
+	{
+		int currentY = startY;
+
+		if(awarenessCripled.isVisible())
+		{
+			awarenessCripled.Position(startX, currentY);
+			currentY-=step;
+		}
+		if(awarenessWeapon.isVisible())
+		{
+			awarenessWeapon.Position(startX, currentY);
+			currentY-=step;
+		}
+		if(awarenessArmor.isVisible())
+		{
+			awarenessArmor.Position(startX, currentY);
+			currentY-=step;
+		}
+		if(awarenessHp.isVisible())
+		{
+			awarenessHp.Position(startX, currentY);
+			currentY-=step;
+		}
+	}
+
+	string@ getCripledDetailedStuff(CritterCl @ cr)
+	{
+		string cripledString = "";
+		bool moreThemOne = false;
+		bool cripledArms=false;
+		bool cripledLegs = false;
+		if(cr.Damage[DAMAGE_EYE]!=0)
+		{
+			cripledString+="damaged eye";
+			moreThemOne=true;
+		}
+		if(cr.Damage[DAMAGE_RIGHT_ARM]!=0)
+		{
+			if(moreThemOne) cripledString+=", ";
+			if(cr.Damage[DAMAGE_LEFT_ARM]!=0)
+			{
+				cripledString+="crippled arms";
+				cripledArms = true;
+			}
+			else
+			{
+				cripledString+="crippled right arm";
+			}
+			moreThemOne=true;
+		}
+		if(cr.Damage[DAMAGE_LEFT_ARM]!=0 && not cripledArms)
+		{
+			if(moreThemOne) cripledString+=", ";
+			cripledString+="crippled left arm";
+			moreThemOne=true;
+		}
+		if(cr.Damage[DAMAGE_RIGHT_LEG]!=0)
+		{
+			if(moreThemOne) cripledString+=", ";
+			if(cr.Damage[DAMAGE_LEFT_LEG]!=0)
+			{
+				cripledString+="crippled legs";
+				cripledLegs = true;
+			}
+			else
+			{
+				cripledString+="crippled right leg";
+			}
+			moreThemOne=true;
+		}
+		if(cr.Damage[DAMAGE_LEFT_LEG]!=0 && not cripledLegs)
+		{
+			if(moreThemOne) cripledString+=", ";
+			cripledString+="crippled left leg";
+			moreThemOne=true;
+		}
+		return cripledString;
+	}
+
+	string@ getWeapoonName(CritterCl @ cr)
+	{
+		ItemCl@ item=cr.GetItem(0,SLOT_HAND1);
+		if(@item!=null)
+		{
+			return GetMsgStr(TEXTMSG_ITEM,STR_ITEM_INFO(item));
+		}
+		awarenessWeapon.Visible(false);
+		return "none";
+	}
+
+	string@ getArmorName(CritterCl @ cr)
+	{
+		ItemCl@ item=cr.GetItem(0,SLOT_ARMOR);
+		if(@item!=null)
+		{
+			return GetMsgStr(TEXTMSG_ITEM,STR_ITEM_INFO(item));
+		}
+		awarenessArmor.Visible(false);
+		return "No armor";
+	}
+
+	void setHpTexColor(CritterCl @ cr)
+	{
+		int hp_proc=cr.Stat[ST_CURRENT_HP]*100/cr.Stat[ST_MAX_LIFE];
+		int green = 0xFF * hp_proc/100;
+		green = CLAMP(green, 0, 0xFF);
+		int red = 0xFF - green;
+		red = CLAMP(red, 0, 0xFF);
+		//Message("green: "+ green + ". red: " + red);
+		awarenessHp.TextColor(COLOR_RGB(red,green,0));
+	}
+
+	string@ getSimpleHealthState(CritterCl @ cr)
+	{
+		string result="";
+		int hp_proc=cr.Stat[ST_CURRENT_HP]*100/cr.Stat[ST_MAX_LIFE];
+		if(cr.IsDead())
+		{
+			result+=GetMsgStr(TEXTMSG_GAME,STR_CRIT_LOOK_STATE(0));
+			awarenessHp.TextColor(COLOR_DDRED);
+		}
+		else if(hp_proc<34)
+		{
+			result+=GetMsgStr(TEXTMSG_GAME,STR_CRIT_LOOK_STATE(1));
+			awarenessHp.TextColor(COLOR_LRED);
+		}
+		else if(hp_proc<67)
+		{
+			result+=GetMsgStr(TEXTMSG_GAME,STR_CRIT_LOOK_STATE(2));
+			awarenessHp.TextColor(COLOR_CONTOUR_YELLOW);
+		}
+		else if(hp_proc<100)
+		{
+			result+=GetMsgStr(TEXTMSG_GAME,STR_CRIT_LOOK_STATE(3));
+			awarenessHp.TextColor(COLOR_RGB(0xFF,0xFF,0));
+		}
+		else
+		{
+			result+=GetMsgStr(TEXTMSG_GAME,STR_CRIT_LOOK_STATE(4));
+			awarenessHp.TextColor(COLOR_LGREEN);
+		}
+		return result;
+	}
+
+	uint16  hx;
+	uint16  hy;
+}
+
+void updateAwarenessScreen()
+{
+	if(@mouseMove!=null) mouseMove.OnMouseMove(__MouseX, __MouseY); // By aktualizowalo sie HP, nawet jak mycha jest nieruchomo nad celem
+}
+
+
+void InitAwarenessScreen()
+{
+	@awarenessHp = GUI_AddText(CLIENT_MAIN_SCREEN_GAME)
+		.TextBoxSize(200, 15)
+		.TextOptions(FONT_FALLOUT, COLOR_TEXT, FT_BORDERED)
+		.AbsolutePosition(true)
+		.Visible(false);
+	@awarenessArmor = GUI_AddText(CLIENT_MAIN_SCREEN_GAME)
+		.TextBoxSize(300, 15)
+		.TextOptions(FONT_FALLOUT, COLOR_TEXT, FT_BORDERED)
+		.AbsolutePosition(true)
+		.Visible(false);
+	@awarenessWeapon = GUI_AddText(CLIENT_MAIN_SCREEN_GAME)
+		.TextBoxSize(200, 15)
+		.TextOptions(FONT_FALLOUT, COLOR_TEXT, FT_BORDERED)
+		.AbsolutePosition(true)
+		.Visible(false);
+	@awarenessCripled = GUI_AddText(CLIENT_MAIN_SCREEN_GAME)
+		.TextBoxSize(250, 55)
+		.TextOptions(FONT_FALLOUT, COLOR_TEXT, FT_BORDERED)
+		.AbsolutePosition(true)
+		.Visible(false);	
+}
