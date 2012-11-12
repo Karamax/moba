@@ -2457,52 +2457,32 @@ Shift + Enter - рация.
 Developers of FOnline Tactics
 
 
-Xenom - Project Leader, programmer
+Project Leader:
+Martin Boryczko aka Xenom
 
+Programmers
+Xenom & JohnyPl
 
-Wesan - Project Leader, designer
+Mappers
+Cerberix, Ras, Cubik2k, 
+TankForYou, Archon
 
-
-Cerberix - Mapping
-
-
-JohnyPl aka Kuna - Gui Mod & Worldmap API programmer
-
-
-Cubik2k - Maps Conversion
-
-
-TankForYou - dialoger / mapper
-
-
-Gabriel & Ras - Scenery Designers
-
-
-Cryofluid & Kinkin - Secondary Scenery Designers
-
-
+Designers:
+Ras, Wesan, Gabriel,
+Cryofluid, Kinkin
 
 
 Special thanks to:
 
-
-NiePamietamNicku - for scripts optimalization
-
-
 Doctor Eex - for interface
 
-
 TLA Developers - for great engine
-
-
-TTTLA & CS - for great gameplay ideas
-
 
 Brian Fargo & Black Isle & Interplay - for great religion
 
 
 
-FOnline Tactics 2012 -  www.fonlinetactics.com
+FOnline Tactics 2012/2013
 }
 # Shift + Credits
 {2000001020}{}{
