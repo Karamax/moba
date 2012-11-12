@@ -1,1 +1,23 @@
 http://www.speedyshare.com/tJVkv/client.zip
+
+To start client, you need to put in client folder some files: 
+
+From game Fallout 2:
+-Master.dat
+-Critter.dat
+
+From game Fallout Tactics:
+-character_0
+-spr-character_AB
+-spr-character_ABCDE
+-spr-character_ABD
+-spr-character_B
+-spr-character_D
+-spr-character_E
+-spr-critter_0
+-spr-critter_ABCDE
+-spr-extra_0
+-spr-mechanical_0
+-spr-mechanical_DE
+-spr-missspec_A
+-spr-sprites_0
